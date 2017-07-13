@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: de.larmic.butterfaces:components:2.1.18">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../tools/apache-maven-3.5.0/repository/de/larmic/butterfaces/components/2.1.18/components-2.1.18.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../tools/apache-maven-3.5.0/repository/de/larmic/butterfaces/components/2.1.18/components-2.1.18-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../tools/apache-maven-3.5.0/repository/de/larmic/butterfaces/components/2.1.18/components-2.1.18-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
