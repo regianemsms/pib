@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class PibLimeiraApplication {
 
     public static void main(String[] args) {
+    	//por aqui que inicia o projeto
         SpringApplication.run(PibLimeiraApplication.class, args);
     }
 
