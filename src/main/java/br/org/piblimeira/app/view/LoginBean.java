@@ -16,7 +16,7 @@ import br.org.piblimeira.repository.UsuarioRepository;
  * CDI backing bean holding login credentials and delegating to session scoped spring bean.
  */
 @Named
-@RequestScope
+@RequestScope 
 public class LoginBean {
 
     @Inject
@@ -29,13 +29,6 @@ public class LoginBean {
     private String password = "admin";
 
     public String login() {
-       /* Usuario u = new Usuario();
-        u.setLogin("sandro.mileno");
-        u.setPerfil("Inicial");
-        u.setStatus("A");
-        u.setSenha("12345");
-        usuarioRepository.save(u);*/
-    //    System.out.print("################" + userName);
     	List<Usuario> users =  (List<Usuario>) usuarioRepository.findAll();
        return identity.login(userName, password);
     }
