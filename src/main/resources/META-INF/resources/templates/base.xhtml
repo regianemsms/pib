@@ -58,6 +58,7 @@
             margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
+            
         }
 
         .footer-links {
@@ -91,55 +92,28 @@
         .yourKitLogo:hover {
             cursor: pointer;
         }
+        .content{
+        	min-height: 100%;
+        }
     </style>
 
     <f:view>
 
         <div class="header">
             <div class="container">
-                <h2>ButterFaces
-                    <small>a smart JSF framework</small>
+                <h2>Primeira Igreja Batista em Limeira
+                   
                 </h2>
 
                 <p>
-                    This demo shows ButterFaces running as a Spring Boot application with a simple login mechanism without using spring security.
+                    Acesso restrito a membros cadastrados
                 </p>
 
-                <div class="socialNetwork">
-                    <div class="googleplus">
-                        <!-- Fügen Sie dieses Tag in den head-Abschnitt oder direkt vor dem schließenden body-Tag ein. -->
-                        <script src="https://apis.google.com/js/platform.js"></script>
-
-                        <!-- Fügen Sie dieses Tag an der Stelle ein, an der die Widget erscheinen soll. -->
-                        <div class="g-follow" data-annotation="bubble" data-height="20"
-                             data-href="//plus.google.com/u/0/106961814726878390727" data-rel="publisher"></div>
-                    </div>
-
-                    <div class="twitter">
-                        <a href="https://twitter.com/share" class="twitter-share-button" data-via="butterfacesDE"
-                           data-hashtags="ButterFaces">Tweet</a>
-                        <script>!function (d, s, id) {
-                            var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
-                            if (!d.getElementById(id)) {
-                                js = d.createElement(s);
-                                js.id = id;
-                                js.src = p + '://platform.twitter.com/widgets.js';
-                                fjs.parentNode.insertBefore(js, fjs);
-                            }
-                        }(document, 'script', 'twitter-wjs');</script>
-                    </div>
-
-                    <div class="github">
-                        <!-- Place this tag where you want the button to render. -->
-                        <a class="github-button" href="https://github.com/butterfaces/butterfaces" data-icon="octicon-star" data-count-href="/butterfaces/butterfaces/stargazers" data-count-api="/repos/butterfaces/butterfaces#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star butterfaces/butterfaces on GitHub">Star</a>
-                        <!-- Place this tag right after the last button or just before your close body tag. -->
-                        <script id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
-                    </div>
-                </div>
+         
             </div>
         </div>
 
-        <div class="content">
+        <div class="content" >
             <div class="container">
                 <ui:insert name="content"/>
             </div>
@@ -149,19 +123,17 @@
         <hr />
             <footer class="footer">
                 <div class="versionInformation">
-                    <strong>ButterFaces 2.1.11</strong> @ Spring Boot 1.4.1.RELEASE <br/>
-                </div>
+                    <strong>piblimeiraweb 1.0.0</strong> Desenvolvido por: <a href="https://www.linkedin.com/in/regiane-mesquita-65154823/" target="_blank">Regiane Mesquita</a> <br/>
+                </div><br/>
                 <div class="footer-links">
-                    <div class="butterfaces-links">
+                   <!--  <div class="butterfaces-links">
                         <div class="footer-link"><a href="https://github.com/ButterFaces/spring-boot-joinfaces" target="_blank">Source</a></div>
                         <div class="footer-link"><a href="https://butterfaces.gitbooks.io/butterfaces/content/" target="_blank">Documentation</a></div>
                         <div class="footer-link"><a href="http://forum.byte-welt.net/byte-welt-projekte-projects/butterfaces/" target="_blank">Forum</a></div>
                         <div class="footer-link"><a href="http://opensource.org/licenses/MIT" target="_blank">License</a></div>
                         <div class="footer-link"><a href="http://www.larmic.de/legalNotice.html" target="_blank">Impressum</a></div>
-                    </div>
-                    <div class="yourkit-link">
-                        Supported by <div class="yourKitLogo" onclick="window.open('https://www.yourkit.com/java/profiler/index.jsp', '_blank');"/>
-                    </div>
+                    </div> -->
+                       <img src="#{request.contextPath}/images/nomeIgrejaPreto.png" width="30%" alt="logo" />
                 </div>
             </footer>
         </div>

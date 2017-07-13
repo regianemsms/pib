@@ -25,12 +25,14 @@ public class LoginBean {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    private String userName = "admin";
-    private String password = "admin";
+    private String userName;
+    private String password;
 
     public String login() {
-    	List<Usuario> users =  (List<Usuario>) usuarioRepository.findAll();
-       return identity.login(userName, password);
+    	//List<Usuario> users =  (List<Usuario>) usuarioRepository.findAll();
+       Usuario user = usuarioRepository.findByLoginAndStatus(userName, "A");
+       
+    	return identity.login(true,user.getPessoa().getNome());
     }
 
     public String getUserName() {
