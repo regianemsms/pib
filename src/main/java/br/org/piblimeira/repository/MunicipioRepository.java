@@ -10,6 +10,6 @@ import br.org.piblimeira.domain.Municipio;
 
 public interface MunicipioRepository extends CrudRepository<Municipio, Long>{
 
-	@Query(" SELECT m FROM Municipio m where UPPER(m.nmMunicipio) = :nmMunicipio by p.nmMunicipio ")
+	@Query(" SELECT m FROM Municipio m where UPPER(m.nmMunicipio) = :nmMunicipio order by m.nmMunicipio ")
 	List<Municipio> buscarPorNomeIdentico(@Param("nmMunicipio") String nmMunicipio);
 }

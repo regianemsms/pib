@@ -16,7 +16,8 @@ public interface PessoaRepository extends CrudRepository<Pessoa, Long>{
 	@Query("SELECT p FROM Pessoa p where p.tipoRecepcao.id = :idTipoRecepcao")
 	List<Pessoa> buscarPessoaPorTipoRecepcao(@Param("idTipoRecepcao") Long idTipoRecepcao);
 	
-	List<Pessoa> buscarPorFiltro(Pessoa p);
+	@Query("SELECT p FROM Pessoa p ")
+	List<Pessoa> buscarPorFiltro(@Param("p") Pessoa p);
 	
 	@Query(" SELECT p FROM Pessoa p where UPPER(p.nome) like :nome and p.status = :status order by p.nome ")
 	List<Pessoa> buscarPorNome(@Param("nome") String nome, @Param("status") String status);

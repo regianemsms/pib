@@ -13,7 +13,7 @@ public interface TipoRecepcaoRepository  extends CrudRepository<TipoRecepcao, Lo
 	@Query("SELECT t FROM TipoRecepcao t order by t.tpRecepcao ")
 	List<TipoRecepcao> buscarTodos();
 	
-	@Query(" SELECT t FROM TipoRecepcao t where UPPER(t.tpRecepcao) = :tpRecepcao by t.tpRecepcao ")
+	@Query(" SELECT t FROM TipoRecepcao t where UPPER(t.tpRecepcao) = :tpRecepcao order by t.tpRecepcao ")
 	TipoRecepcao buscarPorNome(@Param("tpRecepcao") String tpRecepcao);
 	
 }

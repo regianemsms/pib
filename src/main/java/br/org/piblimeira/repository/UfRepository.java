@@ -9,7 +9,7 @@ import br.org.piblimeira.domain.Uf;
 
 public interface UfRepository extends CrudRepository<Uf, Long>{
 
-	@Query("SELECT u FROM Uf u where order by u.sgUf")
+	@Query("SELECT u FROM Uf u order by u.sgUf")
 	List<Uf> listarTodos();
 	
 }

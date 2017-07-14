@@ -2,12 +2,17 @@ package br.org.piblimeira.business;
 
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.org.piblimeira.domain.Usuario;
 import br.org.piblimeira.enuns.EnumStatus;
 import br.org.piblimeira.repository.UsuarioRepository;
 
+@Named
+@RequestScoped
 public class UsuarioBusiness {
 
 	@Autowired

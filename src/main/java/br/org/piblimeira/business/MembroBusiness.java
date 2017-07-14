@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,6 @@ import br.org.piblimeira.domain.Uf;
 import br.org.piblimeira.domain.Usuario;
 import br.org.piblimeira.domain.Visita;
 import br.org.piblimeira.enuns.EnumStatus;
-import br.org.piblimeira.exception.BusinessException;
 import br.org.piblimeira.repository.EnderecoRepository;
 import br.org.piblimeira.repository.MunicipioRepository;
 import br.org.piblimeira.repository.PessoaRepository;
@@ -60,7 +57,6 @@ public class MembroBusiness {
 		return null;
 	}
 
-	@Transactional(value = TxType.REQUIRED, rollbackOn = BusinessException.class)
 	public void salvar(Pessoa p){
 		//salvar municipio
 		if(StringUtils.isNotEmpty(p.getEndereco().getMunicipio().getNmMunicipio())){
@@ -89,13 +85,11 @@ public class MembroBusiness {
 		enderecoRepository.save(p.getEndereco());
 	}
 
-	@Transactional(value = TxType.REQUIRED, rollbackOn = BusinessException.class)
 	public void inativar(Pessoa p){
 		p.setStatus(Constantes.INATIVO);
 		pessoaRepository.save(p);
 	}
 	
-	@Transactional(value = TxType.REQUIRED, rollbackOn = BusinessException.class)
 	public void excluir(Pessoa p){
 		Endereco end = enderecoRepository.buscarEnderecoPorIdPessoa(p.getId());
 		if(end != null){

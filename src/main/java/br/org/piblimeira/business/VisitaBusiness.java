@@ -2,26 +2,25 @@ package br.org.piblimeira.business;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.org.piblimeira.domain.Visita;
-import br.org.piblimeira.exception.BusinessException;
 import br.org.piblimeira.repository.VisitaRepository;
 
+@Named
+@RequestScoped
 public class VisitaBusiness {
 	
 	@Autowired
 	private VisitaRepository visitaRepository;
 	
-	@Transactional(value = TxType.REQUIRED, rollbackOn = BusinessException.class)
 	public Visita salvar(Visita v){
 		return visitaRepository.save(v);
 	}
 	
-	@Transactional(value = TxType.REQUIRED, rollbackOn = BusinessException.class)
 	public void excluir(Long idVisita){
 		visitaRepository.delete(idVisita);
 	}
