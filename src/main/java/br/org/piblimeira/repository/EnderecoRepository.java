@@ -7,4 +7,6 @@ import org.springframework.data.repository.CrudRepository;
  * Created by sandro on 12/07/17.
  */
 public interface EnderecoRepository extends CrudRepository<Endereco, Long> {
+	
+	Endereco buscarEnderecoPorIdPessoa(Long idPessoa);
 }

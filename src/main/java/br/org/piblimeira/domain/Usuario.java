@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Table(name = "tb_usuario")
 public class Usuario implements Cloneable {
 	private static final Logger logger = Logger.getLogger(Usuario.class);
-	private static final long serialVersionUID = -2169223876535744399L;
 
 	@Id
 	@Column(name = "ID_USUARIO")

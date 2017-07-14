@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
+import br.org.piblimeira.domain.Usuario;
+import br.org.piblimeira.enuns.EnumPerfil;
+
 /**
  * Session scoped spring bean represents logged in user with user name and logged in flag.
  */
@@ -17,18 +20,16 @@ public class Identity {
 
     private String userName;
     private boolean loggedIn;
-
-    public String login(boolean isPossuiAcesso, String usuarioLogado) {
-        //log.info("Try to login user {}", userName);
+    private Usuario user;
+    
+    public String login(boolean isPossuiAcesso, Usuario usuarioLogado) {
         this.loggedIn = isPossuiAcesso;
-
         if (loggedIn) {
-            this.userName = usuarioLogado;
-          //  log.info("User {} logged in.", userName);
+            this.userName = usuarioLogado.getPessoa().getNome();
+            this.user = usuarioLogado;
             return "/secure/index.jsf?faces-redirect=true";
         } else {
             this.userName = null;
-        //    log.info("User {} not logged in. Bad credentials.", userName);
             return null;
         }
     }
@@ -36,12 +37,32 @@ public class Identity {
     public String logout() {
         loggedIn = false;
         userName = null;
-
-      //  log.info("User {} logged out", userName);
-
+        user = null;
         return "/login.jsf?faces-redirect=true";
     }
 
+    public Boolean verificarAdmin(){
+		if(loggedIn && EnumPerfil.ADMINISTRADOR.getCodigo().equals(this.user.getPerfil())){
+			return true;
+		}
+		return false;
+	}
+	
+	public Boolean verificarConsulta(){
+		if(loggedIn && EnumPerfil.CONSULTA.getCodigo().equals(this.user.getPerfil())){
+			return true;
+		}
+		return false;
+	}
+	
+	public Boolean verificarGestor(){
+		if(loggedIn && EnumPerfil.GESTOR.getCodigo().equals(this.user.getPerfil())){
+			return true;
+		}
+		return false;
+	}
+	
+    
     public boolean isLoggedIn() {
         return loggedIn;
     }
@@ -49,4 +70,20 @@ public class Identity {
     public String getUserName() {
         return userName;
     }
+
+	public Usuario getUser() {
+		return user;
+	}
+
+	public void setUser(Usuario user) {
+		this.user = user;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
 }

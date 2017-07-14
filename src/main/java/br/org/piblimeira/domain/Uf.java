@@ -12,8 +12,6 @@ import javax.persistence.Table;
 @Table(name = "tb_uf")
 public class Uf {
 
-	private static final long serialVersionUID = -8422308963734096129L;
-
 	@Id
 	@Column(name = "SG_UF")
 	private String sgUf;	
