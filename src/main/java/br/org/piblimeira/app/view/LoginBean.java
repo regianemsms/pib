@@ -1,15 +1,17 @@
 package br.org.piblimeira.app.view;
 
-import java.util.List;
-
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.xml.bind.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.annotation.RequestScope;
 
 import br.org.piblimeira.app.security.Identity;
+import br.org.piblimeira.domain.Pessoa;
 import br.org.piblimeira.domain.Usuario;
+import br.org.piblimeira.form.UsuarioForm;
 import br.org.piblimeira.repository.UsuarioRepository;
 
 /**
@@ -17,23 +19,59 @@ import br.org.piblimeira.repository.UsuarioRepository;
  */
 @Named
 @RequestScope 
-public class LoginBean {
+public class LoginBean  extends BaseController {
 
-    @Inject
+	private static final long serialVersionUID = -9125501998887846341L;
+
+	@Inject
     private Identity identity;
 
     @Autowired
     UsuarioRepository usuarioRepository;
+    
+    private UsuarioForm usuarioForm;
 
     private String userName;
     private String password;
 
-    public String login() {
-    	//List<Usuario> users =  (List<Usuario>) usuarioRepository.findAll();
-       Usuario user = usuarioRepository.findByLoginAndStatus(userName, "A");
-       
-    	return identity.login(true,user.getPessoa().getNome());
+    @PostConstruct
+    public void init() {
+    	instanciarForm();
     }
+    
+    private void instanciarForm(){
+		usuarioForm = new UsuarioForm();
+		usuarioForm.setUsuario(new Usuario());
+		usuarioForm.getUsuario().setPessoa(new Pessoa());
+		usuarioForm.setUsuarioLogado(new Usuario());
+	}
+    
+    public String login() {
+    	try {
+    		Usuario user = usuarioRepository.findByLoginAndStatus(userName, "A");
+    		autenticar(user);
+    		return identity.login(true,user);
+    	} catch (ValidationException e) {
+    		exibeMensagem(getMessageByKey("msg.atencao"), e.getMessage());
+    		return null;
+    	}
+    }
+    
+    private void autenticar(Usuario user) throws ValidationException{
+    	if(user == null){
+			throw new ValidationException(getMessageByKey("msg.usuario.senha.invalidos"));
+		}else if(!validarSenha(user.getSenha())){
+			throw new ValidationException(getMessageByKey("msg.usuario.senha.invalidos"));
+		}
+    }
+    
+    private boolean validarSenha(String senha){
+		if(codificarSenha(usuarioForm.getUsuarioLogado().getSenha()).equals(senha)){
+			return true;
+		}
+		return false;
+	}
+  
 
     public String getUserName() {
         return userName;

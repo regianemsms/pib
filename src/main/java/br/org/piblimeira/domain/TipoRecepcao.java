@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Table(name = "tb_tipo_recepcao")
 public class TipoRecepcao {
 	
-	private static final long serialVersionUID = -6622045564906637762L;
 	@Id
 	@Column(name = "ID_TP_RECEPCAO")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
