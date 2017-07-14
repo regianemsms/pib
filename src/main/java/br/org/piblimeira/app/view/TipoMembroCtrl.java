@@ -5,18 +5,19 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.bind.ValidationException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import br.org.piblimeira.business.TipoMembroBusiness;
 import br.org.piblimeira.domain.Pessoa;
 import br.org.piblimeira.domain.TipoMembro;
 import br.org.piblimeira.enuns.EnumCaminhoPagina;
 import br.org.piblimeira.form.TipoMembroForm;
+import br.org.piblimeira.repository.PessoaRepository;
+import br.org.piblimeira.repository.TipoMembroRepository;
 
 
 @Named
@@ -27,8 +28,11 @@ public class TipoMembroCtrl extends BaseController {
 
 	private TipoMembroForm tipoMembroForm;
 	
-	@Inject
-	private TipoMembroBusiness business;
+	@Autowired
+	private TipoMembroRepository tipoMembroRepository;
+	
+	@Autowired
+	private PessoaRepository pessoaRepository;
 	
 	@PostConstruct
     public void init() {
@@ -43,7 +47,7 @@ public class TipoMembroCtrl extends BaseController {
 	}
 	
 	public void listarTiposMembros(){
-		tipoMembroForm.setListaTiposMembros(business.listarTiposMembros());
+		tipoMembroForm.setListaTiposMembros(tipoMembroRepository.buscarTodos());
 	}
 	private void instanciarTipoMembro(){
 		tipoMembroForm = new TipoMembroForm();
@@ -59,14 +63,14 @@ public class TipoMembroCtrl extends BaseController {
 	public void excluir(TipoMembro tipo){
 		try{
 			validarExclusao(tipo);
-			business.excluir(tipo);
+			tipoMembroRepository.delete(tipo.getId());
 			listarTiposMembros();
 		}catch(ValidationException e){
 			exibeMensagem("Atenção!", e.getMessage());
 		}
 	}
 	 private void validarExclusao(TipoMembro tipo) throws ValidationException{
-		 List<Pessoa> membros = business.buscarMembroPorTipoMembro(tipo);
+		 List<Pessoa> membros = pessoaRepository.buscarPessoaPorTipoMembro(tipo.getId());
 		 if(membros != null && !membros.isEmpty()){
 			 throw new ValidationException(getMessageByKey("msg.tipo.membro.nao.pode.excluir"));
 		 }
@@ -84,7 +88,7 @@ public class TipoMembroCtrl extends BaseController {
 		if(StringUtils.isEmpty(tipoMembroForm.getTipoMembro().getTpMembro().trim())){
 			throw new ValidationException(getMessageByKey("msg.tipo.membro.obrigatorio"));
 		}
-		TipoMembro tipo = business.buscarPorDescricao(tipoMembroForm.getTipoMembro().getTpMembro().trim());
+		TipoMembro tipo = tipoMembroRepository.buscarPorNome(tipoMembroForm.getTipoMembro().getTpMembro().trim().toUpperCase());
 		if((tipoMembroForm.getTipoMembro().getId() == null && tipo != null) ||
 			(tipo != null && !tipoMembroForm.getTipoMembro().getId().equals(tipo.getId()))){
 			throw new ValidationException(getMessageByKey("tipo.membro.ja.cadastrado"));
@@ -94,7 +98,7 @@ public class TipoMembroCtrl extends BaseController {
 	public void salvar(){
 		try{
 				validarSalvar();
-				business.salvar(tipoMembroForm.getTipoMembro());
+				tipoMembroRepository.save(tipoMembroForm.getTipoMembro());
 				setMensagemOk(getMessageByKey("msg.informacoes.salvas.com.sucesso"));
 				setHeader(getMessageByKey("msg.confirmacao"));
 				RequestContext.getCurrentInstance().execute("PF('modalOk').show()");

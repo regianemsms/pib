@@ -19,13 +19,10 @@ import org.jboss.logging.Logger;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import br.org.piblimeira.app.consumer.CepConsumer;
 import br.org.piblimeira.app.security.Identity;
-import br.org.piblimeira.business.MembroBusiness;
-import br.org.piblimeira.business.TipoMembroBusiness;
-import br.org.piblimeira.business.TipoRecepcaoBusiness;
-import br.org.piblimeira.business.VisitaBusiness;
 import br.org.piblimeira.domain.Endereco;
 import br.org.piblimeira.domain.Municipio;
 import br.org.piblimeira.domain.Pessoa;
@@ -39,6 +36,13 @@ import br.org.piblimeira.enuns.EnumParametroNiver;
 import br.org.piblimeira.enuns.EnumStatus;
 import br.org.piblimeira.form.MembroForm;
 import br.org.piblimeira.relatorio.PdfRelatorio;
+import br.org.piblimeira.repository.EnderecoRepository;
+import br.org.piblimeira.repository.PessoaRepository;
+import br.org.piblimeira.repository.TipoMembroRepository;
+import br.org.piblimeira.repository.TipoRecepcaoRepository;
+import br.org.piblimeira.repository.UfRepository;
+import br.org.piblimeira.repository.UsuarioRepository;
+import br.org.piblimeira.repository.VisitaRepository;
 import br.org.piblimeira.util.Constantes;
 import br.org.piblimeira.util.Utils;
 import br.org.piblimeira.vo.RelatorioVo;
@@ -55,20 +59,29 @@ public class MembroCtrl extends BaseController{
 
 	private MembroForm membroForm;
 	
-	@Inject
-	MembroBusiness membroBusiness;
+	@Autowired
+	PessoaRepository pessoaRepository;
 	
-	@Inject 
-	private TipoRecepcaoBusiness tipoRecepcaoBusiness;
+	@Autowired 
+	private TipoRecepcaoRepository tipoRecepcaoRepository;
 	
-	@Inject
-	private TipoMembroBusiness tipoMembroBusiness;
+	@Autowired
+	private TipoMembroRepository tipoMembroRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private UfRepository ufRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	@Inject
     private Identity identity;
 	
-	@Inject
-	private VisitaBusiness visitaBusiness;
+	@Autowired
+	private VisitaRepository visitaRepository;
 	
 	private CepConsumer consumer = new CepConsumer();
 
@@ -83,7 +96,7 @@ public class MembroCtrl extends BaseController{
 		Pessoa membro = getFromSession("membro");
 		if(membro != null){
 			membroForm.setPessoa(membro);
-			membroForm.getPessoa().setEndereco(membroBusiness.buscarEnderecoPorIdPessoa(membro.getId()));
+			membroForm.getPessoa().setEndereco(enderecoRepository.buscarEnderecoPorIdPessoa(membro.getId()));
 			removeFromSession("membro");
 			exibirUltimaVisita();
 		}
@@ -114,9 +127,6 @@ public class MembroCtrl extends BaseController{
 			} 
 	}
 	
-	
-	
-	
 	public StreamedContent getFileMembros() {
 		return fileMembros;
 	}
@@ -143,7 +153,7 @@ public class MembroCtrl extends BaseController{
         		exibeMensagem(getMessageByKey("msg.atencao"), getMessageByKey("msg.informe.mes"));
         		return null;
         	}
-        	membroForm.setListaAniversariantes(membroBusiness.buscarPorMesNascimento(membroForm.getMesNascimento()));
+        	membroForm.setListaAniversariantes(pessoaRepository.buscarPorMesNascimento(membroForm.getMesNascimento(),membroForm.getPessoa().getStatus()));
         	if(membroForm.getListaAniversariantes() == null || membroForm.getListaAniversariantes().isEmpty()){
         		exibeMensagem(getMessageByKey("msg.atencao"), getMessageByKey("msg.nao.relatorio"));
         		return null;	
@@ -214,7 +224,7 @@ public class MembroCtrl extends BaseController{
 			return "botao";
 	}
 	private void exibirUltimaVisita(){
-		List<Visita> visitas = visitaBusiness.listarVisitasPorIdPessoa(membroForm.getPessoa().getId());
+		List<Visita> visitas = visitaRepository.listarVisitasPorIdPessoa(membroForm.getPessoa().getId());
 		if(visitas != null && !visitas.isEmpty()){
 			membroForm.setDtUltimaVisita(visitas.get(0).getDtVisita());
 		}
@@ -240,7 +250,7 @@ public class MembroCtrl extends BaseController{
 	}
 	public List<Pessoa> buscarPessoas(String query) {
 	    membroForm.getPessoa().setNome(StringUtils.isEmpty(query)?null:query);
-		return membroBusiness.buscarPorNome(query, null);
+		return pessoaRepository.buscarPorNome(query, null);
 	}
 
 	public String retornarStatus(){
@@ -250,7 +260,7 @@ public class MembroCtrl extends BaseController{
 		return EnumStatus.ATIVO.getLabel();
 	}
 	private void listarMembros(){
-		membroForm.setListaMembros(new ArrayList<>(membroBusiness.buscarPorFiltro(membroForm.getPessoa())));
+		membroForm.setListaMembros(new ArrayList<>(pessoaRepository.buscarPorFiltro(membroForm.getPessoa())));
 		addToSession("listaMembros", membroForm.getListaMembros());
 	}
 	public void pesquisar(){
@@ -260,15 +270,20 @@ public class MembroCtrl extends BaseController{
 	
 	public void inativar(Pessoa membro){
 			removeFromSession("listaMembros");
-			membroBusiness.inativar(membro);
+			inativarPessoa(membro);
 			membroForm.setPessoa(instanciarPessoa());
 			listarMembros();
 			exibeMensagem(getMessageByKey("msg.confirmacao"), Utils.retornarPrimeiroNome(membro.getNome()) + " inativado(a) com sucesso!");
 	}
+	
+	private void inativarPessoa(Pessoa membro){
+		membro.setStatus(Constantes.INATIVO);
+		pessoaRepository.save(membro);
+	}
 	public void excluir(Pessoa membro){
 		try{
 			validarExclusao(membro);
-			membroBusiness.excluir(membro);
+			pessoaRepository.delete(membro.getId());
 			membroForm.setPessoa(instanciarPessoa());
 			removeFromSession("listaMembros");
 			listarMembros();
@@ -279,11 +294,11 @@ public class MembroCtrl extends BaseController{
 	}
 	
 	private void validarExclusao(Pessoa membro) throws ValidationException{
-		 Usuario usuario = membroBusiness.buscarUsuarioPorMembro(membro);
+		 Usuario usuario =  usuarioRepository.buscarPorPessoa(membro.getId());
 		 if(usuario != null){
 			 throw new ValidationException(getMessageByKey("msg.nao.pode.excluir.membro.usuario"));
 		 }
-		 List<Visita> visitas = membroBusiness.buscarVistasPorMembro(membro);
+		 List<Visita> visitas = visitaRepository.listarVisitasPorIdPessoa(membro.getId());
 		 if(visitas != null && !visitas.isEmpty()){
 			 throw new ValidationException(getMessageByKey("msg.noa.pode.excluir.membro"));
 		 }
@@ -329,16 +344,16 @@ public class MembroCtrl extends BaseController{
 	}
 	
 	public List<TipoRecepcao> buscarTiposRecepcoes(){
-		return tipoRecepcaoBusiness.listarTiposRecepcao();
+		return tipoRecepcaoRepository.buscarTodos();
 	}
 
 	public List<Uf> buscarUfs(){
-		return membroBusiness.listarUfs();
+		return ufRepository.listarTodos();
 	}
 	
 
 	public List<TipoMembro> buscarTiposMembros(){
-		return tipoMembroBusiness.listarTiposMembros();
+		return tipoMembroRepository.buscarTodos();
 	}
 	
 	public void irParaIncluir(){
@@ -362,7 +377,7 @@ public class MembroCtrl extends BaseController{
 			throw new ValidationException(getMessageByKey("msg.status.obrigatorio"));
 		}
 		
-		Pessoa pessoa = membroBusiness.buscarPorNomeIdentico(membroForm.getPessoa().getNome().trim(), membroForm.getPessoa().getStatus());
+		Pessoa pessoa = buscarPorNomeIdentico(membroForm.getPessoa().getNome().trim(), membroForm.getPessoa().getStatus());
 		if((membroForm.getPessoa().getId() == null && pessoa != null) ||
 			(pessoa != null && !membroForm.getPessoa().getId().equals(pessoa.getId()))){
 				throw new ValidationException(getMessageByKey("msg.membro.ja.cadastrado"));
@@ -374,10 +389,18 @@ public class MembroCtrl extends BaseController{
 		
 	}
 	
+	private Pessoa buscarPorNomeIdentico(String nome, String status){
+		List<Pessoa> pessoas = pessoaRepository.buscarPorNomeIdentico(nome, status);
+		if(pessoas != null && !pessoas.isEmpty()){
+			return pessoas.get(0); 
+		}
+		return null;
+	}
+	
 	public void salvar(){
 		try{
 			validarSalvar();
-			membroBusiness.salvar(membroForm.getPessoa());
+			pessoaRepository.save(membroForm.getPessoa());
 			setMensagemOk(getMessageByKey("msg.informacoes.salvas.com.sucesso"));
 			setHeader(getMessageByKey("msg.confirmacao"));
 			RequestContext.getCurrentInstance().execute("PF('modalOk').show()");
@@ -397,5 +420,7 @@ public class MembroCtrl extends BaseController{
 	}
 	public void setFile(StreamedContent file) {
 		this.file = file;
-	} 
+	}
+
+	
 }

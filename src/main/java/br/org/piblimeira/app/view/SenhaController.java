@@ -8,12 +8,13 @@ import javax.validation.ValidationException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import br.org.piblimeira.app.security.Identity;
-import br.org.piblimeira.business.UsuarioBusiness;
 import br.org.piblimeira.domain.Pessoa;
 import br.org.piblimeira.domain.Usuario;
 import br.org.piblimeira.form.UsuarioForm;
+import br.org.piblimeira.repository.UsuarioRepository;
 import br.org.piblimeira.util.Constantes;
 
 @Named
@@ -26,8 +27,8 @@ public class SenhaController extends BaseController{
 	@Inject
     private Identity identity;
 	
-	@Inject 
-	private UsuarioBusiness usuarioBusiness;
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	@PostConstruct
     public void init() {
@@ -55,7 +56,7 @@ public class SenhaController extends BaseController{
 			Usuario user = identity.getUser();
 			user.setIsSenhaInicial(Constantes.NAO);
 			user.setSenha(codificarSenha(usuarioForm.getUsuario().getSenha()));
-			identity.setUser(usuarioBusiness.salvar(user));
+			identity.setUser(usuarioRepository.save(user));
 			RequestContext.getCurrentInstance().execute("PF('modalAlterarSenha').hide()");
 			RequestContext.getCurrentInstance().execute("PF('modalSenhaAtualizada').show()");
 		}catch(ValidationException e){

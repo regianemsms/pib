@@ -7,7 +7,6 @@ import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.bind.ValidationException;
 
@@ -16,15 +15,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.EmailException;
 import org.jboss.logging.Logger;
 import org.primefaces.context.RequestContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import br.org.piblimeira.business.MembroBusiness;
-import br.org.piblimeira.business.UsuarioBusiness;
 import br.org.piblimeira.domain.Pessoa;
 import br.org.piblimeira.domain.Usuario;
 import br.org.piblimeira.enuns.EnumCaminhoPagina;
 import br.org.piblimeira.enuns.EnumSexo;
 import br.org.piblimeira.enuns.EnumStatus;
 import br.org.piblimeira.form.UsuarioForm;
+import br.org.piblimeira.repository.PessoaRepository;
+import br.org.piblimeira.repository.UsuarioRepository;
 import br.org.piblimeira.util.Constantes;
 import br.org.piblimeira.util.EnviarEmail;
 import br.org.piblimeira.util.Utils;
@@ -36,12 +36,11 @@ public class UsuarioCtrl  extends BaseController{
 
 	private static final long serialVersionUID = -8510526845599268466L;
 
-	@Inject
-	private MembroBusiness membroBusiness;
+	@Autowired
+	private PessoaRepository pessoaRepository;
 	
-	@Inject
-	private UsuarioBusiness usuarioBusiness;
-	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	private UsuarioForm usuarioForm;
 	
@@ -61,7 +60,7 @@ public class UsuarioCtrl  extends BaseController{
 	
 	public List<Pessoa> buscarPessoas(String query) {
 		usuarioForm.getUsuario().getPessoa().setNome(StringUtils.isEmpty(query)?null:query);
-		return membroBusiness.buscarPorNome(query, EnumStatus.ATIVO);
+		return pessoaRepository.buscarPorNome(query, EnumStatus.ATIVO.getCodigo());
 	}
 	
 	private void instanciarForm(){
@@ -88,11 +87,11 @@ public class UsuarioCtrl  extends BaseController{
 		if(StringUtils.isEmpty(usuarioForm.getUsuario().getLogin())){
 			throw new ValidationException(getMessageByKey("msg.login.obrigatorio"));
 		}
-		Usuario usuarioBanco = usuarioBusiness.buscarPorLogin(usuarioForm.getUsuario().getLogin(), EnumStatus.ATIVO);
+		Usuario usuarioBanco = usuarioRepository.findByLoginAndStatus(usuarioForm.getUsuario().getLogin(), EnumStatus.ATIVO.getCodigo());
 		if(usuarioBanco != null && (usuarioForm.getUsuario().getId() == null || !usuarioForm.getUsuario().getId().equals(usuarioBanco.getId()))){
 			throw new ValidationException(getMessageByKey("msg.login.existente"));
 		}
-		Usuario usuarioBancoInativo = usuarioBusiness.buscarPorPessoa(usuarioForm.getUsuario().getPessoa().getId());
+		Usuario usuarioBancoInativo = usuarioRepository.buscarPorPessoa(usuarioForm.getUsuario().getPessoa().getId());
 		if(usuarioBancoInativo != null){
 			if(EnumStatus.ATIVO.getCodigo().equals(usuarioBancoInativo.getStatus()) && !usuarioForm.isAlterar()){
 				throw new ValidationException(getMessageByKey("msg.usuario.cadastrado"));
@@ -105,7 +104,7 @@ public class UsuarioCtrl  extends BaseController{
 	public void reEnviarSenha(){
 		try {
 			validarReevio();
-			Usuario user = usuarioBusiness.buscarPorLoginEmail(usuarioForm.getLoginRecuperacao(), usuarioForm.getEmailRecuperacao());
+			Usuario user = usuarioRepository.buscarPorLoginEmail(usuarioForm.getLoginRecuperacao(), usuarioForm.getEmailRecuperacao());
 			
 			EnviarEmail.sendEmail(mensagemRecuperacaoSenha(user), getMessageByKey("msg.assunto.email.recuperacao.senha"), 
 									new ArrayList<>(Arrays.asList(user.getPessoa().getEmail())));
@@ -187,7 +186,7 @@ public class UsuarioCtrl  extends BaseController{
 			throw new ValidationException(getMessageByKey("msg.email.invalido"));
 		}
 		if(StringUtils.isNotEmpty(usuarioForm.getEmailRecuperacao()) && StringUtils.isNotEmpty(usuarioForm.getLoginRecuperacao())){
-			Usuario user = usuarioBusiness.buscarPorLoginEmail(usuarioForm.getLoginRecuperacao(), usuarioForm.getEmailRecuperacao());
+			Usuario user = usuarioRepository.buscarPorLoginEmail(usuarioForm.getLoginRecuperacao(), usuarioForm.getEmailRecuperacao());
 			if(user == null){
 				throw new ValidationException(getMessageByKey("msg.login.email.invalidos"));
 			}
@@ -204,7 +203,7 @@ public class UsuarioCtrl  extends BaseController{
 						new ArrayList<>(Arrays.asList(usuarioForm.getUsuario().getPessoa().getEmail())));
 			}
 			usuarioForm.getUsuario().setStatus(EnumStatus.ATIVO.getCodigo());
-			usuarioBusiness.salvar(usuarioForm.getUsuario());
+			usuarioRepository.save(usuarioForm.getUsuario());
 			
 			setMensagemOk(getMessageByKey("msg.informacoes.salvas.com.sucesso"));
 			setHeader(getMessageByKey("msg.confirmacao"));
@@ -224,7 +223,7 @@ public class UsuarioCtrl  extends BaseController{
 	
 	
 	public void pesquisar(){
-		usuarioForm.setUsuarios(new ArrayList<>(usuarioBusiness.buscarPorFiltro(usuarioForm.getUsuario())));
+		usuarioForm.setUsuarios(new ArrayList<>(usuarioRepository.buscarPorFiltro(usuarioForm.getUsuario())));
 		logger.info("qtde usuarios: "+usuarioForm.getUsuarios().size() );
 	}
 	public void editar(Usuario user){
@@ -234,7 +233,7 @@ public class UsuarioCtrl  extends BaseController{
 	
 	public void excluir(Usuario user){
 		user.setStatus(EnumStatus.INATIVO.getCodigo());
-		usuarioBusiness.salvar(user);
+		usuarioRepository.save(user);
 		usuarioForm.setUsuario(new Usuario());
 		usuarioForm.getUsuario().setPessoa(new Pessoa());
 		pesquisar();

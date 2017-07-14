@@ -5,18 +5,19 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.bind.ValidationException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import br.org.piblimeira.business.TipoRecepcaoBusiness;
 import br.org.piblimeira.domain.Pessoa;
 import br.org.piblimeira.domain.TipoRecepcao;
 import br.org.piblimeira.enuns.EnumCaminhoPagina;
 import br.org.piblimeira.form.TipoRecepcaoForm;
+import br.org.piblimeira.repository.PessoaRepository;
+import br.org.piblimeira.repository.TipoRecepcaoRepository;
 
 
 @Named
@@ -27,8 +28,11 @@ public class TipoRecepcaoCtrl extends BaseController {
 
 	private TipoRecepcaoForm tipoRecepcaoForm;
 	
-	@Inject
-	private TipoRecepcaoBusiness business;
+	@Autowired
+	private TipoRecepcaoRepository tipoRecepcaoRepository;
+	
+	@Autowired
+	private PessoaRepository pessoaRepository;
 	
 	@PostConstruct
     public void init() {
@@ -43,7 +47,7 @@ public class TipoRecepcaoCtrl extends BaseController {
 	}
 	
 	public void listarTiposRecepcoes(){
-		tipoRecepcaoForm.setListaTiposRecepcoes(business.listarTiposRecepcao());
+		tipoRecepcaoForm.setListaTiposRecepcoes(tipoRecepcaoRepository.buscarTodos());
 	}
 	private void instanciarTipoRecepcao(){
 		tipoRecepcaoForm = new TipoRecepcaoForm();
@@ -56,7 +60,7 @@ public class TipoRecepcaoCtrl extends BaseController {
 		irParaIncluir();	
 	}
 	private void validarExclusao(TipoRecepcao tipo) throws ValidationException{
-		 List<Pessoa> membros = business.buscarMembroPorTipoRecepcao(tipo);
+		 List<Pessoa> membros = pessoaRepository.buscarPessoaPorTipoRecepcao(tipo.getId());
 		 if(membros != null && !membros.isEmpty()){
 			 throw new ValidationException(getMessageByKey("msg.tipo.recepcao.nao.excluir"));
 		 }
@@ -65,7 +69,7 @@ public class TipoRecepcaoCtrl extends BaseController {
 	public void excluir(TipoRecepcao tipo){
 		try{
 			validarExclusao(tipo);
-			business.excluir(tipo);
+			tipoRecepcaoRepository.delete(tipo.getId());
 			listarTiposRecepcoes();
 		}catch(ValidationException e){
 			exibeMensagem(getMessageByKey("msg.atencao") , e.getMessage());
@@ -84,7 +88,7 @@ public class TipoRecepcaoCtrl extends BaseController {
 		if(StringUtils.isEmpty(tipoRecepcaoForm.getTipoRecepcao().getTpRecepcao().trim())){
 			throw new ValidationException(getMessageByKey("msg.tipo.recepcao.obrigatorio"));
 		}
-		TipoRecepcao tipo = business.buscarPorDescricao(tipoRecepcaoForm.getTipoRecepcao().getTpRecepcao().trim());
+		TipoRecepcao tipo = tipoRecepcaoRepository.buscarPorNome(tipoRecepcaoForm.getTipoRecepcao().getTpRecepcao().trim().toUpperCase());
 		if((tipoRecepcaoForm.getTipoRecepcao().getId() == null && tipo != null) ||
 			(tipo != null && !tipoRecepcaoForm.getTipoRecepcao().getId().equals(tipo.getId()))){
 			throw new ValidationException(getMessageByKey("msg.tipo.recepcao.ja.cadastrado"));
@@ -94,7 +98,7 @@ public class TipoRecepcaoCtrl extends BaseController {
 	public void salvar(){
 		try{
 			validarSalvar();
-			business.salvar(tipoRecepcaoForm.getTipoRecepcao());
+			tipoRecepcaoRepository.save(tipoRecepcaoForm.getTipoRecepcao());
 			setMensagemOk(getMessageByKey("msg.informacoes.salvas.com.sucesso"));
 			setHeader(getMessageByKey("msg.confirmacao"));
 			RequestContext.getCurrentInstance().execute("PF('modalOk').show()");

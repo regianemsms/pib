@@ -11,15 +11,14 @@ import javax.xml.bind.ValidationException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import br.org.piblimeira.business.MembroBusiness;
-import br.org.piblimeira.business.VisitaBusiness;
 import br.org.piblimeira.domain.Pessoa;
 import br.org.piblimeira.domain.Visita;
 import br.org.piblimeira.enuns.EnumCaminhoPagina;
 import br.org.piblimeira.form.VisitaForm;
-
-
+import br.org.piblimeira.repository.PessoaRepository;
+import br.org.piblimeira.repository.VisitaRepository;
 
 @Named
 @ViewScoped
@@ -29,10 +28,10 @@ public class VisitaCtrl  extends BaseController{
 
 	private VisitaForm visitaForm;
 	
-	@Inject
-	private MembroBusiness membroBusiness;
+	@Autowired
+	private PessoaRepository pessoaRepository;
 	
-	@Inject VisitaBusiness visitaBusiness;
+	@Inject VisitaRepository visitaRepository;
 	
 	@PostConstruct
     public void init() {
@@ -53,7 +52,7 @@ public class VisitaCtrl  extends BaseController{
 		prencherQtdeCaracteres();
 	}
 	public void pesquisar(){
-		visitaForm.setVisitas(visitaBusiness.listarVisitas(visitaForm.getVisita()));
+		visitaForm.setVisitas(visitaRepository.listarVisitas(visitaForm.getVisita()));
 	}
 	private Visita instanciarVisita(){
 		Visita visita = new Visita();
@@ -63,7 +62,7 @@ public class VisitaCtrl  extends BaseController{
 	
 	public List<Pessoa> buscarPessoas(String query) {
 		visitaForm.getVisita().getPessoa().setNome(StringUtils.isEmpty(query)?null:query);
-		return membroBusiness.buscarPorNome(query, null);
+		return pessoaRepository.buscarPorNome(query, null);
 	}
 	public void editar(Visita visita){
 		addToSession("visita", visita);
@@ -74,7 +73,7 @@ public class VisitaCtrl  extends BaseController{
 	public void salvar(){
 		try{
 			validarSalvar();
-		    visitaBusiness.salvar(visitaForm.getVisita());
+		    visitaRepository.save(visitaForm.getVisita());
 		    setMensagemOk(getMessageByKey("msg.informacoes.salvas.com.sucesso"));
 			setHeader(getMessageByKey("msg.confirmacao"));
 			RequestContext.getCurrentInstance().execute("PF('modalOk').show()");
@@ -102,7 +101,7 @@ public class VisitaCtrl  extends BaseController{
 	}
 	
 	public void excluir(Long idVisita){
-		visitaBusiness.excluir(idVisita);
+		visitaRepository.delete(idVisita);
 			visitaForm.setVisita(instanciarVisita());
 			pesquisar();
 			exibeMensagem(getMessageByKey("msg.confirmacao"), getMessageByKey("msg.visita.excluida"));
