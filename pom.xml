@@ -28,7 +28,7 @@
     <developers>
         <developer>
             <name>Regiane</name>
-            <email>regianemsms@gmail.com</email>
+            <email>user@mail.com</email>
         </developer>
     </developers>
 
@@ -84,15 +84,14 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
-        
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+    
+     <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-lang3</artifactId>
 		    <version>3.0</version>
 		</dependency>
 		
-
 		<!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
 		<dependency>
 		    <groupId>javax.mail</groupId>
@@ -117,13 +116,8 @@
 		    <groupId>commons-codec</groupId>
 		    <artifactId>commons-codec</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.omnifaces</groupId>
-			<artifactId>omnifaces</artifactId>
-			<version>2.5.1</version>
-		</dependency>
-        
+		
+		
     </dependencies>
 
 </project>
