@@ -223,7 +223,8 @@ public class UsuarioCtrl  extends BaseController{
 	
 	
 	public void pesquisar(){
-		usuarioForm.setUsuarios(new ArrayList<>(usuarioRepository.buscarPorFiltro(usuarioForm.getUsuario())));
+		usuarioForm.setUsuarios(new ArrayList<>());
+	//	usuarioForm.setUsuarios(new ArrayList<>(usuarioRepository.buscarPorFiltro(usuarioForm.getUsuario())));
 		logger.info("qtde usuarios: "+usuarioForm.getUsuarios().size() );
 	}
 	public void editar(Usuario user){

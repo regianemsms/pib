@@ -46,7 +46,7 @@ public class LoginBean  extends BaseController {
 		usuarioForm.setUsuarioLogado(new Usuario());
 	}
     
-    public String login() {
+    public String logar() {
     	try {
     		Usuario user = usuarioRepository.findByLoginAndStatus(userName, "A");
     		autenticar(user);
@@ -58,11 +58,11 @@ public class LoginBean  extends BaseController {
     }
     
     private void autenticar(Usuario user) throws ValidationException{
-    	if(user == null){
+    	/*if(user == null){
 			throw new ValidationException(getMessageByKey("msg.usuario.senha.invalidos"));
 		}else if(!validarSenha(user.getSenha())){
 			throw new ValidationException(getMessageByKey("msg.usuario.senha.invalidos"));
-		}
+		}*/
     }
     
     private boolean validarSenha(String senha){

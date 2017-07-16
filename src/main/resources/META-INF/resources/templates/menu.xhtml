@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"  
+ 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	>
+       
+ <p:panelMenu>
+    <p:submenu label="Cadastros" expanded="true" styleClass="pnlMenuStyle_1">
+
+ 		<p:menuitem value="#{msg['display.usuario']}"  
+     	 			actionListener="#{usuarioCtrl.irParaManter}" icon="ui-icon-person"  
+     	 			style="color: #000000 !important;"
+     	 			rendered="#{usuarioCtrl.verificarIsAdmin()}"/>
+
+     	<p:menuitem value="#{msg['display.membro']}"  
+     	 			actionListener="#{membroCtrl.irParaManter}" icon="ui-icon-person"  
+     	 			style="color: #000000 !important;"/>
+
+     	<p:menuitem value="#{msg['display.visita']}"  
+     	 			actionListener="#{visitaCtrl.irParaManter}" icon="ui-icon-disk"  
+     	 			style="color: #000000 !important;"
+     	 			rendered="#{usuarioCtrl.verificarIsAdmin()}"/>
+ 
+     	<p:menuitem value="#{msg['display.tp.recepcao']}"  
+     	 			actionListener="#{tipoRecepcaoCtrl.irParaManter}" icon="ui-icon-disk"  
+     	 			style="color: #000000 !important;"
+     	 			rendered="#{usuarioCtrl.verificarIsAdmin()}"/>
+     	 			
+     	 <p:menuitem value="#{msg['display.tp.membro']}"  
+     	 			actionListener="#{tipoMembroCtrl.irParaManter}" icon="ui-icon-disk"  
+     	 			style="color: #000000 !important;"
+     	 			rendered="#{usuarioCtrl.verificarIsAdmin()}"/>
+     	  <p:menuitem value="#{msg['display.relatorios']}"  
+     	 			actionListener="#{relatorioController.irParaManter}" icon="ui-icon-disk"  
+     	 			style="color: #000000 !important;"
+     	 			rendered="#{relatorioController.verificarIsAdmin()}"/>			
+     		
+     </p:submenu>
+ </p:panelMenu>
+	 	
+       
+</html>

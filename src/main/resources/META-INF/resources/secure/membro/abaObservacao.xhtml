@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+	  xmlns:o="http://omnifaces.org/ui"
+	  xmlns:of="http://omnifaces.org/functions"
+	  xmlns:app="http://java.sun.com/jsf/composite/componentes">     		
+	
+	<p/><p:fieldset style="width:90%"><p/>
+	<p:spacer styleClass="pad20"/>
+		<h:panelGrid  columns="1" cellpadding="8">		  
+   			<h:panelGroup>
+   				<p:outputLabel value="#{msg['display.observacao']}: " for="obs" /><p/>
+	 			<p:inputTextarea   
+	 					id="obs" 
+	 					cols="20"
+	 					rows="3"
+	 					validatorMessage="Máximo 255 caracteres"
+	 					autoResize="false"
+	 					style="margin: 0px; width: 905px; height: 163px;"
+						maxlength="255" 
+						value="#{membroCtrl.membroForm.pessoa.obs}" 
+			     >
+                            <f:validateLength maximum="255" />
+                              <p:ajax event="keyup" update="qtdeCaracteres" listener="#{membroCtrl.calcularCaracteresRestantes()}" />
+                  </p:inputTextarea> 
+	 	    </h:panelGroup>
+	 	    <h:panelGroup styleClass="alinharADireita">
+	 	    	<h:outputLabel value="#{msg['display.qtde.carac.rest']}:" />
+	 	        <h:outputText id="qtdeCaracteres" value="#{membroCtrl.membroForm.qtdeCaracteresRestantes}" />              
+	 	        
+	 	    </h:panelGroup>
+   		</h:panelGrid>
+   
+	</p:fieldset>
+</html>
+ 			

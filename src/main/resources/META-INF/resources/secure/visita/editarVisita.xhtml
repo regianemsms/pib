@@ -1,0 +1,101 @@
+<ui:composition template="/layout/template.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+     
+     <ui:define name="content">
+     	<h:form id="formEditar" prependId="false">
+     		<p:panel header=" #{visitaCtrl.visitaForm.visita.id > 0? msg['display.alterar.visita'] : msg['display.incluir.visita']}">
+     			<p/><p:fieldset ><p/>
+     			
+     				<h:inputHidden value="#{visitaCtrl.visitaForm.visita.id}" />
+     				<h:panelGrid id="panelGridVisita" 
+							 columns="2" 
+							 cellpadding="4" >		  
+				   			<h:panelGroup>
+					   			<p:outputLabel value="#{msg['display.data']}: " for="dtVisita"/><p/>
+									  <p:calendar id="dtVisita" size="10"
+						   		 			value="#{visitaCtrl.visitaForm.visita.dtVisita}" 
+						   		 			pattern="dd/MM/yyyy" 
+						   		 			mask="true"
+						   		 			navigator="true"
+						   		 			locale="pt"	/>
+				   			</h:panelGroup>
+		        			<h:panelGroup>
+				        		<p:outputLabel value="#{msg['display.nome']}: " for="nome" /><p/>
+								<p:autoComplete id="nome" size="47"
+		  	    					dropdown="true" 
+			   			  	   		scrollHeight="300" 
+			   			  	   		maxlength="60" 
+			   			  	   		forceSelection="true"
+		     		 				value="#{visitaCtrl.visitaForm.visita.pessoa}" 
+		     		 				var="pessoa"
+		     		 				itemLabel="#{pessoa.nome}"
+		     		 				itemValue="#{pessoa}"
+		     		 				converter="simpleEntityConverter"
+		     		 				effect="fade"
+		     		 				completeMethod="#{visitaCtrl.buscarPessoas}" >
+		     		 					<p:ajax event="itemSelect" listener="#{visitaCtrl.onItemSelect}" /> 
+		     		 			</p:autoComplete>	
+		        			</h:panelGroup>		  
+				   		</h:panelGrid>	
+			   			<h:panelGrid  columns="1" cellpadding="8">		  
+				   			<h:panelGroup>
+				   				<p:outputLabel value="#{msg['display.motivo']}: " for="motivo" /><p/>
+					 			<p:inputTextarea   
+					 					id="motivo" 
+					 					cols="20"
+					 					rows="3"
+					 					validatorMessage="Máximo 255 caracteres"
+					 					autoResize="false"
+					 					style="margin: 0px; width: 500px; height: 110px;"
+										maxlength="255" 
+										value="#{visitaCtrl.visitaForm.visita.motivo}"  >
+				                            <f:validateLength maximum="255" />
+				                              <p:ajax event="keyup" update="qtdeCaracteres" listener="#{visitaCtrl.calcularCaracteresRestantes()}" />
+				                  </p:inputTextarea> 
+					 	    </h:panelGroup>
+					 	    <h:panelGroup styleClass="alinharADireita">
+					 	    	<h:outputLabel value="#{msg['display.qtde.carac.rest']}:" />
+					 	        <h:outputText id="qtdeCaracteres" value="#{visitaCtrl.visitaForm.qtdeCaracteresRestantes}" />              
+					 	    </h:panelGroup>
+				   		</h:panelGrid>
+				   			
+        			<p/>
+		 			<p:commandButton id="btSalvar"
+		 							 value="#{msg['display.salvar']}" 
+		 							 actionListener="#{visitaCtrl.salvar}" 
+		 							 icon="ui-icon-check"
+		 							 update="panelmod"
+		 							 process="@all"
+		 							 styleClass="botao"/>
+		 			<p:spacer styleClass="pad10"/>				 
+		 			<p:commandButton id="btVoltar"
+		 							 value="#{msg['display.voltar']}" 
+		 							 actionListener="#{visitaCtrl.irParaManter}" 
+ 									 process="@this"
+		 							 icon="ui-icon-arrowreturnthick-1-w"
+		 							 styleClass="botaoDisable"/>
+			 </p:fieldset>
+     			
+     		</p:panel>
+     	</h:form>
+     	  <h:panelGroup id="panelmod">
+			<p:dialog  appendTo="@(body)" widgetVar="modalOk" resizable="true" styleClass="centralizar"
+			  			header="#{visitaCtrl.header}" modal="true" showEffect="explode" hideEffect="explode" >
+				<h:form id="formOk"  prependId="false">
+					    <h:outputText value="#{visitaCtrl.mensagemOk}"/>
+					  <p/>
+			 		<p:commandButton id="btnlogout" 
+			 				actionListener="#{visitaCtrl.irParaManter()}" 
+							styleClass="botao"
+			 		 		oncomplete="PF('modalOk').hide();"
+		 		 			icon="ui-icon-check"
+		 		 			value="#{msg['display.confirmar']}" /> 
+				</h:form>
+			</p:dialog> 
+			</h:panelGroup>
+     </ui:define>
+</ui:composition>     			

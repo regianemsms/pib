@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+	  xmlns:o="http://omnifaces.org/ui"
+	  xmlns:of="http://omnifaces.org/functions"
+	  xmlns:app="http://java.sun.com/jsf/composite/componentes">     		
+	
+		<p/><p:fieldset style="width:90%"><p/>
+		<p:spacer styleClass="pad20"/>
+			<h:inputHidden value="#{membroCtrl.membroForm.pessoa.endereco.id}" />
+			<h:panelGrid  columns="3" cellpadding="8" >		 
+				<h:panelGroup>
+					<h:outputLabel value="#{msg['display.cep']}" styleClass="label" for="cep" /><p/>
+					<p:inputMask id="cep" mask="99999-999" size="10" 
+							 value="#{membroCtrl.membroForm.pessoa.endereco.cep}"/>
+							 <p/>
+					<a href="http://m.correios.com.br/movel/buscaCepConfirma.do" target="_blank">
+								<h:outputText value="#{msg['display.nao.sei.cep']}" />
+					</a> 		
+				</h:panelGroup>
+				<h:panelGroup styleClass="btCEP">
+					<p:commandButton id="btnPesquisarCEP"
+							actionListener="#{membroCtrl.buscarCEP}"
+							process="@this, cep"
+							icon="ui-icon-search"
+							styleClass="botao"
+							update="panelLogradouro, panelBairro" 
+							/>				
+			
+			     </h:panelGroup>
+			     <h:panelGroup>
+							
+				</h:panelGroup>		
+			</h:panelGrid>     
+	   		<h:panelGrid  columns="3" cellpadding="8" id="panelLogradouro">			
+	   			<h:panelGroup>
+	   				<p:outputLabel value="#{msg['display.logradouro']}: " for="logradouro" /><p/>
+	 				<p:inputText id="logradouro" 
+							size="49" 
+							maxlength="50" 
+							value="#{membroCtrl.membroForm.pessoa.endereco.logradouro}" /> 
+			 	</h:panelGroup>
+			 	<h:panelGroup>
+				 	<p:outputLabel value="#{msg['display.numero']}: " for="numero" /><p/>
+	   			 	<p:inputText id="numero" 
+							size="6" 
+							maxlength="10" 
+							value="#{membroCtrl.membroForm.pessoa.endereco.numero}" /> 
+		   		</h:panelGroup>
+		   		<h:panelGroup>
+				 	<p:outputLabel value="#{msg['display.complemento']}: " for="complemento" /><p/>
+	   			 	<p:inputText id="complemento" 
+							size="25" 
+							maxlength="50" 
+							value="#{membroCtrl.membroForm.pessoa.endereco.complemento}" /> 
+		   		</h:panelGroup>
+		   	</h:panelGrid>
+		   	<h:panelGrid  columns="3" cellpadding="8" id="panelBairro">	
+		  			<h:panelGroup>
+						<p:outputLabel value="#{msg['display.bairro']}: " for="bairro" /><p/>
+		 				<p:inputText id="bairro" 
+								size="35" 
+								maxlength="50" 
+								value="#{membroCtrl.membroForm.pessoa.endereco.bairro}" /> 
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel value="#{msg['display.municipio']}: " for="municipio" /><p/>
+		 				<p:inputText id="municipio" 
+								size="35" 
+								maxlength="50" 
+								value="#{membroCtrl.membroForm.pessoa.endereco.municipio.nmMunicipio}" />
+					</h:panelGroup>			 
+					<h:panelGroup>
+						<p:outputLabel value="#{msg['display.uf']}: " for="uf" /><p/>
+						 <p:inputText id="uf" 
+								size="5" 
+								maxlength="2" 
+								value="#{membroCtrl.membroForm.pessoa.endereco.municipio.uf.sgUf}" />
+					</h:panelGroup>										
+		  		</h:panelGrid>
+		</p:fieldset>
+</html>
+ 			

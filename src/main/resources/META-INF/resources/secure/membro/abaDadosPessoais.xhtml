@@ -1,0 +1,148 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+	  xmlns:o="http://omnifaces.org/ui"
+	  xmlns:of="http://omnifaces.org/functions"
+	  xmlns:app="http://java.sun.com/jsf/composite/componentes">     		
+	
+	<p/><p:fieldset style="width:90%"><p/>
+	<p:spacer styleClass="pad20"/>
+		<h:inputHidden value="#{membroCtrl.membroForm.pessoa.id}" />
+		<h:panelGrid  columns="4" cellpadding="8">		  
+   			<h:panelGroup>
+   				<p:outputLabel value="#{msg['display.nome']}: " for="nome" /><p/>
+ 			<p:inputText id="nome" 
+						size="30" 
+						maxlength="50" 
+						value="#{membroCtrl.membroForm.pessoa.nome}" /> 
+		 		   </h:panelGroup>
+		 		      <h:panelGroup>
+			 <p:outputLabel value="#{msg['display.nascimento']}: " for="dtNascimento" /><p/>
+   			 <p:calendar id="dtNascimento" size="10"
+   		 			value="#{membroCtrl.membroForm.pessoa.dtNascimento}" 
+   		 			pattern="dd/MM/yyyy" 
+   		 			mask="true"
+   		 			navigator="true"
+   		 			locale="pt"	/>
+   		 		
+   	</h:panelGroup>
+   <h:panelGroup>				
+		 <p:outputLabel value="#{msg['display.tp.membro']}: " for="tpMembro" /><p/>
+		 <p:selectOneMenu id="tpMembro" value="#{membroCtrl.membroForm.pessoa.tipoMembro.id}" >		
+		 	<f:selectItem itemValue="" itemLabel="Selecione" />
+		 	<f:selectItems 	
+		 		value="#{membroCtrl.buscarTiposMembros()}"
+			   	var="tpMembro"	
+			   	itemLabel="#{tpMembro.tpMembro}"
+			   	itemValue="#{tpMembro.id}"/>
+		</p:selectOneMenu>	
+   </h:panelGroup>		
+   <h:panelGroup>			
+	     <p:outputLabel value="#{msg['display.status']}: " for="status" /><p/>
+	   	 <p:selectOneMenu id="status" style="width: 100px" value="#{membroCtrl.membroForm.pessoa.status}" >		
+		 	<f:selectItem itemValue="" itemLabel="Selecione" />
+		 	<f:selectItems 	
+		 		value="#{membroCtrl.allEnumStatus}"
+			   	var="status"	
+			   	itemLabel="#{status.label}"
+			   	itemValue="#{status.codigo}"/>
+		</p:selectOneMenu>
+	</h:panelGroup>	
+	<h:panelGrid columns="2">						
+   		 <h:panelGroup>	
+			<p:outputLabel value="#{msg['display.data.batismo']}: " for="dtBatismo" /><p/>
+	   		 <p:calendar id="dtBatismo" size="10"
+	   		 			value="#{membroCtrl.membroForm.pessoa.dtBatismo}" 
+	   		 			pattern="dd/MM/yyyy" 
+	   		 			mask="true"
+	   		 			navigator="true"
+	   		 			locale="pt"
+	   		 			/>
+	   		 	<p:spacer styleClass="pad20"/>			
+   		 </h:panelGroup> 
+   		 <h:panelGroup>	 				
+	   		 <p:outputLabel value="#{msg['display.sexo']}: " for="sexo" /><p/>
+	   		 <p:selectOneMenu id="sexo" value="#{membroCtrl.membroForm.pessoa.sexo}" >		
+			 	<f:selectItem itemValue="" itemLabel="Selecione" />
+			 	<f:selectItems 	
+			 		value="#{membroCtrl.allEnumSexo}"
+				   	var="sexo"	
+				   	itemLabel="#{sexo.label}"
+				   	itemValue="#{sexo.codigo}"/>
+			</p:selectOneMenu>	
+		</h:panelGroup>
+		</h:panelGrid>
+		<h:panelGroup>	
+			<p:outputLabel value="#{msg['display.data.recepcao']}: " for="dtRecepcao" /><p/>
+	   		 <p:calendar id="dtRecepcao" size="10"
+	   		 			value="#{membroCtrl.membroForm.pessoa.dtRecepcao}" 
+	   		 			pattern="dd/MM/yyyy" 
+	   		 			mask="true"
+	   		 			navigator="true"
+	   		 			locale="pt"
+	   		 			
+	   		 			/>
+   		 </h:panelGroup>							
+   		 <h:panelGroup>				
+	   		 <p:outputLabel value="#{msg['display.tp.recepcao']}: " for="tpRecepcao" /><p/>
+			 <p:selectOneMenu  id="tpRecepcao" value="#{membroCtrl.membroForm.pessoa.tipoRecepcao.id}" >		
+			 	<f:selectItem itemValue="" itemLabel="Selecione" />
+			 	<f:selectItems 	
+			 		value="#{membroCtrl.buscarTiposRecepcoes()}"
+				   	var="tpRecepcao"	
+				   	itemLabel="#{tpRecepcao.tpRecepcao}"
+				   	itemValue="#{tpRecepcao.id}"/>
+			</p:selectOneMenu>	
+		</h:panelGroup>	
+		 						
+   		 <h:panelGroup>	
+			<p:outputLabel value="#{msg['display.estadoCivil']}: " for="estadoCivil" /><p/>
+			 <p:selectOneMenu id="estadoCivil" value="#{membroCtrl.membroForm.pessoa.estadoCivil}" >		
+			 	<f:selectItem itemValue="" itemLabel="Selecione" />
+			 	<f:selectItems 	
+			 		value="#{membroCtrl.allEnumEstadoCivil}"
+				   	var="estadoCivil"	
+				   	itemLabel="#{estadoCivil.label}"
+				   	itemValue="#{estadoCivil.codigo}"/>
+			</p:selectOneMenu>	
+		</h:panelGroup>
+	   	<h:panelGroup>
+     				<p:outputLabel value="#{msg['display.email']}: " for="email" /><p/>
+   			<p:inputText id="email" 
+  						size="30" 
+  						maxlength="50" 
+  						value="#{membroCtrl.membroForm.pessoa.email}" /> 
+ 		 		    </h:panelGroup>
+ 		 		    <h:panelGroup>	
+			<p:outputLabel value="#{msg['display.telefone.fixo']}: " for="fixo" /><p/>
+				<p:inputMask size="14" id="fixo"
+				mask="(99)9999-9999?9" 
+				value="#{membroCtrl.membroForm.pessoa.fixo}" 
+				maxlength="12" styleClass="texto"
+			/>	
+		</h:panelGroup>
+		 <h:panelGroup>	
+			<p:outputLabel value="#{msg['display.celular']}: " for="celular" /><p/>
+				<p:inputMask size="14" id="celular"
+				mask="(99)9999-9999?9" 
+				value="#{membroCtrl.membroForm.pessoa.celular}" 
+				maxlength="12" styleClass="texto"
+			/>	
+		</h:panelGroup>
+	   	<h:panelGroup>
+    		 			<p:outputLabel value="#{msg['display.ultima.visita']}: " for="dtVisita" /><p/>
+		   		 <p:calendar id="dtVisita" size="13"
+	   		 			value="#{membroCtrl.membroForm.dtUltimaVisita}" 
+	   		 			pattern="dd/MM/yyyy" 
+	   		 			mask="true"
+	   		 			navigator="true"
+	   		 			locale="pt"
+	   		 			disabled="true"
+	   		 			/>
+	   </h:panelGroup>	 					
+   				</h:panelGrid>	
+				</p:fieldset>
+</html>
+ 			

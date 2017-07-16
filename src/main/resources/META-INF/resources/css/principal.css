@@ -1,0 +1,68 @@
+.header {
+    background-image: linear-gradient(120deg, #155799, #159957);
+    padding: 10px 0 10px 0;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.botao{
+	background: linear-gradient(to bottom right, #144c6d, #2589c4) !important;
+    color: #FFF !important;
+}
+
+.header small {
+    color: #fff;
+}
+
+.socialNetwork {
+    margin-top: 15px;
+}
+
+.socialNetwork .googleplus,
+.socialNetwork .twitter,
+.socialNetwork .github {
+ float: left;
+ margin-right: 20px;
+}
+
+.footer .footer-link,
+.footer .versionInformation {
+    font-size: smaller;
+}
+
+.footer {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+}
+
+.butterfaces-links {
+    display: flex;
+}
+
+.footer-link {
+    margin-left: 6px;
+}
+
+.yourkit-link {
+    font-size: smaller;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.content{
+	min-height: 100%;
+}
+.zerarLayout{
+	border: none;
+	clear: both;
+	padding: 0;
+	overflow: hidden !important;
+}

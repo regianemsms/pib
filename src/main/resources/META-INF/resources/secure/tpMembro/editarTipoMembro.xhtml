@@ -1,0 +1,58 @@
+<ui:composition template="/layout/template.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+     
+     <ui:define name="content">
+     	<h:form id="formEditar" prependId="false">
+     		<p:panel header=" #{tipoMembroCtrl.tipoMembroForm.tipoMembro.id > 0? msg['display.alterar.tp.membro'] : msg['display.incluir.tp.membro']}">
+     			<p/><p:fieldset ><p/>
+     			
+     				<h:inputHidden value="#{tipoMembroCtrl.tipoMembroForm.tipoMembro.id}" />
+     				<h:panelGrid id="panelGridTpRecapcao" 
+							 columns="2" 
+							 cellpadding="4" >		  
+		        			<p:outputLabel value="#{msg['display.tp.membro']}: " for="tp" />
+					   		<p:inputText id="tp" 
+				   						size="50" 
+				   						maxlength="50" 
+				   						value="#{tipoMembroCtrl.tipoMembroForm.tipoMembro.tpMembro}" /> 
+ 					</h:panelGrid>
+        			<p/>
+		 			<p:commandButton id="btSalvar"
+		 							 value="#{msg['display.salvar']}" 
+		 							 actionListener="#{tipoMembroCtrl.salvar}" 
+		 							 icon="ui-icon-check"
+		 							 update="panelmod"
+		 							 process="@all"
+		 							 styleClass="botao"/>
+		 			<p:spacer styleClass="pad10"/>				 
+		 			<p:commandButton id="btVoltar"
+		 							 value="#{msg['display.voltar']}" 
+		 							 actionListener="#{tipoMembroCtrl.irParaManter}" 
+ 									 process="@this"
+		 							 icon="ui-icon-arrowreturnthick-1-w"
+		 							 styleClass="botaoDisable"/>
+			 </p:fieldset>
+     			
+     		</p:panel>
+     	</h:form>
+     	  <h:panelGroup id="panelmod">
+			<p:dialog  appendTo="@(body)" widgetVar="modalOk" resizable="true" styleClass="centralizar"
+			  			header="#{tipoMembroCtrl.header}" modal="true" showEffect="explode" hideEffect="explode" >
+				<h:form id="formOk"  prependId="false">
+					    <h:outputText value="#{tipoMembroCtrl.mensagemOk}"/>
+					  <p/>
+			 		<p:commandButton id="btnlogout" 
+			 				actionListener="#{tipoMembroCtrl.irParaManter()}" 
+			 		 		oncomplete="PF('modalOk').hide();"
+		 		 			icon="ui-icon-check"
+		 		 			styleClass="botao"
+		 		 			value="#{msg['display.confirmar']}" /> 
+				</h:form>
+			</p:dialog> 
+			</h:panelGroup>
+     </ui:define>
+</ui:composition>     			

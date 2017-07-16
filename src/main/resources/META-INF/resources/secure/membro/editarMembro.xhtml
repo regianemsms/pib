@@ -1,0 +1,74 @@
+<ui:composition template="/layout/template.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+     
+     
+     <ui:define name="content">
+    
+       <p:panel header=" #{membroCtrl.membroForm.pessoa.id > 0? msg['display.alterar.membro'] : msg['display.incluir.membro']}">
+     		<h:form id="formDadosPessoais" prependId="false">
+        		<p:tabView id="mytabs" 
+				   styleClass="myTabView" 
+				   prependId="false" 
+				   activeIndex="0" >
+ 			
+					<!-- ABA DADOS PESSOAIS -->
+					<p:tab  title="#{msg['display.dados.pessoais']}" titleStyleClass="bold">
+						<ui:include src="/view/membro/abaDadosPessoais.xhtml" />
+					</p:tab>
+					
+					<!--  ABA ENDERECO -->
+					<p:tab title="#{msg['display.dados.enderecamento']}" titleStyleClass="bold">
+						<ui:include src="/view/membro/abaDadosEndereco.xhtml" />
+					</p:tab>
+					<!--  ABA OBSERVACAO -->
+					<p:tab title="#{msg['display.observacao']}" titleStyleClass="bold">
+						<ui:include src="/view/membro/abaObservacao.xhtml" />
+					</p:tab>
+					
+					
+				</p:tabView>
+        		<p/>
+        			<p/>
+        			<p:spacer styleClass="pad20"/>
+		 			<p:commandButton id="btSalvar"
+		 							 disabled="#{membroCtrl.membroForm.detalhar}"
+		 							 value="#{msg['display.salvar']}" 
+		 							 actionListener="#{membroCtrl.salvar}" 
+		 							 icon="ui-icon-check"
+		 							 update="panelmod"
+		 							 process="@all"
+		 							 styleClass="#{membroCtrl.styleBotao()}"
+		 							 />
+		 			<p:spacer styleClass="pad20"/>				 
+		 			<p:commandButton id="btVoltar"
+		 							 value="#{msg['display.voltar']}" 
+		 							 actionListener="#{membroCtrl.irParaManter}" 
+ 									 process="@this"
+ 									 styleClass="botaoDisable"
+		 							 icon="ui-icon-arrowreturnthick-1-w"
+		 							 /> 
+			<p/>
+     			
+     		</h:form>
+     	</p:panel>
+     	  <h:panelGroup id="panelmod">
+			<p:dialog  appendTo="@(body)" widgetVar="modalOk" resizable="true" styleClass="centralizar"
+			  			header="#{membroCtrl.header}" modal="true" showEffect="explode" hideEffect="explode" >
+				<h:form id="formOk"  prependId="false">
+					    <h:outputText value="#{membroCtrl.mensagemOk}"/>
+					  <p/>
+			 		<p:commandButton id="btnlogout"
+			 				actionListener="#{membroCtrl.irParaManter()}" 
+			 		 		oncomplete="PF('modalOk').hide();"
+  	 		 			    styleClass="botao"
+		 		 			icon="ui-icon-check"
+		 		 			value="#{msg['display.confirmar']}" /> 
+				</h:form>
+			</p:dialog> 
+			</h:panelGroup>
+     </ui:define>
+</ui:composition>     			

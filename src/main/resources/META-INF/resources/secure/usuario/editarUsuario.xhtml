@@ -1,0 +1,94 @@
+<ui:composition template="/layout/template.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+     
+     <ui:define name="content">
+     	<h:form id="formEditar" prependId="false">
+     		<p:panel header=" #{usuarioCtrl.usuarioForm.alterar ? msg['display.alterar.usuario'] : msg['display.incluir.usuario']}">
+     			<p/><p:fieldset ><p/>
+     		  	    <h:inputHidden value="#{usuarioCtrl.usuarioForm.alterar }"/>
+     				<h:inputHidden value="#{usuarioCtrl.usuarioForm.usuario.id}" />
+     				<h:inputHidden value="#{usuarioCtrl.usuarioForm.usuario.senha}" />
+     				<h:panelGrid id="panelGridEditar" 
+								 	columns="4" 
+							 		cellpadding="10"
+							 		cellspacing="10" >	
+			   				<p:outputLabel value="#{msg['display.usuario']}" for="usuario"/>
+			   				<p:autoComplete id="usuario" size="30"
+		  	    					dropdown="true" 
+			   			  	   		scrollHeight="200" 
+			   			  	   		maxlength="60" 
+			   			  	   		disabled="#{usuarioCtrl.usuarioForm.alterar}"
+			   			  	   		forceSelection="true"
+		     		 				value="#{usuarioCtrl.usuarioForm.usuario.pessoa}" 
+		     		 				var="pessoa"
+		     		 				itemLabel="#{pessoa.nome}"
+		     		 				itemValue="#{pessoa}"
+		     		 				converter="simpleEntityConverter"
+		     		 				effect="fade"
+		     		 				completeMethod="#{usuarioCtrl.buscarPessoas}" >
+		     		 					<p:ajax event="itemSelect" listener="#{usuarioCtrl.onItemSelect}" update="email" /> 
+		     		 		</p:autoComplete>
+		     		 		
+		     		 		<p:outputLabel value="#{msg['display.perfil']}" for="perfil"/>
+							<p:selectOneMenu 	value="#{usuarioCtrl.usuarioForm.usuario.perfil}"							 								 
+												id="perfil" styleClass="comboPerfil">
+								<f:selectItem  itemLabel="" itemValue=""/>
+								<f:selectItems 	value="#{usuarioCtrl.allEnumPerfil}"
+											   	itemLabel="#{perfil.label}" 
+											   	itemValue="#{perfil.codigo}"
+											   	var="perfil" />
+							</p:selectOneMenu> 	
+		     		 			
+		     		 		<p:outputLabel value="#{msg['display.email']}" for="email"/>
+		     		 		<p:inputText id="email" 
+			   						 size="34" 
+			   						 disabled="true"
+			   						 value="#{usuarioCtrl.usuarioForm.usuario.pessoa.email}"/> 			   				 	
+			   				
+			   				<p:outputLabel value="#{msg['display.login']}: " for="login"/>
+				   			<p:inputText id="login" 
+			   						 size="20" 
+			   						 maxlength="30" 
+			   						 value="#{usuarioCtrl.usuarioForm.usuario.login}"/> 
+	        			
+					 </h:panelGrid> 
+        			<p/>
+		 			<p:commandButton id="btSalvar"
+		 							 value="#{msg['display.salvar']}" 
+		 							 actionListener="#{usuarioCtrl.salvar}" 
+		 							 icon="ui-icon-check"
+		 							 update="panelmod"
+		 							 process="@all"
+		 							 styleClass="botao"/>
+		 			<p:spacer styleClass="pad10"/>				 
+		 			<p:commandButton id="btVoltar"
+		 							 value="#{msg['display.voltar']}" 
+		 							 actionListener="#{usuarioCtrl.irParaManter}" 
+ 									 process="@this"
+		 							 icon="ui-icon-arrowreturnthick-1-w"
+		 							 styleClass="botaoDisable"/>
+			 </p:fieldset>
+     			
+     		</p:panel>
+     	</h:form>
+     	  <h:panelGroup id="panelmod">
+			<p:dialog  appendTo="@(body)" widgetVar="modalOk" resizable="true" styleClass="centralizar"
+			  			header="#{usuarioCtrl.header}" modal="true" showEffect="explode" hideEffect="explode" >
+				<h:form id="formOk"  prependId="false">
+					    <h:outputText value="#{usuarioCtrl.mensagemOk}"/>
+					  <p/>
+			 		<p:commandButton id="btnlogout" 
+			 				actionListener="#{usuarioCtrl.irParaManter()}" 
+							styleClass="botao"
+			 		 		oncomplete="PF('modalOk').hide();"
+		 		 			icon="ui-icon-check"
+		 		 			value="#{msg['display.confirmar']}" /> 
+				</h:form>
+			</p:dialog> 
+			</h:panelGroup>
+     </ui:define>
+</ui:composition>     			

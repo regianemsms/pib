@@ -1,0 +1,77 @@
+<ui:composition template="/layout/template.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+     
+     <ui:define name="content">
+     	<p:panel header="#{msg['display.consultar.tipo.recepcao']}">
+     	<h:form id="formConsultar" prependId="false">
+     			<p:messages id="msgs" autoUpdate="true" closable="true" globalOnly="true" escape="false"/>
+    		<p:fieldset  >
+				<p/>
+				<p:dataTable
+ 					id="gridTpRecepcao" 
+	  					 value="#{tipoRecepcaoCtrl.tipoRecepcaoForm.listaTiposRecepcoes}" 
+	  					 var="tipo" 
+		    			 emptyMessage=""
+		    			 rows="10" 
+		    			 paginator="#{tipoRecepcaoCtrl.tipoRecepcaoForm.listaTiposRecepcoes.size() > 10 ? true  : false}"
+		    			 paginatorAlwaysVisible="false"
+		    			 paginatorPosition="bottom"
+		    			 style="width:60%; align:center;">
+ 			
+		 			<p:column headerText="#{msg['display.tp.recepcao']}" style="width:70%;">
+						<h:outputText value="#{tipo.tpRecepcao}" />
+			   		</p:column>
+			   		<p:column headerText="#{msg['display.acoes']}" style="width:30%;text-align:center;">
+ 					
+ 						<p:commandButton id="btEditar"
+			 							 title="#{msg['display.editar']}" 
+			 							 actionListener="#{tipoRecepcaoCtrl.editar(tipo)}"
+			 							 icon="ui-icon-pencil"
+			 							 styleClass="botao"/>
+			 				<p:spacer styleClass="pad5"/>				 
+ 						<p:commandButton
+	   			 				 title="#{msg['display.excluir']}" 
+	   							 icon="ui-icon-trash" 
+		   					 	 process="@this" 
+		   					 	 update="gridTpRecepcao" 
+		   					 	 styleClass="botaoDisable"
+		   					 	 action="#{tipoRecepcaoCtrl.excluir(tipo)}">
+		   					 
+		   						    <p:confirm header="#{msg['display.exclusao']}" 
+	                					   message="#{msg['msg.confirmacao.exclusao.tp.recepcao']}" 
+	                					   icon="ui-icon-alert" />
+	                			
+	                				<p:confirmDialog global="true" 
+	                							 showEffect="fade" 
+	                							 hideEffect="fade">
+        							
+        								<p:commandButton value="#{msg[display.sim]}"  
+        											 type="button"   
+        											 icon="ui-icon-check"
+        											 styleClass="botao"/>
+        							
+        								<p:commandButton value="#{msg[display.nao]}"  
+        											 type="button"
+        											 icon="ui-icon-close"
+        											 styleClass="botaoDisable"/>
+    								</p:confirmDialog>
+    							</p:commandButton>
+ 					</p:column>
+ 				</p:dataTable>
+				
+				<p/> 		
+				<p:commandButton styleClass="botao"
+						 id="btIncluir" 
+						 value="#{msg['display.incluir.tp.recepcao']}"
+						 icon="ui-icon-plusthick" 
+		 				 actionListener="#{tipoRecepcaoCtrl.irParaIncluir}"  />
+		 	<p:spacer/> 	
+		 	</p:fieldset>		 
+     	</h:form>
+     	</p:panel>
+	</ui:define>
+</ui:composition>

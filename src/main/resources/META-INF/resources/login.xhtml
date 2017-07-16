@@ -1,25 +1,83 @@
-<ui:composition template="/templates/base.xhtml"
+<ui:composition template="/templates/templateLogin.xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:b="http://butterfaces.org/components"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <ui:define name="content">
-        <h:form >
-            <b:text label="Login"
-                    value="#{loginBean.userName}"
-                    autoFocus="true">
-            </b:text>
-            <b:secret label="Senha"
-                      value="#{loginBean.password}">
-            </b:secret>
-			<p:outputLabel value="Teste do primefaces"/>
-            <b:commandLink value="login"
-                           action="#{loginBean.login}"
-                           styleClass="btn btn-primary pull-right"
-                           glyphicon="fa fa-sign-in">
-                <f:ajax execute="@form" render="@form"/>
-                <b:defaultAction/>
-            </b:commandLink>
-        </h:form>
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+   <ui:define name="content">
+       	<h:form id="loginForm" prependId="false">
+			<p:messages for="msgs" autoUpdate="true" closable="true" globalOnly="true" escape="false"/>
+			 <p:growl id="msgs" showDetail="true" sticky="false" />
+			<p/><p/><p/>
+			<div class="container" style="width:320px; margin: auto; top:60px;">
+				<div class="clear-both page-title">
+					<h2>
+						<p:spacer styleClass="pad20"/>
+						<p:outputLabel value="Login" />
+					</h2>
+				</div>
+				
+				<div style="width:90%; margin:18px auto 18px auto;">
+					<div style="width:100%; margin:8px;">
+						<p:outputLabel value="Usuario"/>
+						<div style="width:100%;">
+							<p:inputText id="login" label="Login" value="#{loginBean.userName}" 
+								styleClass="input-filed" maxlength="30" style="width:90%;"/>	
+						</div>
+					</div>
+					
+					<div style="width:100%; margin:8px;">
+						<p:outputLabel value="Senha" />
+						<div style="width:100%">
+							<p:password id="senha" label="Senha"
+								value="#{loginBean.password}" 
+								styleClass="input-filed" maxlength="30" 
+								style="width:90%;"/>
+						</div>
+					</div>
+					<div style="width:100%; margin:8px;">
+						<div style="width:100%;">
+							<p:commandLink actionListener="#{usuarioCtrl.limparDadosEsqueciSenha}" update="formEsqSenha" value="Esqueci a senha" oncomplete ="PF('modalEsqSenha').show()"/>
+						</div>
+						<p/>
+						<p/>
+						<p/>
+						<p:commandButton styleClass="btn btn-primary botao" 
+										id="btnLogar" 
+										icon="ui-icon-locked"
+										value="Entrar" 
+										actionListener="#{loginBean.logar}" 
+										ajax="false" 
+										
+										style="width:90%;"
+										update="@all" />
+					</div>
+				</div>
+			</div>
+		</h:form>
+		
+		  <h:panelGroup id="panelmod">
+			<p:dialog  appendTo="@(body)" widgetVar="modalEsqSenha" resizable="true" 
+			  			header="Informe o login e email cadastrados" modal="true" showEffect="explode" hideEffect="explode" >
+				<h:form id="formEsqSenha"  prependId="false">
+					    <h:outputText value="#{msg['display.login']}:"/><p/>
+					    <p:inputText id="loginCad" value="#{usuarioCtrl.usuarioForm.loginRecuperacao}" size="40"/><p/>
+					    <h:outputText value="#{msg['display.email']}:"/><p/>
+					    <p:inputText id="emailCad" value="#{usuarioCtrl.usuarioForm.emailRecuperacao}" size="40"/>
+					    
+					  <p/>
+			 		<p:commandButton id="btncon" 
+			 				actionListener="#{usuarioCtrl.reEnviarSenha()}" 
+							styleClass="botao"
+		 		 			icon="ui-icon-check"
+		 		 			value="#{msg['display.enviar']}" /> 
+		 		 	<p:commandButton  
+							styleClass="botaoDisable"
+			 		 		onclick="PF('modalEsqSenha').hide();"
+		 		 			icon="ui-icon-closethick"
+		 		 			value="#{msg['display.enviar']}" /> 
+				</h:form>
+			</p:dialog> 
+			</h:panelGroup>
     </ui:define>
 </ui:composition>

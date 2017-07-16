@@ -1,0 +1,63 @@
+<ui:composition 
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+   	  <h:panelGroup id="panelAlterarSenha">
+		  <p:dialog  appendTo="@(body)" widgetVar="modalAlterarSenha" resizable="true" 
+			  			header="#{msg['display.alterar.senha.usuario']}" modal="true" showEffect="explode" hideEffect="explode" >
+					<h:form id="formAlterarSenha"  prependId="false">
+					 	 <p:fieldset >
+							 <h:panelGrid  
+								 columns="2" 
+								 cellpadding="4"
+								  >
+				   			<h:panelGroup>
+					   			<p:outputLabel value="#{msg['display.matricula']}: " for="usuario"/><p/>
+					   			<p:inputText id="matriculaIncluir" 
+				   						 size="10" 
+				   						 maxlength="8" 
+				   						 value="#{manterUsuarioCtrl.usuarioVo.usuarioSistema.pk.usuario.matricula}" />
+				   			</h:panelGroup>
+				   			<h:panelGroup>
+					   			<p:outputLabel value="#{msg['display.senha.atual']}: " for="senhaAtual"/>
+					   			<p:password id="senha" 
+									value="#{usuarioCtrl.usuarioForm.usuarioLogado.senha}" 
+									maxlength="30" 
+									style="width:90%;"/>
+				   			</h:panelGroup>	
+				   			<h:panelGroup>
+					   			<p:outputLabel value="#{msg['display.senha.atual']}: " for="novaSenha"/>
+					   			<p:password id="novaSenha" 
+									value="#{usuarioCtrl.usuarioForm.usuarioLogado.senha}" 
+									maxlength="30" 
+									style="width:90%;"/>
+				   			</h:panelGroup>	
+				   			<h:panelGroup>
+					   			<p:outputLabel value="#{msg['display.senha.atual']}: " for="confirmNovasenha"/>
+					   			<p:password id="confirmNovasenha" 
+									value="#{usuarioCtrl.usuarioForm.usuarioLogado.senha}" 
+									maxlength="30" 
+									style="width:90%;"/>
+				   			</h:panelGroup>			 
+					 		</h:panelGrid>
+			        			<p:spacer/>
+			        			<p:commandButton id="btConfirmIncluirUsuario"
+					 							 value="#{msg['display.confirmar']}" 
+					 							 update="panelGridEditar" 
+					 							 actionListener="#{manterUsuarioCtrl.atualizarUsuario}" 
+					 							 icon="ui-icon-check"
+					 							 styleClass="btDireita"/>
+					 			
+					 			<p:spacer styleClass="pad10"/>
+					 			<p:commandButton id="btCancelUsuario"
+					 							 value="#{msg['display.cancelar']}" 
+					 							 icon="ui-icon-close"
+					 							 oncomplete="PF('modalUsuario').hide();"
+					 							 styleClass="btDireita"/>
+			 			</p:fieldset>
+					</h:form>
+				</p:dialog> 
+		</h:panelGroup>	
+</ui:composition>			

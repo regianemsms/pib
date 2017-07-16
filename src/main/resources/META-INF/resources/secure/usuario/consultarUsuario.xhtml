@@ -1,0 +1,130 @@
+<ui:composition template="/layout/template.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+     
+     <ui:define name="content">
+     	<p:panel header="#{msg['display.consultar.membro']}">
+     	<h:form id="formPesquisar" prependId="false">
+     	<p:messages id="msgs" autoUpdate="true" closable="true" globalOnly="true" escape="false"/>
+    		<p/>
+    		<p:fieldset> <p/>
+				<h:panelGrid id="panelGridPesquisar" 
+							 columns="3" 
+							 cellpadding="8"
+							  >
+					<h:panelGroup>
+	        			<p:outputLabel value="#{msg['display.nome']}: " for="nome" /><p/>
+			   			<p:inputText id="nome" 
+						size="35" 
+						maxlength="50" 
+						value="#{usuarioCtrl.usuarioForm.usuario.pessoa.nome}" /> 
+        			</h:panelGroup>	
+        			<h:panelGroup>
+        				<p:outputLabel value="#{msg['display.login']}: " for="login"/><p/>
+				   			<p:inputText id="login" 
+			   						 size="30" 
+			   						 maxlength="30" 
+			   						 value="#{usuarioCtrl.usuarioForm.usuario.login}"/>
+			   		</h:panelGroup>				  
+			   		<h:panelGroup>				 	  
+						<p:outputLabel value="#{msg['display.perfil']}" for="perfil"/><p/>
+							<p:selectOneMenu 	value="#{usuarioCtrl.usuarioForm.usuario.perfil}"							 								 
+												id="perfil" styleClass="comboPerfil">
+								<f:selectItem  itemLabel="" itemValue=""/>
+								<f:selectItems 	value="#{usuarioCtrl.allEnumPerfil}"
+											   	itemLabel="#{perfil.label}" 
+											   	itemValue="#{perfil.codigo}"
+											   	var="perfil" />
+							</p:selectOneMenu> 					 
+        			</h:panelGroup>
+        			<h:panelGroup>
+        				<p:commandButton id="btPesquisar"
+		 							 value="Pesquisar" 
+		 							 update="gridUsuarios" 
+		 							 process="@all"
+		 							 actionListener="#{usuarioCtrl.pesquisar}" 
+		 							 icon="ui-icon-search"
+		 							 styleClass="btDireita, botao"/>
+		 			</h:panelGroup>				 
+		 		</h:panelGrid>
+ 			</p:fieldset><p/>
+ 		</h:form>
+     	<h:form id="formConsultar" prependId="false">
+    		<p:fieldset><p/>
+				<p:dataTable
+ 					id="gridUsuarios" 
+	  					 value="#{usuarioCtrl.usuarioForm.usuarios}" 
+	  					 var="user" 
+		    			 emptyMessage=""
+		    			 rows="10" 
+		    			 paginator="#{usuarioCtrl.usuarioForm.usuarios.size() > 10 ? true  : false}"
+		    			 paginatorAlwaysVisible="false"
+		    			 paginatorPosition="bottom"
+		    			 style="width:90%; align:center;">
+ 						 <f:facet name="header">
+                      		<p:outputLabel value="#{msg['display.lista.usuarios']} "/>
+                      	</f:facet>	
+			 			<p:column headerText="#{msg['display.nome']}" style="width:40%;">
+							<h:outputText value="#{user.pessoa.nome}" />
+				   		</p:column>
+				   		<p:column headerText="#{msg['display.login']}" style="width:20%;">
+							<h:outputText value="#{user.login}" />
+				   		</p:column>
+				   		<p:column headerText="#{msg['display.perfil']}" style="width:20%;">
+							<h:outputText value="#{user.perfil}" />
+				   		</p:column>
+				   		<p:column headerText="#{msg['display.acoes']}" style="width:20%;text-align:center;">
+	 						<p:commandButton id="btEditar"
+				 							 title="#{msg['display.editar']}" 
+				 							 actionListener="#{usuarioCtrl.editar(user)}"
+				 							 icon="ui-icon-pencil"
+				 							  styleClass="botao"
+				 							 />
+				 			<p:spacer styleClass="pad5"/>				 
+	 						<p:commandButton
+		   			 				 title="#{msg['display.excluir']}" 
+		   							 icon="ui-icon-trash" 
+			   					 	 process="@this" 
+			   					 	 update="gridUsuarios" 
+			   					 	  styleClass="botaoDisable"
+			   					 	 actionListener="#{usuarioCtrl.excluir(user)}">
+			   					 
+			   						    <p:confirm header="#{msg['display.exclusao']}" 
+		                					   message="#{msg['msg.confirmacao.exclusao.usuario']}" 
+		                					   icon="ui-icon-alert" />
+		                			
+		                				<p:confirmDialog global="true" 
+		                							 showEffect="fade" 
+		                							 hideEffect="fade">
+	        							
+	        								<p:commandButton value="#{msg[display.sim]}"  
+	        											 type="button"   
+	        											 icon="ui-icon-check"
+	        											 styleClass="ui-confirmdialog-yes botao"/>
+	        							
+	        								<p:commandButton value="#{msg[display.nao]}"  
+	        											 type="button"
+	        											 icon="ui-icon-close"
+	        											 styleClass="ui-confirmdialog-no botaoDisable"
+	        											 />
+	    								</p:confirmDialog>
+	    							</p:commandButton>
+	 					</p:column>
+	 				</p:dataTable>
+				
+				<p/> 		
+				<p:commandButton 
+						 id="btIncluir" 
+						 value="#{msg['display.incluir.usuario']}"
+						 icon="ui-icon-plusthick" 
+						 styleClass="botao"
+		 				 actionListener="#{usuarioCtrl.irParaIncluir}"  />
+		 	<p:spacer/> 	
+		 	</p:fieldset>		 
+     	</h:form>
+     	</p:panel>
+	</ui:define>
+</ui:composition>

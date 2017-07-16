@@ -1,0 +1,122 @@
+<ui:composition template="/layout/template.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+     
+     <ui:define name="content">
+     	<p:panel header="#{msg['display.consultar.visitas']}">
+		
+		<h:form id="formPesquisar" prependId="false">
+     	<p:messages id="msgs" autoUpdate="true" closable="true" globalOnly="true" escape="false"/>
+    		<p/>
+    		<p:fieldset> <p/>
+				<h:panelGrid id="panelGridPesquisar" 
+							 columns="2" 
+							 cellpadding="8"
+							  >
+					<h:panelGroup>
+	        			<p:outputLabel value="#{msg['display.nome']}: " for="nome" /><p/>
+			   			<p:inputText id="nome" 
+						size="40" 
+						maxlength="50" 
+						value="#{visitaCtrl.visitaForm.visita.pessoa.nome}" /> 
+        			</h:panelGroup>		  
+		   			<h:panelGroup>
+			   			<p:outputLabel value="#{msg['display.data']}: " for="dtVisita"/><p/>
+							  <p:calendar id="dtVisita" size="10"
+				   		 			value="#{visitaCtrl.visitaForm.visita.dtVisita}" 
+				   		 			pattern="dd/MM/yyyy" 
+				   		 			mask="true"
+				   		 			navigator="true"
+				   		 			locale="pt"	/>
+		   			</h:panelGroup>
+        			<h:panelGroup>
+	        			<p:commandButton id="btPesquisar"
+			 							 value="Pesquisar" 
+			 							 update="gridVisita" 
+			 							 process="@all"
+			 							 actionListener="#{visitaCtrl.pesquisar}" 
+			 							 icon="ui-icon-search"
+			 							 styleClass="btDireita, botao"/>
+		 			</h:panelGroup>				 
+		 		</h:panelGrid>
+ 			</p:fieldset>
+ 		</h:form>     	
+     	
+     	<h:form id="formConsultar" prependId="false">
+				<p/>
+				<p:fieldset><p/>
+				<p:dataTable
+ 					id="gridVisita" 
+	  					 value="#{visitaCtrl.visitaForm.visitas}" 
+	  					 var="vis" 
+		    			 emptyMessage=""
+		    			 rows="10" 
+		    			 paginator="#{visitaCtrl.visitaForm.visitas.size() > 10 ? true  : false}"
+		    			 paginatorAlwaysVisible="false"
+		    			 paginatorPosition="bottom"
+		    			 style="width:70%; align:center;">
+ 			
+		 			<p:column headerText="#{msg['display.visita']}" style="width:30%;">
+						<h:outputText value="#{vis.dtVisita}" >
+								<f:convertDateTime type="date" locale="pt_BR"  pattern="dd/MM/yyyy" />
+						</h:outputText>
+			   		</p:column>
+			   		
+			   		<p:column headerText="#{msg['display.nome']}" style="width:50%;">
+						<h:outputText value="#{vis.pessoa.nome}" />
+			   		</p:column>
+			   		
+			   		<p:column headerText="#{msg['display.acoes']}" style="width:20%;text-align:center;">
+ 					
+ 							<p:commandButton id="btEditar"
+			 							 title="#{msg['display.editar']}" 
+			 							 actionListener="#{visitaCtrl.editar(vis)}"
+			 							 icon="ui-icon-pencil"
+			 							 styleClass="botao"/>
+			 				<p:spacer styleClass="pad5"/>				 
+ 							<p:commandButton
+	   			 				 title="#{msg['display.excluir']}" 
+	   							 icon="ui-icon-trash" 
+		   					 	 process="@this" 
+		   					 	 styleClass="botaoDisable"
+		   					 	 actionListener ="#{visitaCtrl.excluir(vis.id)}">
+		   					 
+		   						    <p:confirm header="#{msg['display.exclusao']}" 
+	                					   message="#{msg['msg.confirmacao.exclusao.visita']}" 
+	                					   icon="ui-icon-alert" />
+	                			
+	                				<p:confirmDialog global="true" 
+	                							 showEffect="fade" 
+	                							 hideEffect="fade">
+        							
+        								<p:commandButton value="#{msg[display.sim]}"  
+        											 type="button"   
+        											 icon="ui-icon-check"
+        											  styleClass="botao"/>
+        							
+        								<p:commandButton value="#{msg[display.nao]}"  
+        											 type="button"
+        											 icon="ui-icon-close"
+        											 styleClass="botaoDisable"
+        											 />
+    								</p:confirmDialog>
+    							</p:commandButton>
+ 					</p:column>
+ 				</p:dataTable>
+				
+				<p/> 		
+				<p:commandButton styleClass="botao"
+						 id="btIncluir" 
+						 
+						 value="#{msg['display.incluir.visita']}"
+						 icon="ui-icon-plusthick" 
+		 				 actionListener="#{visitaCtrl.irParaIncluir}"  />
+		 		</p:fieldset>		 
+		 	<p:spacer/> 	
+     	</h:form>
+     	</p:panel>
+	</ui:define>
+</ui:composition>
