@@ -28,7 +28,7 @@
     <developers>
         <developer>
             <name>Regiane</name>
-            <email>user@mail.com</email>
+            <email>regianemsms@gmail.com</email>
         </developer>
     </developers>
 
@@ -118,6 +118,11 @@
 		    <artifactId>commons-codec</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
 		
     </dependencies>
 

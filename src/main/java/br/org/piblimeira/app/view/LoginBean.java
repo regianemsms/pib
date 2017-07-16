@@ -1,6 +1,5 @@
 package br.org.piblimeira.app.view;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.xml.bind.ValidationException;
@@ -9,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.annotation.RequestScope;
 
 import br.org.piblimeira.app.security.Identity;
-import br.org.piblimeira.domain.Pessoa;
 import br.org.piblimeira.domain.Usuario;
-import br.org.piblimeira.form.UsuarioForm;
 import br.org.piblimeira.repository.UsuarioRepository;
 
 /**
@@ -29,23 +26,9 @@ public class LoginBean  extends BaseController {
     @Autowired
     UsuarioRepository usuarioRepository;
     
-    private UsuarioForm usuarioForm;
-
-    private String userName;
+	private String userName;
     private String password;
 
-    @PostConstruct
-    public void init() {
-    	instanciarForm();
-    }
-    
-    private void instanciarForm(){
-		usuarioForm = new UsuarioForm();
-		usuarioForm.setUsuario(new Usuario());
-		usuarioForm.getUsuario().setPessoa(new Pessoa());
-		usuarioForm.setUsuarioLogado(new Usuario());
-	}
-    
     public String logar() {
     	try {
     		Usuario user = usuarioRepository.findByLoginAndStatus(userName, "A");
@@ -58,20 +41,23 @@ public class LoginBean  extends BaseController {
     }
     
     private void autenticar(Usuario user) throws ValidationException{
-    	/*if(user == null){
+    	if(user == null){
 			throw new ValidationException(getMessageByKey("msg.usuario.senha.invalidos"));
 		}else if(!validarSenha(user.getSenha())){
 			throw new ValidationException(getMessageByKey("msg.usuario.senha.invalidos"));
-		}*/
+		}
     }
     
     private boolean validarSenha(String senha){
-		if(codificarSenha(usuarioForm.getUsuarioLogado().getSenha()).equals(senha)){
+		if(codificarSenha(getPassword()).equals(senha)){
 			return true;
 		}
 		return false;
 	}
-  
+    
+    public String obterPrimeiroNome() {
+    	return identity.getUser().getPessoa().retornarPrimeiroNome();
+    }
 
     public String getUserName() {
         return userName;
@@ -88,4 +74,5 @@ public class LoginBean  extends BaseController {
     public void setPassword(String password) {
         this.password = password;
     }
+    
 }

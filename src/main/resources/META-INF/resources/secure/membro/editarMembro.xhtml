@@ -1,4 +1,4 @@
-<ui:composition template="/layout/template.xhtml"
+<ui:composition  template="/templates/template.xhtml"
      xmlns="http://www.w3.org/1999/xhtml"
      xmlns:f="http://java.sun.com/jsf/core"
      xmlns:h="http://java.sun.com/jsf/html"
@@ -17,16 +17,16 @@
  			
 					<!-- ABA DADOS PESSOAIS -->
 					<p:tab  title="#{msg['display.dados.pessoais']}" titleStyleClass="bold">
-						<ui:include src="/view/membro/abaDadosPessoais.xhtml" />
+						<ui:include src="/secure/membro/abaDadosPessoais.xhtml" />
 					</p:tab>
 					
 					<!--  ABA ENDERECO -->
 					<p:tab title="#{msg['display.dados.enderecamento']}" titleStyleClass="bold">
-						<ui:include src="/view/membro/abaDadosEndereco.xhtml" />
+						<ui:include src="/secure/membro/abaDadosEndereco.xhtml" />
 					</p:tab>
 					<!--  ABA OBSERVACAO -->
 					<p:tab title="#{msg['display.observacao']}" titleStyleClass="bold">
-						<ui:include src="/view/membro/abaObservacao.xhtml" />
+						<ui:include src="/secure/membro/abaObservacao.xhtml" />
 					</p:tab>
 					
 					

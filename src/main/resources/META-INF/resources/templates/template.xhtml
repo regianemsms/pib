@@ -23,7 +23,13 @@
     <link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/images/logoAtual.png"/>
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
     
+    <h:outputScript library="js" name="locale-primefaces.js"/>
+    <h:outputScript library="js" name="jquery.maskMoney.js"/>
+    
+   	<h:outputStylesheet library="css/bootstrap" name="css/bootstrap.css"/>
     <h:outputStylesheet library="css" name="principal.css"/>
+	
+	
 </h:head>
 
 <h:body styleClass="body">
@@ -37,7 +43,7 @@
 	        <div class="header">
 	            <div class="container">
 	                <h2>Primeira Igreja Batista em Limeira</h2>
-	                <p>Acesso restrito a membros cadastrados</p>
+	                <p>Bem-vindo(a) #{loginBean.obterPrimeiroNome()}!!!</p>
 	                
 	            </div>
 	        </div>

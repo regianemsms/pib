@@ -1,13 +1,15 @@
 package br.org.piblimeira.domain;
 
 import javax.persistence.*;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Date;
 
 @Entity
 @Table(name="tb_pessoa")
 public class Pessoa {
 	
-	private static final long serialVersionUID = 3956912766710327072L;
 
 	@Id
 	@Column(name = "ID_PESSOA")
@@ -71,6 +73,14 @@ public class Pessoa {
 	private Integer mesNascimento;
 	
 	public Pessoa() {
+	}
+	
+	public String retornarPrimeiroNome() {
+		if(StringUtils.isNotBlank(getNome())) {
+			String primeiroNome[] = getNome().split(" ");
+			return primeiroNome[0];
+		}
+		return "";
 	}
 	
 	public Pessoa(Integer mesNascimento) {

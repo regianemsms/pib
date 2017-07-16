@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import br.org.piblimeira.domain.Usuario;
+import br.org.piblimeira.enuns.EnumCaminhoPagina;
 import br.org.piblimeira.enuns.EnumPerfil;
 
 /**
@@ -27,7 +28,7 @@ public class Identity {
         if (loggedIn) {
             this.userName = usuarioLogado.getPessoa().getNome();
             this.user = usuarioLogado;
-            return "/intranet/secure/index.jsf";
+            return EnumCaminhoPagina.PAGINA_PRINCIPAL.getCaminho();
         } else {
             this.userName = null;
             return null;
