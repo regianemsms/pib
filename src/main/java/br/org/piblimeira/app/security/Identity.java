@@ -27,7 +27,7 @@ public class Identity {
         if (loggedIn) {
             this.userName = usuarioLogado.getPessoa().getNome();
             this.user = usuarioLogado;
-            return "/secure/index.jsf?faces-redirect=true";
+            return "/intranet/secure/index.jsf";
         } else {
             this.userName = null;
             return null;

@@ -32,48 +32,28 @@
     <p:ajaxExceptionHandler type="javax.faces.application.ViewExpiredException"
 	                onexception="window.location.href = '#{request.contextPath}/index.html'" />
 			
-			<p:layout fullPage="true">
-    <p:layoutUnit position="north">
-        <div class="header">
-            <div class="container">
-                <h2>Primeira Igreja Batista em Limeira
-                   
-                </h2>
-
-                <p>
-                    Acesso restrito a membros cadastrados
-                </p>
-
-         
-            </div>
-        </div>
-	</p:layoutUnit>
-	<p:layoutUnit position="west" resizable="true" header="#{msg['display.funcionalidades']}" collapsible="true" effect="drop" size="205">
+	<p:layout fullPage="true">
+      <p:layoutUnit position="north" styleClass="zerarLayout">
+	        <div class="header">
+	            <div class="container">
+	                <h2>Primeira Igreja Batista em Limeira</h2>
+	                <p>Acesso restrito a membros cadastrados</p>
+	                
+	            </div>
+	        </div>
+		</p:layoutUnit>
+	<p:layoutUnit position="west" resizable="true"  styleClass="zerarLayout" header="#{msg['display.funcionalidades']}" collapsible="true" effect="drop" size="205">
 	    	<h:form id="form_lateral_esquerda" prependId="false">
 	   		 	<ui:include src="/templates/menu.xhtml" />
 	    	</h:form>	
 	</p:layoutUnit>
-    <p:layoutUnit position="center">
+    <p:layoutUnit position="center" styleClass="zerarLayout">
            <div class="content" >
-            <div class="container">
                 <ui:insert name="content"/>
-            </div>
         </div>
 	</p:layoutUnit>
 	
-          <p:layoutUnit position="south">
-        <div class="container">
-        <hr />
-            <footer class="footer">
-                <div class="versionInformation">
-                    <strong>piblimeiraweb 1.0.0</strong> Desenvolvido por: <a href="https://www.linkedin.com/in/regiane-mesquita-65154823/" target="_blank">Regiane Mesquita</a> <br/>
-                </div><br/>
-                <div class="footer-links">
-                       <img src="#{request.contextPath}/images/nomeIgrejaPreto.png" width="30%" alt="logo" />
-                </div>
-            </footer>
-        </div>
-		</p:layoutUnit>
+	  
 		</p:layout>
     </f:view>
 </h:body>

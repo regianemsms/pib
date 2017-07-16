@@ -13,13 +13,13 @@
 				<div class="clear-both page-title">
 					<h2>
 						<p:spacer styleClass="pad20"/>
-						<p:outputLabel value="Login" />
+						<p:outputLabel value="#{msg['display.login']}" />
 					</h2>
 				</div>
 				
 				<div style="width:90%; margin:18px auto 18px auto;">
 					<div style="width:100%; margin:8px;">
-						<p:outputLabel value="Usuario"/>
+						<p:outputLabel value="#{msg['display.usuario']}"/>
 						<div style="width:100%;">
 							<p:inputText id="login" label="Login" value="#{loginBean.userName}" 
 								styleClass="input-filed" maxlength="30" style="width:90%;"/>	
@@ -75,7 +75,7 @@
 							styleClass="botaoDisable"
 			 		 		onclick="PF('modalEsqSenha').hide();"
 		 		 			icon="ui-icon-closethick"
-		 		 			value="#{msg['display.enviar']}" /> 
+		 		 			value="#{msg['display.cancelar']}" /> 
 				</h:form>
 			</p:dialog> 
 			</h:panelGroup>

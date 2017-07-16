@@ -19,6 +19,16 @@
     <application>
         <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
         <resource-handler>br.org.piblimeira.app.view.TimestampResourceHandler</resource-handler>
+        
+        <locale-config>
+			<default-locale>pt_BR</default-locale>
+		</locale-config>
+			
+		<resource-bundle>
+			<base-name>br.org.piblimeira.properties.Messages</base-name>
+			<var>msg</var>
+		</resource-bundle>
+        
     </application>
 
 </faces-config>
