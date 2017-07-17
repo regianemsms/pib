@@ -108,7 +108,10 @@ public class UsuarioCtrl  extends BaseController{
 	
 	public List<Pessoa> buscarPessoas(String query) {
 		usuarioForm.getUsuario().getPessoa().setNome(StringUtils.isEmpty(query)?null:query);
-		return pessoaRepository.buscarPorNome(query, EnumStatus.ATIVO.getCodigo());
+		if(StringUtils.isNotBlank(query)) {
+			return pessoaRepository.buscarPorNome(query, EnumStatus.ATIVO.getCodigo());
+		}
+		return pessoaRepository.buscarPorFiltro(EnumStatus.ATIVO.getCodigo());
 	}
 	
 	private void instanciarForm(){
