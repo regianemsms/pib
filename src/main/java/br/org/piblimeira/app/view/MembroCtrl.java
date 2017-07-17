@@ -136,8 +136,9 @@ public class MembroCtrl extends BaseController{
 		try{
 			List lista = popularFieldsAniversariantes();
 			PdfRelatorio pdf = new PdfRelatorio(); 
-			
-			InputStream stream = pdf.gerarPdfRelatorio(Constantes.CAMINHO_RELATORIO_ANIVERSARIANTES, preencherParametros(membroForm.getMesNascimento()), lista);
+			String caminhoJasper = getServletContext().getRealPath(Constantes.CAMINHO_JASPER + Constantes.CAMINHO_RELATORIO_ANIVERSARIANTES);
+
+			InputStream stream = pdf.gerarPdfRelatorio(caminhoJasper, preencherParametros(membroForm.getMesNascimento()), lista);
 	         file = new DefaultStreamedContent(stream, "application/pdf", EnumParametroNiver.getByCodigo(membroForm.getMesNascimento()).
 	        		 						getLabel().concat(" de ").concat(Utils.obterAno(new Date()).toString()).concat(Constantes.PONTO_PDF)); 
 		} catch (Exception e) {
@@ -170,7 +171,9 @@ public class MembroCtrl extends BaseController{
 		try{
 			List lista = popularFieldsMembros();
 			PdfRelatorio pdf = new PdfRelatorio();
-			InputStream stream = pdf.gerarPdfRelatorio(Constantes.CAMINHO_RELATORIO_MEMBROS,preencherParametros(null), lista);
+			String caminhoJasper = getServletContext().getRealPath(Constantes.CAMINHO_JASPER + Constantes.CAMINHO_RELATORIO_MEMBROS);
+
+			InputStream stream = pdf.gerarPdfRelatorio(caminhoJasper ,preencherParametros(null), lista);
 			fileMembros = new DefaultStreamedContent(stream, "application/pdf", "Lista de Membros - ".concat(Utils.StringData(new Date())).concat(Constantes.PONTO_PDF)); 
 		} catch (Exception e) {
 			logger.error("Erro ao gerar Lote: "+ e.getMessage(),e);
@@ -254,18 +257,33 @@ public class MembroCtrl extends BaseController{
 	}
 
 	public String retornarStatus(){
-		if(membroForm.getPessoa() != null && membroForm.getPessoa().getStatus() != null){
+		if(membroForm.getPessoa() != null && StringUtils.isNotBlank(membroForm.getPessoa().getStatus())){
 			return EnumStatus.getByCodigo(membroForm.getPessoa().getStatus().toString()).getLabel();
 		}
 		return EnumStatus.ATIVO.getLabel();
 	}
 	private void listarMembros(){
-		membroForm.setListaMembros(new ArrayList<>(pessoaRepository.buscarPorFiltro(membroForm.getPessoa())));
+		membroForm.setListaMembros(new ArrayList<>(pessoaRepository.buscarPorFiltro(EnumStatus.ATIVO.getCodigo())));
 		addToSession("listaMembros", membroForm.getListaMembros());
 	}
-	public void pesquisar(){
+	
+	private List<Pessoa> buscarPorNomeStatus(){
+		String status = StringUtils.isNotBlank(membroForm.getPessoa().getStatus()) ? membroForm.getPessoa().getStatus() : EnumStatus.ATIVO.getCodigo(); 
+		return pessoaRepository.buscarPorNome(membroForm.getPessoa().getNome().toUpperCase(), status);
+	}
+	
+	public void pesquisar(){ //nome, nascimento, tipomembro, status
 		removeFromSession("listaMembros");
-		listarMembros();
+		String nome = membroForm.getPessoa().getNome();
+		Long tipoMembro = membroForm.getPessoa().getTipoMembro().getId();
+		String status = membroForm.getPessoa().getStatus();
+		Integer mes = membroForm.getPessoa().getMesNascimento();
+		if(StringUtils.isBlank(nome) && tipoMembro == null && StringUtils.isBlank(status) && mes == null){
+			membroForm.setListaMembros(new ArrayList<>(pessoaRepository.buscarPorFiltro(EnumStatus.ATIVO.getCodigo())));
+		}else if(StringUtils.isNotBlank(nome) && tipoMembro == null && StringUtils.isBlank(status) && mes == null) {
+			membroForm.setListaMembros(new ArrayList<>(buscarPorNomeStatus()));
+		}
+		addToSession("listaMembros", membroForm.getListaMembros());
 	}
 	
 	public void inativar(Pessoa membro){

@@ -21,7 +21,7 @@
 					<div style="width:100%; margin:8px;">
 						<p:outputLabel value="#{msg['display.usuario']}"/>
 						<div style="width:100%;">
-							<p:inputText id="login" label="Login" value="#{loginBean.userName}" 
+							<p:inputText id="login" label="Login" value="#{usuarioCtrl.userName}" 
 								styleClass="input-filed" maxlength="30" style="width:90%;"/>	
 						</div>
 					</div>
@@ -30,7 +30,7 @@
 						<p:outputLabel value="Senha" />
 						<div style="width:100%">
 							<p:password id="senha" label="Senha"
-								value="#{loginBean.password}" 
+								value="#{usuarioCtrl.password}" 
 								styleClass="input-filed" maxlength="30" 
 								style="width:90%;"/>
 						</div>
@@ -46,7 +46,7 @@
 										id="btnLogar" 
 										icon="ui-icon-locked"
 										value="Entrar" 
-										actionListener="#{loginBean.logar}" 
+										actionListener="#{usuarioCtrl.logar}" 
 										ajax="false" 
 										
 										style="width:90%;"

@@ -48,7 +48,10 @@ public class Utils {
     
     public static final String StringData(final Date data) {
         final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return formatter.format(data);
+        if(data != null) {
+        	return formatter.format(data);
+        }
+        return "";
     }
     
     /**
