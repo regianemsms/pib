@@ -46,7 +46,6 @@ public class UsuarioCtrl  extends BaseController{
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-
 	@Inject
     private Identity identity;
 	
@@ -271,9 +270,27 @@ public class UsuarioCtrl  extends BaseController{
 	
 	
 	public void pesquisar(){
+		String nome = usuarioForm.getUsuario().getPessoa().getNome();
+		String login = usuarioForm.getUsuario().getLogin();
+		String perfil = usuarioForm.getUsuario().getPerfil();
+		
 		usuarioForm.setUsuarios(new ArrayList<>());
-	//	usuarioForm.setUsuarios(new ArrayList<>(usuarioRepository.buscarPorFiltro(usuarioForm.getUsuario())));
-		logger.info("qtde usuarios: "+usuarioForm.getUsuarios().size() );
+		if(usuarioForm.getUsuario() == null ||(StringUtils.isBlank(nome)
+				&& StringUtils.isBlank(login)
+				&& StringUtils.isBlank(perfil))){
+			usuarioForm.setUsuarios(usuarioRepository.buscarUsuariosAtivos());
+		}else if(StringUtils.isNotBlank(nome)
+				&& StringUtils.isNotBlank(login)
+				&& StringUtils.isNotBlank(perfil)){
+			usuarioForm.setUsuarios(usuarioRepository.buscarPorLoginNomePerfil(login, nome, perfil));
+		}else if(StringUtils.isNotBlank(nome)
+				&& StringUtils.isBlank(login)
+				&& StringUtils.isBlank(perfil)){
+			usuarioForm.setUsuarios(usuarioRepository.buscarPorLoginNomePerfil(login, nome, perfil));
+		}
+		
+		//nada, tudo, nome e login, nome, nome e perfil, login, login e perfil, perfil
+		//acertar o upercase e like
 	}
 	public void editar(Usuario user){
 		addToSession("usuario", user);
