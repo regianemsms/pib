@@ -32,12 +32,12 @@
 			   			  	   		forceSelection="true"
 		     		 				value="#{visitaCtrl.visitaForm.visita.pessoa}" 
 		     		 				var="pessoa"
-		     		 				itemLabel="#{pessoa.id}"
+		     		 				itemLabel="#{pessoa.nome}"
 		     		 				itemValue="#{pessoa}"
+		     		 				converter="simpleEntityConverter"
 		     		 				effect="fade"
-		     		 				converter="pessoaConverter"
 		     		 				completeMethod="#{visitaCtrl.buscarPessoas}" >
-		     		 					<p:ajax event="itemSelect" listener="#{visitaCtrl.onPessoaSelect}" /> 
+		     		 					<p:ajax event="itemSelect" listener="#{visitaCtrl.onItemSelect}" /> 
 		     		 			</p:autoComplete>	
 		        			</h:panelGroup>		  
 				   		</h:panelGrid>	

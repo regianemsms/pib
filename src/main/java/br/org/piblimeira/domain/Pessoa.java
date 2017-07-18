@@ -8,8 +8,10 @@ import java.util.Date;
 
 @Entity
 @Table(name="tb_pessoa")
-public class Pessoa {
+public class Pessoa extends BaseEntity{
 	
+
+	private static final long serialVersionUID = 3359163512031402500L;
 
 	@Id
 	@Column(name = "ID_PESSOA")
@@ -36,7 +38,7 @@ public class Pessoa {
 	private String estadoCivil;
 	
 	@Column(name = "MOTIVO_DESLIGAMENTO")
-	private String motivo_desligamento;
+	private String motivoDesligamento;
 	
 	@Column(name = "OBSERVACAO")
 	private String obs;
@@ -135,12 +137,12 @@ public class Pessoa {
 		this.status = status;
 	}
 
-	public String getMotivo_desligamento() {
-		return motivo_desligamento;
+	public String getMotivoDesligamento() {
+		return motivoDesligamento;
 	}
 
-	public void setMotivo_desligamento(String motivo_desligamento) {
-		this.motivo_desligamento = motivo_desligamento;
+	public void setMotivoDesligamento(String motivoDesligamento) {
+		this.motivoDesligamento = motivoDesligamento;
 	}
 
 	public String getObs() {
