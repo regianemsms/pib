@@ -275,23 +275,47 @@ public class UsuarioCtrl  extends BaseController{
 		String perfil = usuarioForm.getUsuario().getPerfil();
 		
 		usuarioForm.setUsuarios(new ArrayList<>());
-		if(usuarioForm.getUsuario() == null ||(StringUtils.isBlank(nome)
-				&& StringUtils.isBlank(login)
-				&& StringUtils.isBlank(perfil))){
-			usuarioForm.setUsuarios(usuarioRepository.buscarUsuariosAtivos());
-		}else if(StringUtils.isNotBlank(nome)
+		//buscar por tudo
+		if(StringUtils.isNotBlank(nome)
 				&& StringUtils.isNotBlank(login)
 				&& StringUtils.isNotBlank(perfil)){
-			usuarioForm.setUsuarios(usuarioRepository.buscarPorLoginNomePerfil(login, nome, perfil));
+			usuarioForm.setUsuarios(usuarioRepository.buscarPorLoginNomePerfil(retornarParam(login), retornarParam(nome), perfil));
+		//buscarPorNome
 		}else if(StringUtils.isNotBlank(nome)
 				&& StringUtils.isBlank(login)
 				&& StringUtils.isBlank(perfil)){
-			usuarioForm.setUsuarios(usuarioRepository.buscarPorLoginNomePerfil(login, nome, perfil));
+			usuarioForm.setUsuarios(usuarioRepository.buscarPorNome(retornarParam(nome)));
+		//buscar por login
+		}else if(StringUtils.isBlank(nome)
+				&& StringUtils.isNotBlank(login)
+				&& StringUtils.isBlank(perfil)){
+			usuarioForm.setUsuarios(usuarioRepository.buscarPorLogin(retornarParam(login)));
+		//buscar por perfil
+		}else if(StringUtils.isBlank(nome)
+				&& StringUtils.isBlank(login)
+				&& StringUtils.isNotBlank(perfil)){
+			usuarioForm.setUsuarios(usuarioRepository.buscarPorPerfil(perfil));
+		//buscar por nome e login
+		}else if(StringUtils.isNotBlank(nome)
+				&& StringUtils.isNotBlank(login)
+				&& StringUtils.isBlank(perfil)){
+			usuarioForm.setUsuarios(usuarioRepository.buscarPorNomeLogin(retornarParam(nome), retornarParam(login)));
+		//buscar por nome e perfil
+		}else if(StringUtils.isNotBlank(nome)
+				&& StringUtils.isBlank(login)
+				&& StringUtils.isNotBlank(perfil)){
+			usuarioForm.setUsuarios(usuarioRepository.buscarPorNomePerfil(retornarParam(nome), perfil));
+		//buscar por login e perfil
+		}else if(StringUtils.isBlank(nome)
+				&& StringUtils.isNotBlank(login)
+				&& StringUtils.isNotBlank(perfil)){
+			usuarioForm.setUsuarios(usuarioRepository.buscarPorLoginPerfil(retornarParam(login), perfil));
+		}else {
+			//buscar por nada
+			usuarioForm.setUsuarios(usuarioRepository.buscarUsuariosAtivos());
 		}
-		
-		//nada, tudo, nome e login, nome, nome e perfil, login, login e perfil, perfil
-		//acertar o upercase e like
 	}
+
 	public void editar(Usuario user){
 		addToSession("usuario", user);
 		irParaIncluir();	

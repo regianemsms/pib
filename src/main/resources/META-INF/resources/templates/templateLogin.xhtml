@@ -61,6 +61,12 @@
 	            </footer>
 		</p:layoutUnit>
 		</p:layout>
+		 <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" id="status" />		
+    
+	    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+		    <img src="#{request.contextPath}/images/status.gif" />
+		</p:dialog>
+		
 </f:view>
 	</h:body>
 </html>

@@ -10,8 +10,6 @@ import java.util.Date;
 @Table(name = "tb_visita")
 public class Visita {
 		
-	private static final long serialVersionUID = -564182557662069247L;
-
 	@Id
 	@Column(name = "ID_VISITA")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

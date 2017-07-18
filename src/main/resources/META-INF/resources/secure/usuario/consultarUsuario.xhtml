@@ -113,6 +113,12 @@
 	    								</p:confirmDialog>
 	    							</p:commandButton>
 	 					</p:column>
+	 					<p:columnGroup type="footer">
+				            <p:row>
+				                <p:column colspan="4" style="text-align:right" footerText="#{msg['display.total']}: #{usuarioCtrl.usuarioForm.usuarios.size()}" />
+				            </p:row>
+			        	</p:columnGroup>
+	 					
 	 				</p:dataTable>
 				
 				<p/> 		

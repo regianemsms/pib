@@ -27,6 +27,8 @@ public interface PessoaRepository extends CrudRepository<Pessoa, Long>{
 	
 	@Query("SELECT p FROM Pessoa p where p.status = :status and MONTH(p.dtNascimento) = :mes order by p.dtNascimento ")
     List<Pessoa> buscarPorMesNascimento(@Param("mes") Integer mes, @Param("status") String status);
+	
+	
 
 	
 }

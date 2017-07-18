@@ -30,7 +30,8 @@
 		     		 				converter="simpleEntityConverter"
 		     		 				effect="fade"
 		     		 				completeMethod="#{usuarioCtrl.buscarPessoas}" >
-		     		 					<p:ajax event="itemSelect" listener="#{usuarioCtrl.onItemSelect}" update="email" /> 
+		     		 					<p:ajax event="itemSelect" listener="#{usuarioCtrl.onItemSelect}" process="@this" update="email" />
+		     		 					 
 		     		 		</p:autoComplete>
 		     		 		
 		     		 		<p:outputLabel value="#{msg['display.perfil']}" for="perfil"/>

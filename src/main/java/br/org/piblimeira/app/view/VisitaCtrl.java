@@ -52,7 +52,18 @@ public class VisitaCtrl  extends BaseController{
 		prencherQtdeCaracteres();
 	}
 	public void pesquisar(){
-		visitaForm.setVisitas(visitaRepository.listarVisitas(visitaForm.getVisita()));
+		//tudo
+		if(visitaForm.getVisita().getDtVisita() != null && visitaForm.getVisita().getPessoa() != null && visitaForm.getVisita().getPessoa().getId() != null) {
+			visitaForm.setVisitas(visitaRepository.listarVisitasPorIdPessoaDtVisita(visitaForm.getVisita().getPessoa().getId(), visitaForm.getVisita().getDtVisita()));
+		//nome	
+		}else if(visitaForm.getVisita().getDtVisita() == null && visitaForm.getVisita().getPessoa() != null && visitaForm.getVisita().getPessoa().getId() != null) {
+			visitaForm.setVisitas(visitaRepository.listarVisitasPorIdPessoa(visitaForm.getVisita().getPessoa().getId()));
+		//data	
+		}else if(visitaForm.getVisita().getDtVisita() != null && visitaForm.getVisita().getPessoa() != null && visitaForm.getVisita().getPessoa().getId() == null) {
+			visitaForm.setVisitas(visitaRepository.listarVisitasPorDtVisita(visitaForm.getVisita().getDtVisita())); 
+		}else {
+			visitaForm.setVisitas(visitaRepository.listarVisitas());
+		}
 	}
 	private Visita instanciarVisita(){
 		Visita visita = new Visita();

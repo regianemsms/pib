@@ -55,7 +55,9 @@ public class BaseController implements Serializable{
 		return identity.verificarAdmin() || identity.verificarGestor();
 	}
 	
-	
+	protected String retornarParam(String param) {
+		return "%".concat(param).concat("%").toUpperCase();
+	}
 	@SuppressWarnings("restriction")
 	public String codificarSenha(String senha){
 		return new sun.misc.BASE64Encoder().encode(senha.getBytes());
