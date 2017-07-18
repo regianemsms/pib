@@ -11,11 +11,13 @@ import javax.xml.bind.ValidationException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.org.piblimeira.domain.Pessoa;
 import br.org.piblimeira.domain.Visita;
 import br.org.piblimeira.enuns.EnumCaminhoPagina;
+import br.org.piblimeira.enuns.EnumStatus;
 import br.org.piblimeira.form.VisitaForm;
 import br.org.piblimeira.repository.PessoaRepository;
 import br.org.piblimeira.repository.VisitaRepository;
@@ -45,6 +47,10 @@ public class VisitaCtrl  extends BaseController{
 		}
 		
 	}
+	
+	public void onPessoaSelect(SelectEvent event) {
+	}
+	
 	private void instanciarVisitaForm(){
 		visitaForm = new VisitaForm();
 		visitaForm.setVisita(instanciarVisita());
@@ -52,12 +58,13 @@ public class VisitaCtrl  extends BaseController{
 		prencherQtdeCaracteres();
 	}
 	public void pesquisar(){
+		visitaForm.setVisitas(new ArrayList<>());
 		//tudo
-		if(visitaForm.getVisita().getDtVisita() != null && visitaForm.getVisita().getPessoa() != null && visitaForm.getVisita().getPessoa().getId() != null) {
-			visitaForm.setVisitas(visitaRepository.listarVisitasPorIdPessoaDtVisita(visitaForm.getVisita().getPessoa().getId(), visitaForm.getVisita().getDtVisita()));
+		if(visitaForm.getVisita().getDtVisita() != null && visitaForm.getVisita().getPessoa() != null && StringUtils.isNotBlank(visitaForm.getVisita().getPessoa().getNome())) {
+			visitaForm.setVisitas(visitaRepository.listarVisitasPorNomePessoaDtVisita(retornarParam(visitaForm.getVisita().getPessoa().getNome()), visitaForm.getVisita().getDtVisita()));
 		//nome	
-		}else if(visitaForm.getVisita().getDtVisita() == null && visitaForm.getVisita().getPessoa() != null && visitaForm.getVisita().getPessoa().getId() != null) {
-			visitaForm.setVisitas(visitaRepository.listarVisitasPorIdPessoa(visitaForm.getVisita().getPessoa().getId()));
+		}else if(visitaForm.getVisita().getDtVisita() == null && visitaForm.getVisita().getPessoa() != null && StringUtils.isNotBlank(visitaForm.getVisita().getPessoa().getNome())) {
+			visitaForm.setVisitas(visitaRepository.listarVisitasPorNomePessoa(retornarParam(visitaForm.getVisita().getPessoa().getNome())));
 		//data	
 		}else if(visitaForm.getVisita().getDtVisita() != null && visitaForm.getVisita().getPessoa() != null && visitaForm.getVisita().getPessoa().getId() == null) {
 			visitaForm.setVisitas(visitaRepository.listarVisitasPorDtVisita(visitaForm.getVisita().getDtVisita())); 
@@ -73,7 +80,10 @@ public class VisitaCtrl  extends BaseController{
 	
 	public List<Pessoa> buscarPessoas(String query) {
 		visitaForm.getVisita().getPessoa().setNome(StringUtils.isEmpty(query)?null:query);
-		return pessoaRepository.buscarPorNome(query, null);
+		if(StringUtils.isNotBlank(query)) {
+			return pessoaRepository.buscarPorNome(query, EnumStatus.ATIVO.getCodigo());
+		}
+		return pessoaRepository.buscarPorFiltro(EnumStatus.ATIVO.getCodigo());
 	}
 	public void editar(Visita visita){
 		addToSession("visita", visita);

@@ -16,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.EmailException;
 import org.jboss.logging.Logger;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.org.piblimeira.app.security.Identity;
@@ -65,8 +66,12 @@ public class UsuarioCtrl  extends BaseController{
 			removeFromSession("usuario");
 		}
 	}
-	
-
+	public void onPessoaSelect(SelectEvent event) {
+		Long id = event.getObject() == null ? null : Long.valueOf(event.getObject().toString()); 
+		if(id != null){
+			usuarioForm.getUsuario().setPessoa(pessoaRepository.findOne(id));
+		}
+	}
     public String logar() {
     	try {
     		Usuario user = usuarioRepository.findByLoginAndStatus(userName, "A");

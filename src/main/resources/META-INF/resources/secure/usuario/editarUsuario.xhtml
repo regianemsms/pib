@@ -23,14 +23,13 @@
 			   			  	   		maxlength="60" 
 			   			  	   		disabled="#{usuarioCtrl.usuarioForm.alterar}"
 			   			  	   		forceSelection="true"
-		     		 				value="#{usuarioCtrl.usuarioForm.usuario.pessoa}" 
+		     		 				value="#{usuarioCtrl.usuarioForm.usuario.pessoa.id}" 
 		     		 				var="pessoa"
 		     		 				itemLabel="#{pessoa.nome}"
-		     		 				itemValue="#{pessoa}"
-		     		 				converter="simpleEntityConverter"
+		     		 				itemValue="#{pessoa.id}"
 		     		 				effect="fade"
 		     		 				completeMethod="#{usuarioCtrl.buscarPessoas}" >
-		     		 					<p:ajax event="itemSelect" listener="#{usuarioCtrl.onItemSelect}" process="@this" update="email" />
+		     		 					<p:ajax event="itemSelect" listener="#{usuarioCtrl.onPessoaSelect}" process="@this" update="email" />
 		     		 					 
 		     		 		</p:autoComplete>
 		     		 		
