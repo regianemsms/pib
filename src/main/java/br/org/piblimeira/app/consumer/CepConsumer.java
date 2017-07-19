@@ -40,12 +40,13 @@ public class CepConsumer {
 	 
 	 private Endereco transformarMapEmEndereco(Map<String,String> mapJson, Endereco endereco){
 		Endereco end = endereco == null ? instanciarEndereco() : endereco;
-		
 		end.setBairro(StringEscapeUtils.unescapeJava(mapJson.get("bairro")));
 		end.setCep(mapJson.get("cep"));
 		end.setComplemento(StringEscapeUtils.unescapeJava(mapJson.get("complemento")));
 		end.setLogradouro(StringEscapeUtils.unescapeJava(mapJson.get("logradouro")));
+		end.setMunicipio(end.getMunicipio() == null ? new Municipio() : end.getMunicipio());
 		end.getMunicipio().setNmMunicipio(StringEscapeUtils.unescapeJava(mapJson.get("localidade")));
+		end.getMunicipio().setUf(end.getMunicipio().getUf() == null ? new Uf() : end.getMunicipio().getUf());
 		end.getMunicipio().getUf().setSgUf(StringEscapeUtils.unescapeJava(mapJson.get("uf")).toUpperCase());
 		return end;
 	 }

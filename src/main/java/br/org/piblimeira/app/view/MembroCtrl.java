@@ -37,6 +37,7 @@ import br.org.piblimeira.enuns.EnumStatus;
 import br.org.piblimeira.form.MembroForm;
 import br.org.piblimeira.relatorio.PdfRelatorio;
 import br.org.piblimeira.repository.EnderecoRepository;
+import br.org.piblimeira.repository.MunicipioRepository;
 import br.org.piblimeira.repository.PessoaRepository;
 import br.org.piblimeira.repository.TipoMembroRepository;
 import br.org.piblimeira.repository.TipoRecepcaoRepository;
@@ -82,6 +83,9 @@ public class MembroCtrl extends BaseController{
 	
 	@Autowired
 	private VisitaRepository visitaRepository;
+	
+	@Autowired
+	private MunicipioRepository municipioRepository;
 	
 	private CepConsumer consumer = new CepConsumer();
 
@@ -418,7 +422,7 @@ public class MembroCtrl extends BaseController{
 	public void salvar(){
 		try{
 			validarSalvar();
-			pessoaRepository.save(membroForm.getPessoa());
+			salvarTodasAbas();
 			setMensagemOk(getMessageByKey("msg.informacoes.salvas.com.sucesso"));
 			setHeader(getMessageByKey("msg.confirmacao"));
 			RequestContext.getCurrentInstance().execute("PF('modalOk').show()");
@@ -427,6 +431,34 @@ public class MembroCtrl extends BaseController{
 		}
 	}
 
+	private void salvarTodasAbas() {
+		Pessoa p = membroForm.getPessoa();
+		//salvar municipio
+		if(StringUtils.isNotEmpty(p.getEndereco().getMunicipio().getNmMunicipio())){
+			List<Municipio> mun = municipioRepository.buscarPorNomeIdentico(p.getEndereco().getMunicipio().getNmMunicipio());
+			if(mun != null && !mun.isEmpty()){
+				p.getEndereco().getMunicipio().setId(mun.get(0).getId());
+			}
+		}
+		if(StringUtils.isEmpty(p.getEndereco().getMunicipio().getUf().getSgUf())){
+			p.getEndereco().getMunicipio().setUf(null);
+		}
+		if(p.getEndereco().getMunicipio().getId() == null && 
+				StringUtils.isEmpty(p.getEndereco().getMunicipio().getNmMunicipio()) &&	
+				p.getEndereco().getMunicipio().getUf() == null){
+			p.getEndereco().setMunicipio(null);
+		}else{
+			p.getEndereco().setMunicipio(municipioRepository.save(p.getEndereco().getMunicipio()));
+		}
+		
+		//salvar pessoa
+		if(p.getTipoRecepcao().getId() == null){
+			p.setTipoRecepcao(null);
+		}
+		p.getEndereco().setPessoa(pessoaRepository.save(membroForm.getPessoa()));
+		//salvar endereco
+		enderecoRepository.save(p.getEndereco());
+	}
 	public MembroForm getMembroForm() {
 		return membroForm;
 	}
