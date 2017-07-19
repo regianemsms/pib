@@ -36,6 +36,7 @@
 	        			<p:commandButton id="btPesquisar"
 			 							 value="Pesquisar" 
 			 							 update="gridVisita" 
+			 							 onclick="PF('statusDialog').show()" 
 			 							 process="@all"
 			 							 actionListener="#{visitaCtrl.pesquisar}" 
 			 							 icon="ui-icon-search"
@@ -74,6 +75,7 @@
  							<p:commandButton id="btEditar"
 			 							 title="#{msg['display.editar']}" 
 			 							 actionListener="#{visitaCtrl.editar(vis)}"
+			 							 onclick="PF('statusDialog').show()" 
 			 							 icon="ui-icon-pencil"
 			 							 styleClass="botao"/>
 			 				<p:spacer styleClass="pad5"/>				 
@@ -81,6 +83,7 @@
 	   			 				 title="#{msg['display.excluir']}" 
 	   							 icon="ui-icon-trash" 
 		   					 	 process="@this" 
+		   					 	 onclick="PF('statusDialog').show()" 
 		   					 	 styleClass="botaoDisable"
 		   					 	 actionListener ="#{visitaCtrl.excluir(vis.id)}">
 		   					 
@@ -94,11 +97,13 @@
         							
         								<p:commandButton value="#{msg[display.sim]}"  
         											 type="button"   
+        											 onclick="PF('statusDialog').show()"
         											 icon="ui-icon-check"
         											  styleClass="ui-confirmdialog-yes botao"/>
         							
         								<p:commandButton value="#{msg[display.nao]}"  
         											 type="button"
+        											 onclick="PF('statusDialog').show()" 
         											 icon="ui-icon-close"
         											 styleClass="ui-confirmdialog-no botaoDisable"
         											 />
@@ -110,7 +115,7 @@
 				<p/> 		
 				<p:commandButton styleClass="botao"
 						 id="btIncluir" 
-						 
+						 onclick="PF('statusDialog').show()" 
 						 value="#{msg['display.incluir.visita']}"
 						 icon="ui-icon-plusthick" 
 		 				 actionListener="#{visitaCtrl.irParaIncluir}"  />

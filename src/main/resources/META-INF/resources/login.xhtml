@@ -37,7 +37,11 @@
 					</div>
 					<div style="width:100%; margin:8px;">
 						<div style="width:100%;">
-							<p:commandLink actionListener="#{usuarioCtrl.limparDadosEsqueciSenha}" update="formEsqSenha" value="Esqueci a senha" oncomplete ="PF('modalEsqSenha').show()"/>
+							<p:commandLink actionListener="#{usuarioCtrl.limparDadosEsqueciSenha}"
+								 update="formEsqSenha" 
+								 value="Esqueci a senha" 
+								  onclick="PF('statusDialog').show()"
+								 oncomplete ="PF('modalEsqSenha').show()"/>
 						</div>
 						<p/>
 						<p/>
@@ -48,6 +52,7 @@
 										value="Entrar" 
 										actionListener="#{usuarioCtrl.logar}" 
 										ajax="false" 
+										onclick="PF('statusDialog').show()"
 										style="width:90%;"
 										update="@all" />
 					</div>
@@ -68,11 +73,12 @@
 			 		<p:commandButton id="btncon" 
 			 				actionListener="#{usuarioCtrl.reEnviarSenha()}" 
 							styleClass="botao"
+							 onclick="PF('statusDialog').show()"
 		 		 			icon="ui-icon-check"
 		 		 			value="#{msg['display.enviar']}" /> 
 		 		 	<p:commandButton  
 							styleClass="botaoDisable"
-			 		 		onclick="PF('modalEsqSenha').hide();"
+			 		 		onclick="PF('modalEsqSenha').hide(); PF('statusDialog').show()"
 		 		 			icon="ui-icon-closethick"
 		 		 			value="#{msg['display.cancelar']}" /> 
 				</h:form>

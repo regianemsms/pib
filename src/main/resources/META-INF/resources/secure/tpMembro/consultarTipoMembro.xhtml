@@ -37,6 +37,7 @@
 	   							 icon="ui-icon-trash" 
 		   					 	 process="@this" 
 		   					 	 update="gridTpMembro" 
+		   					 	 onclick="PF('statusDialog').show()" 
 		   					 	 styleClass="botaoDisable"
 		   					 	 action="#{tipoMembroCtrl.excluir(tipo)}">
 		   					 
@@ -49,12 +50,14 @@
 	                							 hideEffect="fade">
         							
         								<p:commandButton value="#{msg[display.sim]}"  
-        											 type="button"   
+        											 type="button"
+        											 onclick="PF('statusDialog').show()"    
         											 icon="ui-icon-check"
         											  styleClass="ui-confirmdialog-yes botao"/>
         							
         								<p:commandButton value="#{msg[display.nao]}"  
         											 type="button"
+        											 onclick="PF('statusDialog').show()" 
         											 icon="ui-icon-close"
         											 styleClass="ui-confirmdialog-no botaoDisable"
         											 />
@@ -69,6 +72,7 @@
 						 id="btIncluir" 
 						 value="#{msg['display.incluir.tp.membro']}"
 						 icon="ui-icon-plusthick" 
+						 onclick="PF('statusDialog').show()" 
 						 styleClass="botao"
 		 				 actionListener="#{tipoMembroCtrl.irParaIncluir}"  />
 		 	<p:spacer/> 	

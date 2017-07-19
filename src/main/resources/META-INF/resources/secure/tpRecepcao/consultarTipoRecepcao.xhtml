@@ -29,6 +29,7 @@
  					
  						<p:commandButton id="btEditar"
 			 							 title="#{msg['display.editar']}" 
+			 							 onclick="PF('statusDialog').show()" 
 			 							 actionListener="#{tipoRecepcaoCtrl.editar(tipo)}"
 			 							 icon="ui-icon-pencil"
 			 							 styleClass="botao"/>
@@ -51,11 +52,13 @@
         							
         								<p:commandButton value="#{msg[display.sim]}"  
         											 type="button"   
+        											 onclick="PF('statusDialog').show()" 
         											 icon="ui-icon-check"
         											 styleClass="ui-confirmdialog-yes botao"/>
         							
         								<p:commandButton value="#{msg[display.nao]}"  
         											 type="button"
+        											 onclick="PF('statusDialog').show()" 
         											 icon="ui-icon-close"
         											 styleClass="ui-confirmdialog-no  botaoDisable"/>
     								</p:confirmDialog>
@@ -66,6 +69,7 @@
 				<p/> 		
 				<p:commandButton styleClass="botao"
 						 id="btIncluir" 
+						 onclick="PF('statusDialog').show()" 
 						 value="#{msg['display.incluir.tp.recepcao']}"
 						 icon="ui-icon-plusthick" 
 		 				 actionListener="#{tipoRecepcaoCtrl.irParaIncluir}"  />

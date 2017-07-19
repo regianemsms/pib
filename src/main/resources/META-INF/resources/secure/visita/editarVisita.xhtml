@@ -67,6 +67,7 @@
 		 			<p:commandButton id="btSalvar"
 		 							 value="#{msg['display.salvar']}" 
 		 							 actionListener="#{visitaCtrl.salvar}" 
+		 							 onclick="PF('statusDialog').show()"
 		 							 icon="ui-icon-check"
 		 							 update="panelmod"
 		 							 process="@all"
@@ -74,6 +75,7 @@
 		 			<p:spacer styleClass="pad10"/>				 
 		 			<p:commandButton id="btVoltar"
 		 							 value="#{msg['display.voltar']}" 
+		 							 onclick="PF('statusDialog').show()" 
 		 							 actionListener="#{visitaCtrl.irParaManter}" 
  									 process="@this"
 		 							 icon="ui-icon-arrowreturnthick-1-w"
@@ -90,6 +92,7 @@
 					  <p/>
 			 		<p:commandButton id="btnlogout" 
 			 				actionListener="#{visitaCtrl.irParaManter()}" 
+						 	onclick="PF('statusDialog').show()"	
 							styleClass="botao"
 			 		 		oncomplete="PF('modalOk').hide();"
 		 		 			icon="ui-icon-check"

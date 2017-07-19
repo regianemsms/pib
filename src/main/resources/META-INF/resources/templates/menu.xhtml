@@ -12,29 +12,35 @@
  		<p:menuitem value="#{msg['display.usuario']}"  
      	 			actionListener="#{usuarioCtrl.irParaManter}" icon="ui-icon-person"  
      	 			style="color: #000000 !important;"
+     	 			onclick="PF('statusDialog').show()"
      	 			rendered="#{usuarioCtrl.verificarIsAdmin()}"/>
 
      	<p:menuitem value="#{msg['display.membro']}"  
+     				onclick="PF('statusDialog').show()"
      	 			actionListener="#{membroCtrl.irParaManter}" icon="ui-icon-person"  
      	 			style="color: #000000 !important;"/>
 
      	<p:menuitem value="#{msg['display.visita']}"  
+     	 			onclick="PF('statusDialog').show()"
      	 			actionListener="#{visitaCtrl.irParaManter}" icon="ui-icon-disk"  
      	 			style="color: #000000 !important;"
      	 			rendered="#{usuarioCtrl.verificarIsAdmin()}"/>
  
      	<p:menuitem value="#{msg['display.tp.recepcao']}"  
+     	 			onclick="PF('statusDialog').show()"
      	 			actionListener="#{tipoRecepcaoCtrl.irParaManter}" icon="ui-icon-disk"  
      	 			style="color: #000000 !important;"
      	 			rendered="#{usuarioCtrl.verificarIsAdmin()}"/>
      	 			
      	 <p:menuitem value="#{msg['display.tp.membro']}"  
+     	 			onclick="PF('statusDialog').show()"
      	 			actionListener="#{tipoMembroCtrl.irParaManter}" icon="ui-icon-disk"  
      	 			style="color: #000000 !important;"
      	 			rendered="#{usuarioCtrl.verificarIsAdmin()}"/>
      	 			
      	  <p:menuitem value="#{msg['display.relatorios']}"  
      	 			actionListener="#{relatorioController.irParaManter}" icon="ui-icon-disk"  
+     	 			onclick="PF('statusDialog').show()"
      	 			style="color: #000000 !important;"
      	 			rendered="#{relatorioController.verificarIsAdmin()}"/>			
      		

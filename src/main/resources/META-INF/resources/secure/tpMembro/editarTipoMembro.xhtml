@@ -26,6 +26,7 @@
 		 							 actionListener="#{tipoMembroCtrl.salvar}" 
 		 							 icon="ui-icon-check"
 		 							 update="panelmod"
+		 							 onclick="PF('statusDialog').show()" 
 		 							 process="@all"
 		 							 styleClass="botao"/>
 		 			<p:spacer styleClass="pad10"/>				 
@@ -33,6 +34,7 @@
 		 							 value="#{msg['display.voltar']}" 
 		 							 actionListener="#{tipoMembroCtrl.irParaManter}" 
  									 process="@this"
+ 									 onclick="PF('statusDialog').show()" 
 		 							 icon="ui-icon-arrowreturnthick-1-w"
 		 							 styleClass="botaoDisable"/>
 			 </p:fieldset>
@@ -47,6 +49,7 @@
 					  <p/>
 			 		<p:commandButton id="btnlogout" 
 			 				actionListener="#{tipoMembroCtrl.irParaManter()}" 
+			 		 	 	onclick="PF('statusDialog').show()"	
 			 		 		oncomplete="PF('modalOk').hide();"
 		 		 			icon="ui-icon-check"
 		 		 			styleClass="botao"

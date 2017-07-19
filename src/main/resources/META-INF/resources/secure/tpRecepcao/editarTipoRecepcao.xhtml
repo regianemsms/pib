@@ -26,10 +26,12 @@
 		 							 actionListener="#{tipoRecepcaoCtrl.salvar}" 
 		 							 icon="ui-icon-check"
 		 							 update="panelmod"
+		 							 onclick="PF('statusDialog').show()" 
 		 							 process="@all"
 		 							 styleClass="botao"/>
 		 			<p:spacer styleClass="pad10"/>				 
 		 			<p:commandButton id="btVoltar"
+		  							 onclick="PF('statusDialog').show()"			
 		 							 value="#{msg['display.voltar']}" 
 		 							 actionListener="#{tipoRecepcaoCtrl.irParaManter}" 
  									 process="@this"
@@ -47,6 +49,7 @@
 					  <p/>
 			 		<p:commandButton id="btnlogout" 
 			 				actionListener="#{tipoRecepcaoCtrl.irParaManter()}" 
+							onclick="PF('statusDialog').show()"
 							styleClass="botao"
 			 		 		oncomplete="PF('modalOk').hide();"
 		 		 			icon="ui-icon-check"

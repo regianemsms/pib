@@ -59,7 +59,7 @@
         </div>
 	</p:layoutUnit>
 			</p:layout>
-    <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" id="statusGif" />		
+    <p:ajaxStatus  onsuccess="PF('statusDialog').hide()" id="statusGif" />		
     
     <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
 	    <img src="#{request.contextPath}/images/status.gif" />

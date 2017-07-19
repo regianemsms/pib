@@ -41,6 +41,7 @@
 		 							 icon="ui-icon-check"
 		 							 update="panelmod"
 		 							 process="@all"
+		 							 onclick="PF('statusDialog').show()"
 		 							 styleClass="#{membroCtrl.styleBotao()}"
 		 							 />
 		 			<p:spacer styleClass="pad20"/>				 
@@ -48,6 +49,7 @@
 		 							 value="#{msg['display.voltar']}" 
 		 							 actionListener="#{membroCtrl.irParaManter}" 
  									 process="@this"
+ 									 onclick="PF('statusDialog').show()"
  									 styleClass="botaoDisable"
 		 							 icon="ui-icon-arrowreturnthick-1-w"
 		 							 /> 
@@ -65,6 +67,7 @@
 			 				actionListener="#{membroCtrl.irParaManter()}" 
 			 		 		oncomplete="PF('modalOk').hide();"
   	 		 			    styleClass="botao"
+  	 		 			    onclick="PF('statusDialog').show()"
 		 		 			icon="ui-icon-check"
 		 		 			value="#{msg['display.confirmar']}" /> 
 				</h:form>

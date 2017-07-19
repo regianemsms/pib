@@ -305,6 +305,10 @@ public class MembroCtrl extends BaseController{
 	public void excluir(Pessoa membro){
 		try{
 			validarExclusao(membro);
+			Endereco end = enderecoRepository.buscarEnderecoPorIdPessoa(membro.getId());
+			if(end != null && end.getId() != null) {
+				enderecoRepository.delete(end);
+			}
 			pessoaRepository.delete(membro.getId());
 			membroForm.setPessoa(instanciarPessoa());
 			removeFromSession("listaMembros");

@@ -48,12 +48,14 @@
 					 							 update="panelGridEditar" 
 					 							 actionListener="#{manterUsuarioCtrl.atualizarUsuario}" 
 					 							 icon="ui-icon-check"
+					 							 onclick="PF('statusDialog').show()" 
 					 							 styleClass="btDireita"/>
 					 			
 					 			<p:spacer styleClass="pad10"/>
 					 			<p:commandButton id="btCancelUsuario"
 					 							 value="#{msg['display.cancelar']}" 
 					 							 icon="ui-icon-close"
+					 							 onclick="PF('statusDialog').show()" 
 					 							 oncomplete="PF('modalUsuario').hide();"
 					 							 styleClass="btDireita"/>
 			 			</p:fieldset>

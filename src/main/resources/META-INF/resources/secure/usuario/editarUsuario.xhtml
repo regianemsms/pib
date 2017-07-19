@@ -29,6 +29,7 @@
 		     		 				itemValue="#{pessoa}"
 		     		 				converter="simpleEntityConverter"
 		     		 				effect="fade"
+		     		 			
 		     		 				completeMethod="#{usuarioCtrl.buscarPessoas}" >
 		     		 					<p:ajax event="itemSelect" listener="#{usuarioCtrl.onItemSelect}" update="email" /> 
 		     		 		</p:autoComplete>
@@ -62,10 +63,12 @@
 		 							 actionListener="#{usuarioCtrl.salvar}" 
 		 							 icon="ui-icon-check"
 		 							 update="panelmod"
+		 							 onclick="PF('statusDialog').show()" 
 		 							 process="@all"
 		 							 styleClass="botao"/>
 		 			<p:spacer styleClass="pad10"/>				 
 		 			<p:commandButton id="btVoltar"
+		 							 onclick="PF('statusDialog').show()"
 		 							 value="#{msg['display.voltar']}" 
 		 							 actionListener="#{usuarioCtrl.irParaManter}" 
  									 process="@this"

@@ -45,6 +45,7 @@
 		 							 value="Pesquisar" 
 		 							 update="gridUsuarios" 
 		 							 process="@all"
+		 							 onclick="PF('statusDialog').show()"
 		 							 actionListener="#{usuarioCtrl.pesquisar}" 
 		 							 icon="ui-icon-search"
 		 							 styleClass="btDireita, botao"/>
@@ -89,7 +90,8 @@
 		   							 icon="ui-icon-trash" 
 			   					 	 process="@this" 
 			   					 	 update="gridUsuarios" 
-			   					 	  styleClass="botaoDisable"
+			   					 	 onclick="PF('statusDialog').show()"
+			   					 	 styleClass="botaoDisable"
 			   					 	 actionListener="#{usuarioCtrl.excluir(user)}">
 			   					 
 			   						    <p:confirm header="#{msg['display.exclusao']}" 
@@ -103,10 +105,12 @@
 	        								<p:commandButton value="#{msg[display.sim]}"  
 	        											 type="button"   
 	        											 icon="ui-icon-check"
+	        											 onclick="PF('statusDialog').show()" 
 	        											 styleClass="ui-confirmdialog-yes botao"/>
 	        							
 	        								<p:commandButton value="#{msg[display.nao]}"  
 	        											 type="button"
+	        											 onclick="PF('statusDialog').show()"
 	        											 icon="ui-icon-close"
 	        											 styleClass="ui-confirmdialog-no botaoDisable"
 	        											 />
@@ -125,6 +129,7 @@
 				<p:commandButton 
 						 id="btIncluir" 
 						 value="#{msg['display.incluir.usuario']}"
+						 onclick="PF('statusDialog').show()"
 						 icon="ui-icon-plusthick" 
 						 styleClass="botao"
 		 				 actionListener="#{usuarioCtrl.irParaIncluir}"  />
