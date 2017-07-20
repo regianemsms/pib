@@ -72,14 +72,13 @@ public class UsuarioCtrl  extends BaseController{
 			usuarioForm.getUsuario().setPessoa(pessoaRepository.findOne(id));
 		}
 	}
-    public String logar() {
+    public void logar() {
     	try {
     		Usuario user = usuarioRepository.findByLoginAndStatus(userName, "A");
     		autenticar(user);
-    		return identity.login(true,user);
+    		redirect(identity.login(true,user));
     	} catch (ValidationException e) {
     		exibeMensagem(getMessageByKey("msg.atencao"), e.getMessage());
-    		return null;
     	}
     }
     

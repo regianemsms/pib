@@ -2,7 +2,7 @@ package br.org.piblimeira.enuns;
 
 public enum EnumCaminhoPagina {
 
-	PAGINA_PRINCIPAL          ("PAGINA_PRINCIPAL",          "/secure/principal/paginaPrincipal.jsf?faces-redirect=true"),
+	PAGINA_PRINCIPAL          ("PAGINA_PRINCIPAL",          "/secure/principal/paginaPrincipal.jsf"),
 	MANTER_USUARIO            ("MANTER_USUARIO",            "/secure/usuario/consultarUsuario.jsf"),
 	EDITAR_USUARIO            ("EDITAR_USUARIO",            "/secure/usuario/editarUsuario.xhtml"),
 	MANTER_MEMBRO             ("MANTER_MEMBRO",             "/secure/membro/consultarMembro.xhtml"),
