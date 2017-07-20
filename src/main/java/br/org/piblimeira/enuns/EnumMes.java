@@ -8,7 +8,7 @@ import java.util.Map;
 public enum EnumMes {
 	  	JANEIRO(1,"Janeiro"),        
 	  	FEVEREIRO(2,"Fevereiro"),
-	  	MARCO(3,"Mar�o"),
+	  	MARCO(3,"Março"),
 	  	ABRIL(4,"Abril"),
 	  	MAIO(5,"Maio"),
 	  	JUNHO(6,"Junho"),

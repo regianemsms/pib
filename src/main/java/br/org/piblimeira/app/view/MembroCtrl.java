@@ -101,9 +101,13 @@ public class MembroCtrl extends BaseController{
 		if(membro != null){
 			membroForm.setPessoa(membro);
 			membroForm.getPessoa().setEndereco(enderecoRepository.buscarEnderecoPorIdPessoa(membro.getId()));
+			membroForm.getPessoa().getEndereco().setMunicipio(membroForm.getPessoa().getEndereco().getMunicipio() == null ? instanciarMunicipio()
+					: membroForm.getPessoa().getEndereco().getMunicipio());
 			removeFromSession("membro");
 			exibirUltimaVisita();
 		}
+		
+		
 		
 		String detalhar =  getFromSession("detalhar");
 		if( StringUtils.isNotEmpty(detalhar) && "true".equals(detalhar)){
@@ -115,6 +119,12 @@ public class MembroCtrl extends BaseController{
 			membroForm.getPessoa().setTipoRecepcao(new TipoRecepcao());
 		}
 	//	listarMembros();
+	}
+	
+	private Municipio instanciarMunicipio() {
+		Municipio mun = new Municipio();
+		mun.setUf(new Uf());
+		return mun;
 	}
 	
 	public void gerarRelatorioMembros() {
@@ -273,20 +283,37 @@ public class MembroCtrl extends BaseController{
 	
 	private List<Pessoa> buscarPorNomeStatus(){
 		String status = StringUtils.isNotBlank(membroForm.getPessoa().getStatus()) ? membroForm.getPessoa().getStatus() : EnumStatus.ATIVO.getCodigo(); 
-		return pessoaRepository.buscarPorNome(membroForm.getPessoa().getNome().toUpperCase(), status);
+		return pessoaRepository.buscarPorNome(retornarParam(membroForm.getPessoa().getNome()), status);
 	}
 	
 	public void pesquisar(){ //nome, nascimento, tipomembro, status
 		removeFromSession("listaMembros");
 		String nome = membroForm.getPessoa().getNome();
 		Long tipoMembro = membroForm.getPessoa().getTipoMembro().getId();
-		String status = membroForm.getPessoa().getStatus();
+		String status =  StringUtils.isBlank(membroForm.getPessoa().getStatus()) ?  EnumStatus.ATIVO.getCodigo() : membroForm.getPessoa().getStatus() ;
 		Integer mes = membroForm.getPessoa().getMesNascimento();
+		
 		if(StringUtils.isBlank(nome) && tipoMembro == null && StringUtils.isBlank(status) && mes == null){
 			membroForm.setListaMembros(new ArrayList<>(pessoaRepository.buscarPorFiltro(EnumStatus.ATIVO.getCodigo())));
-		}else if(StringUtils.isNotBlank(nome) && tipoMembro == null && StringUtils.isBlank(status) && mes == null) {
+		}else if(StringUtils.isNotBlank(nome) && tipoMembro == null && mes == null) {
 			membroForm.setListaMembros(new ArrayList<>(buscarPorNomeStatus()));
+		}else if(StringUtils.isNotBlank(nome) && tipoMembro != null && mes != null) {
+			membroForm.setListaMembros(new ArrayList<>(pessoaRepository.buscarPorNomeTipoMesStatus(retornarParam(nome), tipoMembro, mes, status)));
+		}else if(StringUtils.isNotBlank(nome) && tipoMembro == null && mes != null) {
+			membroForm.setListaMembros(new ArrayList<>(pessoaRepository.buscarPorNomeMesStatus(retornarParam(nome), mes, status)));
+		}else if(StringUtils.isNotBlank(nome) && tipoMembro != null && mes == null) {
+			membroForm.setListaMembros(new ArrayList<>(pessoaRepository.buscarPorNomeTipoStatus(retornarParam(nome), tipoMembro, status)));
+		}else if(StringUtils.isBlank(nome) && tipoMembro == null && mes != null) {
+			membroForm.setListaMembros(new ArrayList<>(pessoaRepository.buscarPorMesStatus(mes, status)));
+		}else if(StringUtils.isBlank(nome) && tipoMembro != null && mes == null) {
+			membroForm.setListaMembros(new ArrayList<>(pessoaRepository.buscarPorTipoMembroStatus(tipoMembro, status)));
+		}else if(StringUtils.isBlank(nome) && tipoMembro != null && mes != null) {
+			membroForm.setListaMembros(new ArrayList<>(pessoaRepository.buscarPorTipoMesStatus(tipoMembro, mes, status)));
+		
+		}else {
+			membroForm.setListaMembros(new ArrayList<>(pessoaRepository.buscarPorFiltro(status)));
 		}
+		
 		addToSession("listaMembros", membroForm.getListaMembros());
 	}
 	
