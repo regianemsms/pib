@@ -14,7 +14,7 @@ public enum EnumCaminhoPagina {
 	MANTER_VISITA             ("MANTER_VISITA",             "/secure/visita/consultarVisita.xhtml"),
 	EDITAR_VISITA             ("EDITAR_VISITA",             "/secure/visita/editarVisita.xhtml"),
 	RELATORIO_ANIVERSARIANTES ("RELATORIO_ANIVERSARIANTES", "/secure/relatorio/gerarRelatorioNiver.xhtml"),
-	INDEX			          ("INDEX","/index.html?faces-redirect=true");	
+	INDEX			          ("INDEX","/login.xhtml?faces-redirect=true");	
 	
 	private String chave;
 	private String caminho;

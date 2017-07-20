@@ -56,6 +56,9 @@ public class LoginBean  extends BaseController {
 	}
     
     public String obterPrimeiroNome() {
+    	if(identity.getUser() == null) {
+    		return "";
+    	}
     	return identity.getUser().getPessoa().retornarPrimeiroNome();
     }
 
