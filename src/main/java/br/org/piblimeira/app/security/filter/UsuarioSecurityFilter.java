@@ -15,7 +15,7 @@ import java.io.IOException;
  * Security filter redirects to login view if {@link Identity} is not logged in and request url references secure area.
  */
 @Component
-public class PagesSecurityFilter implements Filter {
+public class UsuarioSecurityFilter implements Filter {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -34,7 +34,7 @@ public class PagesSecurityFilter implements Filter {
         final HttpServletResponse response = (HttpServletResponse) servletResponse;
         final String requestURI = request.getRequestURI();
 
-        if (requestURI.startsWith("/intranet/secure/") && !identity.isLoggedIn()) {
+        if (requestURI.startsWith("/intranet/secure/usuario/") && !identity.isLoggedIn() && !identity.verificarAdmin()) {
         	try {
         		response.sendRedirect(request.getContextPath() + "/login.jsf?faces-redirect=true");
         	} catch (IllegalStateException e) {

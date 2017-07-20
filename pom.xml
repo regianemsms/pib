@@ -6,15 +6,14 @@
     <artifactId>piblimeira</artifactId>
     <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
-
+	<name>piblimeira</name>
+ 	<description>Sistema de controle de membros da PIB em Limeira</description>
+  
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.1.RELEASE</version>
     </parent>
-
-    <name>spring-boot-joinfaces</name>
-    <description>Project using JoinFaces in SpringBoot</description>
 
     <properties>
         <maven.min.version>3.2.1</maven.min.version>
