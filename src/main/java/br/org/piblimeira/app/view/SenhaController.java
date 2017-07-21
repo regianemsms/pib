@@ -81,6 +81,9 @@ public class SenhaController extends BaseController{
 		}
 	}
 	
+	public void logout(){
+		redirect(identity.logout());
+	}
 
 	public UsuarioForm getUsuarioForm() {
 		return usuarioForm;

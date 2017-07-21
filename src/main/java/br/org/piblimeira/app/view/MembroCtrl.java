@@ -47,6 +47,13 @@ import br.org.piblimeira.repository.VisitaRepository;
 import br.org.piblimeira.util.Constantes;
 import br.org.piblimeira.util.Utils;
 import br.org.piblimeira.vo.RelatorioVo;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 
 
@@ -152,7 +159,8 @@ public class MembroCtrl extends BaseController{
 			PdfRelatorio pdf = new PdfRelatorio(); 
 			String caminhoJasper = getServletContext().getRealPath(Constantes.CAMINHO_JASPER + Constantes.CAMINHO_RELATORIO_ANIVERSARIANTES);
 
-			InputStream stream = pdf.gerarPdfRelatorio(caminhoJasper, preencherParametros(membroForm.getMesNascimento()), lista);
+			InputStream stream = null;
+					//pdf.gerarPdfRelatorio(caminhoJasper, preencherParametros(membroForm.getMesNascimento()), lista);
 	         file = new DefaultStreamedContent(stream, "application/pdf", EnumParametroNiver.getByCodigo(membroForm.getMesNascimento()).
 	        		 						getLabel().concat(" de ").concat(Utils.obterAno(new Date()).toString()).concat(Constantes.PONTO_PDF)); 
 		} catch (Exception e) {
@@ -185,9 +193,9 @@ public class MembroCtrl extends BaseController{
 		try{
 			List lista = popularFieldsMembros();
 			PdfRelatorio pdf = new PdfRelatorio();
-			String caminhoJasper = getServletContext().getRealPath(Constantes.CAMINHO_JASPER + Constantes.CAMINHO_RELATORIO_MEMBROS);
+			String caminhoJasper =  Constantes.CAMINHO_JASPER + Constantes.CAMINHO_RELATORIO_MEMBROS;
 
-			InputStream stream = pdf.gerarPdfRelatorio(caminhoJasper ,preencherParametros(null), lista);
+			InputStream stream = pdf.gerarPdfRelatorio(lista, caminhoJasper,preencherParametros(null));
 			fileMembros = new DefaultStreamedContent(stream, "application/pdf", "Lista de Membros - ".concat(Utils.StringData(new Date())).concat(Constantes.PONTO_PDF)); 
 		} catch (Exception e) {
 			logger.error("Erro ao gerar Lote: "+ e.getMessage(),e);
@@ -195,6 +203,8 @@ public class MembroCtrl extends BaseController{
 		
 		return fileMembros; 
 	}
+	
+	
 	
 	
 	

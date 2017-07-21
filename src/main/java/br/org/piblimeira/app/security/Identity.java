@@ -17,8 +17,6 @@ import br.org.piblimeira.enuns.EnumPerfil;
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class Identity {
 
- //   private final Logger log = LoggerFactory.getLogger(this.getClass());
-
     private String userName;
     private boolean loggedIn;
     private Usuario user;
@@ -39,7 +37,7 @@ public class Identity {
         loggedIn = false;
         userName = null;
         user = null;
-        return "/login.jsf?faces-redirect=true";
+        return EnumCaminhoPagina.INDEX.getCaminho();
     }
 
     public Boolean verificarAdmin(){

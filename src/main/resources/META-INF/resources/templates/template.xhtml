@@ -41,11 +41,11 @@
 	<p:layout fullPage="true">
       <p:layoutUnit position="north" styleClass="zerarLayout">
 	        <div class="header">
-	            <div class="container">
+	           	<ui:include src="/templates/header.xhtml" />
+	           <!--  <div class="container">
 	                <h2>Primeira Igreja Batista em Limeira</h2>
 	                <p>Bem-vindo(a) #{loginBean.obterPrimeiroNome()}!!!</p>
-	                
-	            </div>
+	            </div> -->
 	        </div>
 		</p:layoutUnit>
 	<p:layoutUnit position="west" resizable="true"  styleClass="zerarLayout" header="#{msg['display.funcionalidades']}" collapsible="true" effect="drop" size="205">
