@@ -4,26 +4,27 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
-	 <div class="container">
-		<h2>Primeira Igreja Batista em Limeira</h2>
-	    <p>Bem-vindo(a) #{loginBean.obterPrimeiroNome()}!!!</p>
-		<h:panelGroup layout="block" id="usuarioHeader" style="float: right" >
-			<h:form id="form_header">
-					<p/>
-					<p:commandButton actionListener="#{senhaController.prepararAlterarSenha}"
-						icon="ui-icon-key"
-						value="Alterar Senha" 
-						styleClass="botaoAmarelo"
-						update="panellAlterarSenha"/>
-					<p:spacer styleClass="pad10"/>
-					<p:commandButton actionListener="#{senhaController.logout}" 
-						icon="ui-icon-power" 
-						value="Logout" 
-						styleClass="botaoDisable"/>
-					
-			</h:form>
-		</h:panelGroup>
-	
+	 <div class="container" style="width:100%">
+	 	<h:panelGrid columns="2" width="100%">
+		 	<h:panelGroup>
+				<h2>Primeira Igreja Batista em Limeira</h2>
+		   		<p>Bem-vindo(a) #{loginBean.obterPrimeiroNome()}!!!</p>
+			</h:panelGroup>
+			<h:panelGroup style="float: right">
+				<h:form id="form_header">
+						<p/>
+						<p:commandLink actionListener="#{senhaController.prepararAlterarSenha}"
+							update="panellAlterarSenha" title="Alterar Senha">
+								<h:graphicImage library="images" name="password.png" height="30px"   />
+						</p:commandLink>	
+						<p:spacer styleClass="pad10"/>
+						<p:commandLink actionListener="#{senhaController.logout}" title="Sair" >
+								<h:graphicImage library="images" name="logout.png" height="30px"   />
+						</p:commandLink>
+						
+				</h:form>
+			</h:panelGroup>
+		</h:panelGrid>
 	 <h:panelGroup id="panellAlterarSenha">
 		 <p:dialog  appendTo="@(body)" widgetVar="modalAlterarSenha" resizable="true" 
 					header="#{senhaController.usuarioForm.usuario.pessoa.nome}" modal="true" showEffect="explode" hideEffect="explode" >

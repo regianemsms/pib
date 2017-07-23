@@ -9,6 +9,69 @@
     color: #FFF !important;
 }
 
+.botaoAmarelo{
+    background: linear-gradient(to bottom right, #87CEFA, #155799) !important;
+    color: #FFF !important;
+}
+
+.botaoVermelho{
+    background: linear-gradient(to bottom right, #FF0000, #B22222) !important;
+    color: #FFF !important;
+}
+.pad10 {
+	padding: 0px 10px 0px 0px !important;
+}
+
+.ui-widget-header{
+	background: linear-gradient(120deg, #D6D6D6, #fff) !important;
+}
+
+.col{
+	
+}
+.col2{
+	padding: 32px 0px 0px 10px !important;
+}
+.botaoDisable{
+	background: linear-gradient(to bottom right, #fff, #666666)!important;
+    color: #FFF !important;
+}
+
+.label {
+	white-space: nowrap;
+	padding: 0 0 0 0 !important;
+}
+
+.conteudoFormulario {
+	position: relative;
+	float: left;
+	left: 0px;
+	padding: 0px 10px 30px 10px;
+}
+
+.conteudoFormulario {
+	position: relative;
+	float: left;
+	left: 0px;
+	padding: 0px 10px 30px 10px;
+}
+.ui-selectonemenu .ui-widget .ui-state-default .ui-corner-all{
+	 min-width: 160px !important;
+}
+.check{
+  	 width: 160px !important;
+	 min-width: 160px !important;
+	 max-width: 160px !important;
+	 display: block !important;
+	 padding-right: 0em !important;
+}
+.ui-selectonemenu .ui-selectonemenu-trigger{
+	padding: 0 0px !important;
+}   
+.field{
+	 margin: 15px 0px 0px 0px !important;
+	 width: 96%;
+}
 .header small {
     color: #fff;
 }

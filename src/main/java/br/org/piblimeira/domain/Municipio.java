@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Table(name = "tb_municipio")
 public class Municipio {
 
-	private static final long serialVersionUID = 1101561852610218727L;
 
 	@Id
 	@Column(name = "ID_MUNICIPIO")

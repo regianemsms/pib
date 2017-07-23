@@ -12,8 +12,8 @@ import org.apache.commons.mail.SimpleEmail;
 	public abstract class EnviarEmail {
 	
 	public static void sendEmail(String mensagem, String assunto,List<String> destinatarios) throws EmailException {
-		   String remetente = "emailremetente";
-		   String senha = "senha";
+	 	   String remetente = "naorespondapiblimeira@gmail.com";
+	 	   String senha = "r168543G";
 			
 		   SimpleEmail email = new SimpleEmail();
 		   email.setHostName("smtp.gmail.com");

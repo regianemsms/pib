@@ -11,9 +11,9 @@
      	<p:messages id="msgs" autoUpdate="true" closable="true" globalOnly="true" escape="false"/>
     		<p/>
     		<p:fieldset> <p/>
-				<h:panelGrid id="panelGridPesquisar" 
-							 columns="4" 
-							 cellpadding="8"
+				<h:panelGrid id="panelGridPesquisar" width="90%"
+							 columns="5" 
+							 cellpadding="8" columnClasses="col,col,col,col,col2"
 							 cellspacing="5" 
 							 >
 					<h:panelGroup>
@@ -58,8 +58,8 @@
 					</h:panelGroup>	
 				 
         			
-        			<h:panelGroup>
-        			
+        			<h:panelGroup >
+        			  <p:outputLabel value=" "/>
         			<p:commandButton id="btPesquisar"
 		 							 value="Pesquisar" 
 		 							 update="gridMembro" 

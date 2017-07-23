@@ -9,12 +9,12 @@
 	  xmlns:of="http://omnifaces.org/functions"
 	  xmlns:app="http://java.sun.com/jsf/composite/componentes">     		
 	
-		<p/><p:fieldset style="width:90%"><p/>
+		<p/><p:fieldset style="width:100%"><p/>
 		<p:spacer styleClass="pad20"/>
 			<h:inputHidden value="#{membroCtrl.membroForm.pessoa.endereco.id}" />
 			<h:panelGrid  columns="3" cellpadding="8" >		 
 				<h:panelGroup>
-					<h:outputLabel value="#{msg['display.cep']}" styleClass="label" for="cep" /><p/>
+					<h:outputLabel value="#{msg['display.cep']}" for="cep" /><p/>
 					<p:inputMask id="cep" mask="99999-999" size="10" 
 							 value="#{membroCtrl.membroForm.pessoa.endereco.cep}"/>
 							 <p/>

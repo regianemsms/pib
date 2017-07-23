@@ -47,13 +47,6 @@ import br.org.piblimeira.repository.VisitaRepository;
 import br.org.piblimeira.util.Constantes;
 import br.org.piblimeira.util.Utils;
 import br.org.piblimeira.vo.RelatorioVo;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 
 
@@ -152,7 +145,7 @@ public class MembroCtrl extends BaseController{
 		return fileMembros;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes"})
 	public StreamedContent gerarRelAniversariantes(){
 		try{
 			List lista = popularFieldsAniversariantes();
@@ -195,7 +188,7 @@ public class MembroCtrl extends BaseController{
 			PdfRelatorio pdf = new PdfRelatorio();
 			String caminhoJasper =  Constantes.CAMINHO_JASPER + Constantes.CAMINHO_RELATORIO_MEMBROS;
 
-			InputStream stream = pdf.gerarPdfRelatorio(lista, caminhoJasper,preencherParametros(null));
+			InputStream stream = pdf.gerarPdfRelatorio(caminhoJasper,preencherParametros(null),lista);
 			fileMembros = new DefaultStreamedContent(stream, "application/pdf", "Lista de Membros - ".concat(Utils.StringData(new Date())).concat(Constantes.PONTO_PDF)); 
 		} catch (Exception e) {
 			logger.error("Erro ao gerar Lote: "+ e.getMessage(),e);
@@ -203,10 +196,6 @@ public class MembroCtrl extends BaseController{
 		
 		return fileMembros; 
 	}
-	
-	
-	
-	
 	
 	private List<RelatorioVo> popularFieldsAniversariantes(){
 		List<RelatorioVo> lista = new ArrayList<>();
