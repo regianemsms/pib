@@ -186,7 +186,7 @@ public class MembroCtrl extends BaseController{
 		try{
 			List lista = popularFieldsMembros();
 			PdfRelatorio pdf = new PdfRelatorio();
-			String caminhoJasper =  Constantes.CAMINHO_JASPER + Constantes.CAMINHO_RELATORIO_MEMBROS;
+			String caminhoJasper = Constantes.CAMINHO_JASPER + Constantes.CAMINHO_RELATORIO_MEMBROS;
 
 			InputStream stream = pdf.gerarPdfRelatorio(caminhoJasper,preencherParametros(null),lista);
 			fileMembros = new DefaultStreamedContent(stream, "application/pdf", "Lista de Membros - ".concat(Utils.StringData(new Date())).concat(Constantes.PONTO_PDF)); 

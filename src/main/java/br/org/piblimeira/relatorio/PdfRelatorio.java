@@ -2,9 +2,9 @@ package br.org.piblimeira.relatorio;
 
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +27,12 @@ public class PdfRelatorio {
 	}
 	
 	private String retornarCaminhoRelatorio(String relatorio) throws IOException{
-		String path = new File(relatorio).getCanonicalPath();
+	System.out.println("caminh 1: " + Paths.get("META-INF//resources//jasper//membros.jrxml").toAbsolutePath().toString());
+	
+	 return Paths.get("src//main//resources//jasper//membros.jrxml").toAbsolutePath().toString();
+		/*String path = new File("/jasper/membros.jrxml").getCanonicalPath();
 		path = path.replaceAll("bin","relatorio");
-		return path.replace("\\\\", "\\");
+		return path.replace("\\\\", "\\");*/
 	}
 	
 }
