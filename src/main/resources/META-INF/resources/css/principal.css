@@ -72,6 +72,13 @@
 	left: 0px;
 	padding: 0px 10px 30px 10px;
 }
+
+.conteudoFormularioCentro{
+	float: left;
+    position: relative;
+    left: 40.5%;
+}
+
 .ui-selectonemenu .ui-widget .ui-state-default .ui-corner-all{
 	 min-width: 160px !important;
 }

@@ -27,12 +27,7 @@ public class PdfRelatorio {
 	}
 	
 	private String retornarCaminhoRelatorio(String relatorio) throws IOException{
-	System.out.println("caminh 1: " + Paths.get("META-INF//resources//jasper//membros.jrxml").toAbsolutePath().toString());
-	
-	 return Paths.get("src//main//resources//jasper//membros.jrxml").toAbsolutePath().toString();
-		/*String path = new File("/jasper/membros.jrxml").getCanonicalPath();
-		path = path.replaceAll("bin","relatorio");
-		return path.replace("\\\\", "\\");*/
+	 return Paths.get("").toAbsolutePath().toString().concat(relatorio);
 	}
 	
 }

@@ -49,15 +49,21 @@
 		
 	    <p:layoutUnit position="south" styleClass="zerarLayout">
 	            <footer class="footer">
-	                <div class="versionInformation">
-	                    Desenvolvido por: 
-	                    <a href="https://www.linkedin.com/in/regiane-mesquita-65154823/" target="_blank">
-	                   		 Regiane Mesquita
-	                    </a> 
-	                </div>
-	                <div class="footer-links">
-	                       <img src="#{request.contextPath}/images/nomeIgrejaPreto.png" width="30%" alt="logo" />
-	                </div>
+	               <h:panelGrid columns="1" width="100%">
+		               <h:panelGroup styleClass="conteudoFormularioCentro">
+			                <div class="footer-links">
+			                       <img src="#{request.contextPath}/images/nomeIgrejaPreto.png" width="250px" alt="logo" />
+			                </div>
+		                </h:panelGroup>
+			             <h:panelGroup style="float: right; padding-right: 10px;">
+			                <div class="versionInformation">
+			                    Desenvolvido por: 
+			                    <a href="https://www.linkedin.com/in/regiane-mesquita-65154823/" target="_blank">
+			                   		 Regiane Mesquita
+			                    </a> 
+			                </div>
+		               </h:panelGroup>
+		            </h:panelGrid>    
 	            </footer>
 		</p:layoutUnit>
 		</p:layout>

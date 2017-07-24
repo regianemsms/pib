@@ -184,8 +184,7 @@
 	   					styleClass="botao" 
 	   					actionListener="#{membroCtrl.limparMesNascimento}"
 	   					update="panelmodNiver"
-	   					oncomplete="PF('modalNiver').show();"
-	   			 		onclick="PF('statusDialog').show()"
+	   					oncomplete="PF('modalNiver').show()"
 	   			 		value="#{msg['display.gerar.rel.aniversariantes']}"
 	   			 		icon="ui-icon-circle-arrow-s"  />
 	   			<p:spacer styleClass="pad10"/>
@@ -193,7 +192,6 @@
 	   					id="downloadMembros" 
 	   					styleClass="btn btn-default botao" 
 	   					process="@all"
-	   					onclick="PF('statusDialog').show()"
 	   					actionListener="#{membroCtrl.gerarRelatorioMembros()}"
 	   			 		value="#{msg['display.gerar.rel.membros']}" 
 	   			 		ajax="false" icon="ui-icon-circle-arrow-s" >
@@ -209,7 +207,7 @@
 			  			header="#{msg['display.gerar.rel.aniversariantes']}" modal="true" showEffect="explode" hideEffect="explode" >
 				<h:form id="formNiver"  prependId="false">
 					    <h:outputText value="#{msg['display.informe.mes']}"/><p/>
-					   <p:selectOneMenu id="mesnascimento" value="#{membroCtrl.membroForm.mesNascimento}" >		
+					   <p:selectOneMenu id="mesnascimento"  styleClass="check" value="#{membroCtrl.membroForm.mesNascimento}" >		
 						 	<f:selectItem itemValue="" itemLabel="Selecione" />
 						 	<f:selectItems 	
 						 		value="#{membroCtrl.allEnumMes}"
@@ -225,6 +223,7 @@
 	   			 		ajax="false" icon="ui-icon-circle-arrow-s" >
 	                    <p:fileDownload value="#{membroCtrl.file}" />
 	                </p:commandButton> 	
+	                <p:spacer styleClass="pad10"/>
 	                <p:commandButton value="#{msg['display.voltar']}" 
  									 styleClass="botaoDisable"
 		 							 icon="ui-icon-arrowreturnthick-1-w"

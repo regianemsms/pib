@@ -2,7 +2,7 @@ package br.org.piblimeira.util;
 
 public class Constantes {
 
-	public static final String CAMINHO_JASPER = "/resources/jasper/";
+	public static final String CAMINHO_JASPER = "/jasper/";
 	public static final String INATIVO = "I";
 	public static final String ATIVO = "A";
 	public static final String PERCENT = "%";

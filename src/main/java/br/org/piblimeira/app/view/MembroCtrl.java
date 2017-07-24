@@ -150,11 +150,12 @@ public class MembroCtrl extends BaseController{
 		try{
 			List lista = popularFieldsAniversariantes();
 			PdfRelatorio pdf = new PdfRelatorio(); 
-			String caminhoJasper = getServletContext().getRealPath(Constantes.CAMINHO_JASPER + Constantes.CAMINHO_RELATORIO_ANIVERSARIANTES);
+			String caminhoJasper = Constantes.CAMINHO_JASPER + Constantes.CAMINHO_RELATORIO_ANIVERSARIANTES;
 
-			InputStream stream = null;
-					//pdf.gerarPdfRelatorio(caminhoJasper, preencherParametros(membroForm.getMesNascimento()), lista);
-	         file = new DefaultStreamedContent(stream, "application/pdf", EnumParametroNiver.getByCodigo(membroForm.getMesNascimento()).
+			InputStream stream = pdf.gerarPdfRelatorio(caminhoJasper, preencherParametros(membroForm.getMesNascimento()), lista);
+	         
+			RequestContext.getCurrentInstance().execute("PF('modalNiver').hide()");
+			file = new DefaultStreamedContent(stream, "application/pdf", EnumParametroNiver.getByCodigo(membroForm.getMesNascimento()).
 	        		 						getLabel().concat(" de ").concat(Utils.obterAno(new Date()).toString()).concat(Constantes.PONTO_PDF)); 
 		} catch (Exception e) {
 			logger.error("Erro ao gerar Lote: "+ e.getMessage(),e);
@@ -169,11 +170,13 @@ public class MembroCtrl extends BaseController{
         		exibeMensagem(getMessageByKey("msg.atencao"), getMessageByKey("msg.informe.mes"));
         		return null;
         	}
-        	membroForm.setListaAniversariantes(pessoaRepository.buscarPorMesNascimento(membroForm.getMesNascimento(),membroForm.getPessoa().getStatus()));
+        	String status = StringUtils.isBlank(membroForm.getPessoa().getStatus()) ? EnumStatus.ATIVO.getCodigo() : membroForm.getPessoa().getStatus();
+        	membroForm.setListaAniversariantes(pessoaRepository.buscarPorMesNascimento(membroForm.getMesNascimento(),status));
         	if(membroForm.getListaAniversariantes() == null || membroForm.getListaAniversariantes().isEmpty()){
         		exibeMensagem(getMessageByKey("msg.atencao"), getMessageByKey("msg.nao.relatorio"));
         		return null;	
         	}
+        	
 			return  gerarRelAniversariantes();
 		} catch (Exception e) {
 			logger.error("Erro ao gerar Lote: "+ e.getMessage(),e);
