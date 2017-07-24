@@ -12,6 +12,7 @@ public enum EnumCaminhoPagina {
 	MANTER_TP_MEMBRO          ("MANTER_TP_MEMBRO",          "/secure/tpMembro/consultarTipoMembro.xhtml"),
 	EDITAR_TP_MEMBRO          ("EDITAR_TP_MEMBRO",          "/secure/tpMembro/editarTipoMembro.xhtml"),
 	MANTER_VISITA             ("MANTER_VISITA",             "/secure/visita/consultarVisita.xhtml"),
+	DETALHAR_VISITA           ("DETALHAR_VISITA",           "/secure/visita/detalharVisita.xhtml"),
 	EDITAR_VISITA             ("EDITAR_VISITA",             "/secure/visita/editarVisita.xhtml"),
 	RELATORIO_ANIVERSARIANTES ("RELATORIO_ANIVERSARIANTES", "/secure/relatorio/gerarRelatorioNiver.xhtml"),
 	INDEX			          ("INDEX","/login.xhtml?faces-redirect=true");	

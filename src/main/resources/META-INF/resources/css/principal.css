@@ -21,6 +21,9 @@
 .pad10 {
 	padding: 0px 10px 0px 0px !important;
 }
+.pad5{
+	padding: 0px 5px 0px 0px !important;
+}
 .botaoPesquisarCep{
 	 height: 25px;
 	 color: #fff !important;

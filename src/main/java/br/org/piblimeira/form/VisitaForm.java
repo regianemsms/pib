@@ -7,8 +7,19 @@ import br.org.piblimeira.domain.Visita;
 public class VisitaForm {
 
 	private Visita visita;
+	
+	private List<Visita> visitasDetalhe;
+	
 	private List<Visita> visitas;
 	
+	public List<Visita> getVisitasDetalhe() {
+		return visitasDetalhe;
+	}
+
+	public void setVisitasDetalhe(List<Visita> visitasDetalhe) {
+		this.visitasDetalhe = visitasDetalhe;
+	}
+
 	private Integer qtdeCaracteresRestantes;
 
 	public Visita getVisita() {

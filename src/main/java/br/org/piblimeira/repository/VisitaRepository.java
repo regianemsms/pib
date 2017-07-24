@@ -29,4 +29,5 @@ public interface VisitaRepository  extends CrudRepository<Visita, Long>{
 	 
 	 @Query(" SELECT v FROM Visita v where  v.pessoa.nome like :nome and v.dtVisita = :dtVisita and v.pessoa.status = 'A' order by v.dtVisita desc ")
 	 List<Visita> listarVisitasPorNomePessoaDtVisita(@Param("nome") String nome, @Param("dtVisita") Date dtVisita);
+	
 }
