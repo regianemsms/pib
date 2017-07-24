@@ -8,54 +8,56 @@
      <ui:define name="content">
      	<h:form id="formEditar" prependId="false">
      		<p:panel header=" #{usuarioCtrl.usuarioForm.alterar ? msg['display.alterar.usuario'] : msg['display.incluir.usuario']}">
-     			<p/><p:fieldset ><p/>
+     			<p:fieldset  styleClass="field">
+     			
      		  	    <h:inputHidden value="#{usuarioCtrl.usuarioForm.alterar }"/>
      				<h:inputHidden value="#{usuarioCtrl.usuarioForm.usuario.id}" />
      				<h:inputHidden value="#{usuarioCtrl.usuarioForm.usuario.senha}" />
-     				<h:panelGrid id="panelGridEditar" 
-								 	columns="4" 
-							 		cellpadding="10"
-							 		cellspacing="10" >	
-			   				<p:outputLabel value="#{msg['display.usuario']}" for="usuario"/>
-			   				<p:autoComplete id="usuario" size="30"
-		  	    					dropdown="true" 
-			   			  	   		scrollHeight="200" 
-			   			  	   		maxlength="60" 
-			   			  	   		disabled="#{usuarioCtrl.usuarioForm.alterar}"
-			   			  	   		forceSelection="true"
-		     		 				value="#{usuarioCtrl.usuarioForm.usuario.pessoa}" 
-		     		 				var="pessoa"
-		     		 				itemLabel="#{pessoa.nome}"
-		     		 				itemValue="#{pessoa}"
-		     		 				converter="simpleEntityConverter"
-		     		 				effect="fade"
-		     		 			
-		     		 				completeMethod="#{usuarioCtrl.buscarPessoas}" >
-		     		 					<p:ajax event="itemSelect" listener="#{usuarioCtrl.onItemSelect}" update="email" /> 
-		     		 		</p:autoComplete>
-		     		 		
-		     		 		<p:outputLabel value="#{msg['display.perfil']}" for="perfil"/>
-							<p:selectOneMenu 	value="#{usuarioCtrl.usuarioForm.usuario.perfil}"							 								 
-												id="perfil" styleClass="comboPerfil">
-								<f:selectItem  itemLabel="" itemValue=""/>
-								<f:selectItems 	value="#{usuarioCtrl.allEnumPerfil}"
-											   	itemLabel="#{perfil.label}" 
-											   	itemValue="#{perfil.codigo}"
-											   	var="perfil" />
-							</p:selectOneMenu> 	
-		     		 			
-		     		 		<p:outputLabel value="#{msg['display.email']}" for="email"/>
-		     		 		<p:inputText id="email" 
-			   						 size="34" 
-			   						 disabled="true"
-			   						 value="#{usuarioCtrl.usuarioForm.usuario.pessoa.email}"/> 			   				 	
-			   				
-			   				<p:outputLabel value="#{msg['display.login']}: " for="login"/>
-				   			<p:inputText id="login" 
-			   						 size="20" 
-			   						 maxlength="30" 
-			   						 value="#{usuarioCtrl.usuarioForm.usuario.login}"/> 
-	        			
+     				
+     				<h:panelGrid id="panelGridEditar" columns="2" >	
+			   				<h:panelGroup styleClass="conteudoFormulario">
+				   				<p:outputLabel value="#{msg['display.usuario']}" for="usuario"/><p/>
+				   				<p:autoComplete id="usuario" size="30"
+			  	    					dropdown="true" 
+				   			  	   		scrollHeight="200" 
+				   			  	   		maxlength="60" 
+				   			  	   		disabled="#{usuarioCtrl.usuarioForm.alterar}"
+				   			  	   		forceSelection="true"
+			     		 				value="#{usuarioCtrl.usuarioForm.usuario.pessoa}" 
+			     		 				var="pessoa"
+			     		 				itemLabel="#{pessoa.nome}"
+			     		 				itemValue="#{pessoa}"
+			     		 				converter="simpleEntityConverter"
+			     		 				effect="fade"
+			     		 				completeMethod="#{usuarioCtrl.buscarPessoas}" >
+			     		 					<p:ajax event="itemSelect" listener="#{usuarioCtrl.onItemSelect}" update="email" /> 
+			     		 		</p:autoComplete>
+		     		 		</h:panelGroup>
+		     		 		<h:panelGroup styleClass="conteudoFormulario">
+			     		 		<p:outputLabel value="#{msg['display.perfil']}" for="perfil"/><p/>
+								<p:selectOneMenu 	value="#{usuarioCtrl.usuarioForm.usuario.perfil}"							 								 
+													id="perfil" styleClass="checkPerfil">
+									<f:selectItem  itemLabel="" itemValue=""/>
+									<f:selectItems 	value="#{usuarioCtrl.allEnumPerfil}"
+												   	itemLabel="#{perfil.label}" 
+												   	itemValue="#{perfil.codigo}"
+												   	var="perfil" />
+								</p:selectOneMenu> 	
+		     		 		</h:panelGroup>
+		     		 		<h:panelGroup styleClass="conteudoFormulario">	
+			     		 		<p:outputLabel value="#{msg['display.email']}" for="email"/><p/>
+			     		 		<p:inputText id="email" 
+				   						 size="34" 
+				   						 disabled="true"
+				   						 value="#{usuarioCtrl.usuarioForm.usuario.pessoa.email}"/> 			   				 	
+				   			</h:panelGroup>	
+				   			<h:panelGroup styleClass="conteudoFormulario">		
+				   				<p:outputLabel value="#{msg['display.login']}: " for="login"/><p/>
+					   			<p:inputText id="login" 
+				   						 size="20" 
+				   						 maxlength="30" 
+				   						 value="#{usuarioCtrl.usuarioForm.usuario.login}"/> 
+	        				</h:panelGroup>
 					 </h:panelGrid> 
         			<p/>
 		 			<p:commandButton id="btSalvar"

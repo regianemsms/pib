@@ -9,50 +9,47 @@
 	  xmlns:of="http://omnifaces.org/functions"
 	  xmlns:app="http://java.sun.com/jsf/composite/componentes">     		
 	
-		<p/><p:fieldset style="width:100%"><p/>
-		<p:spacer styleClass="pad20"/>
+		<p:fieldset styleClass="field">
+
 			<h:inputHidden value="#{membroCtrl.membroForm.pessoa.endereco.id}" />
-			<h:panelGrid  columns="3" cellpadding="8" >		 
-				<h:panelGroup>
+			<h:panelGrid  columns="2">		 
+				<h:panelGroup styleClass="conteudoFormulario">
 					<h:outputLabel value="#{msg['display.cep']}" for="cep" /><p/>
 					<p:inputMask id="cep" mask="99999-999" size="10" 
 							 value="#{membroCtrl.membroForm.pessoa.endereco.cep}"/>
 							 <p/>
 					<a href="http://m.correios.com.br/movel/buscaCepConfirma.do" target="_blank">
-								<h:outputText value="#{msg['display.nao.sei.cep']}" />
+						<h:outputText value="#{msg['display.nao.sei.cep']}" styleClass="linkCEP"/>
 					</a> 		
 				</h:panelGroup>
-				<h:panelGroup styleClass="btCEP">
-					<p:commandButton id="btnPesquisarCEP"
+				<h:panelGroup styleClass="conteudoFormulario">
+					<p:commandLink id="btnPesquisarCEP"
 							actionListener="#{membroCtrl.buscarCEP}"
 							process="@this, cep"
-							icon="ui-icon-search"
-							styleClass="botao"
+							title="Pesquisar CEP"
 							onclick="PF('statusDialog').show()"
-							update="panelLogradouro, panelBairro" 
-							/>				
+							update="panelLogradouro, panelBairro" >
+							<h:graphicImage library="images" name="lopa.ico" height="30px"   />
+					</p:commandLink>						
 			
 			     </h:panelGroup>
-			     <h:panelGroup>
-							
-				</h:panelGroup>		
 			</h:panelGrid>     
-	   		<h:panelGrid  columns="3" cellpadding="8" id="panelLogradouro">			
-	   			<h:panelGroup>
+	   		<h:panelGrid  columns="3" id="panelLogradouro">			
+	   			<h:panelGroup  styleClass="conteudoFormulario">
 	   				<p:outputLabel value="#{msg['display.logradouro']}: " for="logradouro" /><p/>
 	 				<p:inputText id="logradouro" 
-							size="49" 
+							size="44" 
 							maxlength="50" 
 							value="#{membroCtrl.membroForm.pessoa.endereco.logradouro}" /> 
 			 	</h:panelGroup>
-			 	<h:panelGroup>
+			 	<h:panelGroup  styleClass="conteudoFormulario">
 				 	<p:outputLabel value="#{msg['display.numero']}: " for="numero" /><p/>
 	   			 	<p:inputText id="numero" 
 							size="6" 
 							maxlength="10" 
 							value="#{membroCtrl.membroForm.pessoa.endereco.numero}" /> 
 		   		</h:panelGroup>
-		   		<h:panelGroup>
+		   		<h:panelGroup  styleClass="conteudoFormulario">
 				 	<p:outputLabel value="#{msg['display.complemento']}: " for="complemento" /><p/>
 	   			 	<p:inputText id="complemento" 
 							size="25" 
@@ -60,22 +57,22 @@
 							value="#{membroCtrl.membroForm.pessoa.endereco.complemento}" /> 
 		   		</h:panelGroup>
 		   	</h:panelGrid>
-		   	<h:panelGrid  columns="3" cellpadding="8" id="panelBairro">	
-		  			<h:panelGroup>
+		   	<h:panelGrid  columns="3" id="panelBairro">	
+		  			<h:panelGroup  styleClass="conteudoFormulario">
 						<p:outputLabel value="#{msg['display.bairro']}: " for="bairro" /><p/>
 		 				<p:inputText id="bairro" 
 								size="35" 
 								maxlength="50" 
 								value="#{membroCtrl.membroForm.pessoa.endereco.bairro}" /> 
 					</h:panelGroup>
-					<h:panelGroup>
+					<h:panelGroup  styleClass="conteudoFormulario">
 						<p:outputLabel value="#{msg['display.municipio']}: " for="municipio" /><p/>
 		 				<p:inputText id="municipio" 
 								size="35" 
 								maxlength="50" 
 								value="#{membroCtrl.membroForm.pessoa.endereco.municipio.nmMunicipio}" />
 					</h:panelGroup>			 
-					<h:panelGroup>
+					<h:panelGroup  styleClass="conteudoFormulario">
 						<p:outputLabel value="#{msg['display.uf']}: " for="uf" /><p/>
 						 <p:inputText id="uf" 
 								size="5" 

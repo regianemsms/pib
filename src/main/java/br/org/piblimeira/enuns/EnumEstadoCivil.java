@@ -15,7 +15,7 @@ public enum EnumEstadoCivil {
     CASADO("C", "Casado(a)"),
     SEPARADO("S", "Separado(a)"),
     DIVORCIADO("D","Divorciado(a)"),
-    VIUVO("V","Vi�vo(a)");        
+    VIUVO("V","Viúvo(a)");        
 
     private String codigo;
     private String label;

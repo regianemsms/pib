@@ -50,6 +50,13 @@ public class SenhaController extends BaseController{
 		RequestContext.getCurrentInstance().execute("PF('modalAlterarSenha').show()");
 	}
 	
+	public String obterPrimeiroNome() {
+		if(identity.getUser() != null) {
+			return identity.getUser().getPessoa().retornarPrimeiroNome();
+		}
+		return "";
+	}
+	
 	public void atualizarSenha(){
 		try{
 			validar();

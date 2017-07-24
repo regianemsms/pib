@@ -8,13 +8,14 @@
      <ui:define name="content">
      	<h:form id="formEditar" prependId="false">
      		<p:panel header=" #{tipoMembroCtrl.tipoMembroForm.tipoMembro.id > 0? msg['display.alterar.tp.membro'] : msg['display.incluir.tp.membro']}">
-     			<p/><p:fieldset ><p/>
+     			<p:fieldset styleClass="field100">
      			
      				<h:inputHidden value="#{tipoMembroCtrl.tipoMembroForm.tipoMembro.id}" />
      				<h:panelGrid id="panelGridTpRecapcao" 
-							 columns="2" 
+							 columns="3" 
 							 cellpadding="4" >		  
 		        			<p:outputLabel value="#{msg['display.tp.membro']}: " for="tp" />
+		        			<p:spacer styleClass="pad10"/>
 					   		<p:inputText id="tp" 
 				   						size="50" 
 				   						maxlength="50" 

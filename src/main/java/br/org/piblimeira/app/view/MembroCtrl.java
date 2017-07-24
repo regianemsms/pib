@@ -1,6 +1,7 @@
 package br.org.piblimeira.app.view;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -118,7 +119,6 @@ public class MembroCtrl extends BaseController{
 		if(membroForm.getPessoa().getTipoRecepcao() == null){
 			membroForm.getPessoa().setTipoRecepcao(new TipoRecepcao());
 		}
-	//	listarMembros();
 	}
 	
 	private Municipio instanciarMunicipio() {
@@ -389,8 +389,13 @@ public class MembroCtrl extends BaseController{
 	
 	public void buscarCEP(){
 		try {
+			if(StringUtils.isBlank(membroForm.getPessoa().getEndereco().getCep())) {
+				 throw new ValidationException(getMessageByKey("display.cep.informe"));
+			}
 			membroForm.getPessoa().setEndereco(consumer.buscarCep(membroForm.getPessoa().getEndereco().getCep(), membroForm.getPessoa().getEndereco()));
-		} catch (Exception e) {
+		}catch (ValidationException e) {
+			exibeMensagem(getMessageByKey("msg.atencao"), getMessageByKey(e.getMessage()));
+		} catch (IOException e) {
 			logger.error("Erro ao buscar CEP " +e.getMessage());
 		}
 	}
@@ -472,6 +477,8 @@ public class MembroCtrl extends BaseController{
 		}
 		if(StringUtils.isEmpty(p.getEndereco().getMunicipio().getUf().getSgUf())){
 			p.getEndereco().getMunicipio().setUf(null);
+		}else {
+			p.getEndereco().getMunicipio().getUf().setSgUf(p.getEndereco().getMunicipio().getUf().getSgUf().toUpperCase());
 		}
 		if(p.getEndereco().getMunicipio().getId() == null && 
 				StringUtils.isEmpty(p.getEndereco().getMunicipio().getNmMunicipio()) &&	

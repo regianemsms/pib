@@ -9,30 +9,26 @@
      	<p:panel header="#{msg['display.consultar.membro']}">
      	<h:form id="formPesquisar" prependId="false">
      	<p:messages id="msgs" autoUpdate="true" closable="true" globalOnly="true" escape="false"/>
-    		<p/>
-    		<p:fieldset> <p/>
-				<h:panelGrid id="panelGridPesquisar" 
-							 columns="3" 
-							 cellpadding="8"
-							  >
-					<h:panelGroup>
+    		<p:fieldset styleClass="field100">
+				<h:panelGrid id="panelGridPesquisar"  columns="4" >
+					<h:panelGroup styleClass="conteudoFormulario">
 	        			<p:outputLabel value="#{msg['display.nome']}: " for="nome" /><p/>
 			   			<p:inputText id="nome" 
 						size="35" 
 						maxlength="50" 
 						value="#{usuarioCtrl.usuarioForm.usuario.pessoa.nome}" /> 
         			</h:panelGroup>	
-        			<h:panelGroup>
+        			<h:panelGroup styleClass="conteudoFormulario">
         				<p:outputLabel value="#{msg['display.login']}: " for="login"/><p/>
 				   			<p:inputText id="login" 
 			   						 size="30" 
 			   						 maxlength="30" 
 			   						 value="#{usuarioCtrl.usuarioForm.usuario.login}"/>
 			   		</h:panelGroup>				  
-			   		<h:panelGroup>				 	  
+			   		<h:panelGroup styleClass="conteudoFormulario">				 	  
 						<p:outputLabel value="#{msg['display.perfil']}" for="perfil"/><p/>
 							<p:selectOneMenu 	value="#{usuarioCtrl.usuarioForm.usuario.perfil}"							 								 
-												id="perfil" styleClass="comboPerfil">
+												id="perfil" styleClass="check">
 								<f:selectItem  itemLabel="" itemValue=""/>
 								<f:selectItems 	value="#{usuarioCtrl.allEnumPerfil}"
 											   	itemLabel="#{perfil.label}" 
@@ -40,7 +36,8 @@
 											   	var="perfil" />
 							</p:selectOneMenu> 					 
         			</h:panelGroup>
-        			<h:panelGroup>
+        			<h:panelGroup  styleClass="conteudoFormularioBotaoPesquisar">
+        				<p:outputLabel value=" "/>
         				<p:commandButton id="btPesquisar"
 		 							 value="Pesquisar" 
 		 							 update="gridUsuarios" 
@@ -48,7 +45,7 @@
 		 							 onclick="PF('statusDialog').show()"
 		 							 actionListener="#{usuarioCtrl.pesquisar}" 
 		 							 icon="ui-icon-search"
-		 							 styleClass="btDireita, botao"/>
+		 							 styleClass="alinharBtPesquisar"/>
 		 			</h:panelGroup>				 
 		 		</h:panelGrid>
  			</p:fieldset><p/>

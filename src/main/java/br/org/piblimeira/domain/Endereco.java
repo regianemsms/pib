@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Table(name = "tb_endereco")
 public class Endereco {
 
-	private static final long serialVersionUID = -6968510352625287608L;
 
 	@Id
 	@Column(name ="ID_ENDERECO")

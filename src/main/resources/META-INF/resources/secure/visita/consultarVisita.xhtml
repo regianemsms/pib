@@ -10,20 +10,16 @@
 		
 		<h:form id="formPesquisar" prependId="false">
      	<p:messages id="msgs" autoUpdate="true" closable="true" globalOnly="true" escape="false"/>
-    		<p/>
-    		<p:fieldset> <p/>
-				<h:panelGrid id="panelGridPesquisar" 
-							 columns="2" 
-							 cellpadding="8"
-							  >
-					<h:panelGroup>
+    		<p:fieldset styleClass="field100">
+				<h:panelGrid id="panelGridPesquisar" columns="3"  >
+					<h:panelGroup styleClass="conteudoFormulario">
 	        			<p:outputLabel value="#{msg['display.nome']}: " for="nome" /><p/>
 			   			<p:inputText id="nome" 
 						size="40" 
 						maxlength="50" 
 						value="#{visitaCtrl.visitaForm.visita.pessoa.nome}" /> 
         			</h:panelGroup>		  
-		   			<h:panelGroup>
+		   			<h:panelGroup styleClass="conteudoFormulario">
 			   			<p:outputLabel value="#{msg['display.data']}: " for="dtVisita"/><p/>
 							  <p:calendar id="dtVisita" size="10"
 				   		 			value="#{visitaCtrl.visitaForm.visita.dtVisita}" 
@@ -32,7 +28,7 @@
 				   		 			navigator="true"
 				   		 			locale="pt"	/>
 		   			</h:panelGroup>
-        			<h:panelGroup>
+        			<h:panelGroup styleClass="conteudoFormularioBotaoPesquisar">
 	        			<p:commandButton id="btPesquisar"
 			 							 value="Pesquisar" 
 			 							 update="gridVisita" 
@@ -40,7 +36,7 @@
 			 							 process="@all"
 			 							 actionListener="#{visitaCtrl.pesquisar}" 
 			 							 icon="ui-icon-search"
-			 							 styleClass="btDireita, botao"/>
+			 							 styleClass="alinharBtPesquisar"/>
 		 			</h:panelGroup>				 
 		 		</h:panelGrid>
  			</p:fieldset>

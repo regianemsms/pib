@@ -50,6 +50,9 @@ public class BaseController implements Serializable{
 	public boolean verificarIsAdmin(){
 		return identity.verificarAdmin();
 	}
+	public void irParaHome() {
+		redirect(EnumCaminhoPagina.PAGINA_PRINCIPAL.getCaminho());
+	}
 	
 	public boolean verificarIsAdminOrGestor(){
 		return identity.verificarAdmin() || identity.verificarGestor();

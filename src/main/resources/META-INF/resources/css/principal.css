@@ -21,7 +21,11 @@
 .pad10 {
 	padding: 0px 10px 0px 0px !important;
 }
-
+.botaoPesquisarCep{
+	 height: 25px;
+	 color: #fff !important;
+	 font-size:12px !important;
+}
 .ui-widget-header{
 	background: linear-gradient(120deg, #D6D6D6, #fff) !important;
 }
@@ -41,12 +45,22 @@
 	white-space: nowrap;
 	padding: 0 0 0 0 !important;
 }
-
+.alinharBtPesquisar{
+	background: linear-gradient(to bottom right, #144c6d, #2589c4) !important;
+    color: #FFF !important;
+}
 .conteudoFormulario {
 	position: relative;
 	float: left;
 	left: 0px;
 	padding: 0px 10px 30px 10px;
+}
+
+.conteudoFormularioBotaoPesquisar{
+	position: relative;
+	float: left;
+	left: 0px;
+	padding: 42px 10px 39px 10px;
 }
 
 .conteudoFormulario {
@@ -65,12 +79,27 @@
 	 display: block !important;
 	 padding-right: 0em !important;
 }
+.checkPerfil{
+	 width: 205px !important;
+	 min-width: 205px !important;
+	 max-width: 205px !important;
+	 display: block !important;
+	 padding-right: 0em !important;
+}
 .ui-selectonemenu .ui-selectonemenu-trigger{
 	padding: 0 0px !important;
 }   
 .field{
 	 margin: 15px 0px 0px 0px !important;
 	 width: 96%;
+}
+.fieldUsuario{
+	 margin: 15px 0px 0px 0px !important;
+	 width: 70%;
+}
+.field100{
+	 margin: 15px 0px 0px 0px !important;
+	 width: 100%;
 }
 .header small {
     color: #fff;
@@ -100,6 +129,15 @@
 
 .footer-link {
     margin-left: 6px;
+}
+.linkCEP{
+	font-size: smaller;
+	font-style: italic;
+	color: #009ACD !important;
+}
+
+.alinharADireita{
+	float: right;
 }
 
 .yourkit-link {

@@ -9,23 +9,18 @@
      	<p:panel header="#{msg['display.consultar.membro']}">
      	<h:form id="formPesquisar" prependId="false">
      	<p:messages id="msgs" autoUpdate="true" closable="true" globalOnly="true" escape="false"/>
-    		<p/>
-    		<p:fieldset> <p/>
-				<h:panelGrid id="panelGridPesquisar" width="90%"
-							 columns="5" 
-							 cellpadding="8" columnClasses="col,col,col,col,col2"
-							 cellspacing="5" 
-							 >
-					<h:panelGroup>
+    		<p:fieldset  styleClass="field100"> 
+				<h:panelGrid id="panelGridPesquisar" columns="5" >
+					<h:panelGroup styleClass="conteudoFormulario">
 	        			<p:outputLabel value="#{msg['display.nome']}: " for="nome" /><p/>
 			   			<p:inputText id="nome" 
 						size="30" 
 						maxlength="50" 
 						value="#{membroCtrl.membroForm.pessoa.nome}" /> 
         			</h:panelGroup>		  
-		   			<h:panelGroup>
+		   			<h:panelGroup styleClass="conteudoFormulario">
 			   			<p:outputLabel value="#{msg['display.nascimento']}: " for="nascimento"/><p/>
-			   			 <p:selectOneMenu id="nascimento" value="#{membroCtrl.membroForm.pessoa.mesNascimento}" >		
+			   			 <p:selectOneMenu id="nascimento"  styleClass="check" value="#{membroCtrl.membroForm.pessoa.mesNascimento}" >		
 						 	<f:selectItem itemValue="" itemLabel="Selecione" />
 						 	<f:selectItems 	
 						 		value="#{membroCtrl.allEnumMes}"
@@ -34,9 +29,9 @@
 							   	itemValue="#{mes.codigo}"/>
 						</p:selectOneMenu>
 		   			</h:panelGroup>
-		   			 <h:panelGroup>				
+		   			 <h:panelGroup styleClass="conteudoFormulario">				
 							 <p:outputLabel value="#{msg['display.tp.membro']}: " for="tpMembro" /><p/>
-							 <p:selectOneMenu id="tpMembro" value="#{membroCtrl.membroForm.pessoa.tipoMembro.id}" >		
+							 <p:selectOneMenu id="tpMembro"  styleClass="check" value="#{membroCtrl.membroForm.pessoa.tipoMembro.id}" >		
 							 	<f:selectItem itemValue="" itemLabel="Selecione" />
 							 	<f:selectItems 	
 							 		value="#{membroCtrl.buscarTiposMembros()}"
@@ -45,9 +40,9 @@
 								   	itemValue="#{tpMembro.id}"/>
 							</p:selectOneMenu>	
 					 </h:panelGroup>	
-		   			 <h:panelGroup>			
+		   			 <h:panelGroup styleClass="conteudoFormulario">			
 					     <p:outputLabel value="#{msg['display.status']}: " for="status" /><p/>
-					   	 <p:selectOneMenu id="status" style="width: 100px" value="#{membroCtrl.membroForm.pessoa.status}" >		
+					   	 <p:selectOneMenu id="status" styleClass="check" value="#{membroCtrl.membroForm.pessoa.status}" >		
 						 	<f:selectItem itemValue="" itemLabel="Selecione" />
 						 	<f:selectItems 	
 						 		value="#{membroCtrl.allEnumStatus}"
@@ -58,8 +53,8 @@
 					</h:panelGroup>	
 				 
         			
-        			<h:panelGroup >
-        			  <p:outputLabel value=" "/>
+        			<h:panelGroup styleClass="conteudoFormularioBotaoPesquisar">
+        			<p:outputLabel value=" "/>
         			<p:commandButton id="btPesquisar"
 		 							 value="Pesquisar" 
 		 							 update="gridMembro" 
@@ -67,7 +62,7 @@
 		 							 actionListener="#{membroCtrl.pesquisar}" 
 		 							 icon="ui-icon-search"
 		 							 onclick="PF('statusDialog').show()"
-		 							 styleClass="btDireita, botao"/>
+		 							 styleClass="alinharBtPesquisar"/>
 		 			</h:panelGroup>				 
 		 		</h:panelGrid>
  			</p:fieldset><p/>

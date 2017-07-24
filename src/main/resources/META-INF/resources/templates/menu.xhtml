@@ -7,6 +7,12 @@
 	>
        
  <p:panelMenu>
+ 	<p:submenu label="Home" expanded="true" styleClass="pnlMenuStyle_1">
+ 		<p:menuitem value="#{msg['display.pagina.inicial']}"  
+     	 			actionListener="#{baseController.irParaHome}" icon="ui-icon-home"  
+     	 			style="color: #000000 !important;"
+     	 			onclick="PF('statusDialog').show()"/>
+  	</p:submenu>
     <p:submenu label="Cadastros" expanded="true" styleClass="pnlMenuStyle_1">
 
  		<p:menuitem value="#{msg['display.usuario']}"  
