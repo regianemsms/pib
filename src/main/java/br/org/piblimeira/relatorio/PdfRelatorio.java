@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -17,18 +19,23 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 public class PdfRelatorio {
-    
-	public InputStream gerarPdfRelatorio(String caminho, Map<String, Object> parametros, List<Object>lista) throws JRException, IOException {
-		JasperReport report = JasperCompileManager.compileReport(retornarCaminhoRelatorio(caminho));
-		JasperPrint print = JasperFillManager.fillReport(report,  parametros,new JRBeanCollectionDataSource(lista));
+	private static final Logger LOGGER = Logger.getLogger(PdfRelatorio.class);
 	
-		// exportacao do relatorio para outro formato, no caso PDF
-		return new ByteArrayInputStream(JasperExportManager.exportReportToPdf(print));
+	public InputStream gerarPdfRelatorio(String caminho, Map<String, Object> parametros, List<Object>lista)  {
+		try {
+			JasperReport report;
+			JasperPrint print;
+			report = JasperCompileManager.compileReport(retornarCaminhoRelatorio(caminho));
+			print = JasperFillManager.fillReport(report,  parametros,new JRBeanCollectionDataSource(lista));
+			return new ByteArrayInputStream(JasperExportManager.exportReportToPdf(print));
+		} catch (JRException | IOException e) {
+			LOGGER.error("Erro ao gerar PDF" + e.getMessage());
+			return null;
+		}
+	
 	}
 	
 	private String retornarCaminhoRelatorio(String relatorio) throws IOException{
-		System.out.println("Caminho Absoluto: "+Paths.get("").toAbsolutePath().toString());
-		System.out.println("Caminho completo: " + Paths.get("").toAbsolutePath().toString().concat(relatorio));
 		return Paths.get("").toAbsolutePath().toString().concat(relatorio);
 	}
 	
