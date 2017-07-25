@@ -27,7 +27,9 @@ public class PdfRelatorio {
 	}
 	
 	private String retornarCaminhoRelatorio(String relatorio) throws IOException{
-	 return Paths.get("").toAbsolutePath().toString().concat(relatorio);
+		System.out.println("Caminho Absoluto: "+Paths.get("").toAbsolutePath().toString());
+		System.out.println("Caminho completo: " + Paths.get("").toAbsolutePath().toString().concat(relatorio));
+		return Paths.get("").toAbsolutePath().toString().concat(relatorio);
 	}
 	
 }
